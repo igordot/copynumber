@@ -29,12 +29,18 @@ colorSetup <- function(upper.lim,lower.lim,op){
     op$n.col <- 50
 	}
 	#Range of colours in shades:
-	colors <- colorRampPalette(op$colors, space="rgb")(op$n.col)
-
+	range = upper.lim - lower.lim
+  n.col1 = ceiling(op$n.col*abs(lower.lim)/range)
+  n.col2 = ceiling(op$n.col*upper.lim/range)
+  col.down = colorRampPalette(op$colors[1:2], space="rgb")(n.col1)
+  col.up = colorRampPalette(op$colors[2:3], space="rgb")(n.col2)
+  colors = c(col.down,col.up)
+  
 	#Divide into sequence according to values of limits:
-	lim.seq <- seq(lower.lim,upper.lim,length.out=op$n.col-2)
-	lim.seq <- c(-Inf,lim.seq,Inf)
-	n.seq <- length(lim.seq)
+	lim.seq1 <- seq(lower.lim,0,length.out=n.col1-1)
+  lim.seq2 <- seq(0,upper.lim,length.out=n.col2-1)
+  lim.seq <- c(-Inf,unique(c(lim.seq1,lim.seq2)),Inf)
+  n.seq <- length(lim.seq)
 
 	#Get matrix with intervals:
 	low <- lim.seq[1:(n.seq-1)]

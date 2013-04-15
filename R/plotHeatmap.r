@@ -55,6 +55,11 @@ plotHeatmap <- function(segments,upper.lim,lower.lim=-upper.lim,pos.unit="bp",ch
     stop("pos.unit must be one of bp, kbp and mbp",call.=FALSE)
   }
   
+  #Make sure upper.lim is positive and lower.lim is negative:
+  if(!all(upper.lim>0) || !all(lower.lim<0)){
+    stop("upper.lim must be positive and lower.lim must be negative",call.=FALSE)
+  }
+  
   #Making sure number of upperlimits and lowerlimits are the same:
   nT <- min(length(upper.lim),length(lower.lim))
   upper.lim <- upper.lim[1:nT]

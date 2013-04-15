@@ -12,8 +12,8 @@ plotHeatmap(segments, upper.lim, lower.lim = -upper.lim, pos.unit = "bp",
 }
 \arguments{
   \item{segments}{a data frame containing the segmentation results found by either \code{\link{pcf}} or \code{\link{multipcf}}.}
-  \item{upper.lim}{a numeric vector giving the upper limits(s) to be applied. The colors in the heatmap will reflect the magnitude of the estimated copy numbers relative to this limit, see details.}
-  \item{lower.lim}{a numeric vector of same length as \code{upper.lim} giving the lower limits(s) to be applied. Default is to use the negative value of \code{upper.lim}.}
+  \item{upper.lim}{a positive numeric vector giving the upper limits(s) to be applied. The colors in the heatmap will reflect the magnitude of the estimated copy numbers relative to this limit, see details.}
+  \item{lower.lim}{a negative numeric vector of same length as \code{upper.lim} giving the lower limits(s) to be applied. Default is to use the negative value of \code{upper.lim}.}
   \item{pos.unit}{the unit used to represent the probe positions. Allowed options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base pairs). By default assumed to be "bp".}
   \item{chrom}{a numeric or character vector with chromosome number(s) to indicate which chromosome(s) is (are) to be plotted. If unspecified the whole genome is plotted.}
   \item{layout}{the vector of length two giving the number of rows and columns in the plot window. Default is \code{c(1,1)}.}
@@ -27,8 +27,6 @@ plotHeatmap(segments, upper.lim, lower.lim = -upper.lim, pos.unit = "bp",
  		  \item{\code{sep.samples}}{a number in the range 0 to 0.4 used to create some space between samples. Default is 0, which implies that there is no space.}
   		\item{\code{sample.line}}{a numeric scalar giving the margin line where the sample labels should be written, starting at 0 counting outwards. Default is 0.2.}
   		\item{\code{sample.cex}}{the size of the sample labels.}
-  		%\item{\code{continuous}}{a logical value indicating whether the probes should be presented as continuous, i.e. the probe heatmap will start
-      %and end halfway between adjacent probes (except across arms when chromosomes are plotted and except across chromosomes when genome is plotted). Default is TRUE.}
   	}
   }
 }
