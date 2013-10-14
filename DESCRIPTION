@@ -1,7 +1,7 @@
 Package: copynumber
 Title: Segmentation of single- and multi-track copy number data by
         penalized least squares regression.
-Version: 1.2.0
+Version: 1.3.0
 Author: Gro Nilsen, Knut Liestoel and Ole Christian Lingjaerde.
 Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 Description: Penalized least squares regression is applied to fit piecewise constant curves to copy number data to locate genomic regions of constant copy number. Procedures are available for individual segmentation of each sample, joint segmentation of several samples and joint segmentation of the two data tracks from SNP-arrays. Several plotting functions are available for visualization of the data and the segmentation results.
