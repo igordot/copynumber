@@ -1,7 +1,7 @@
 Package: copynumber
 Title: Segmentation of single- and multi-track copy number data by
         penalized least squares regression.
-Version: 1.5.0
+Version: 1.5.1
 Author: Gro Nilsen, Knut Liestoel and Ole Christian Lingjaerde.
 Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 Description: Penalized least squares regression is applied to fit
@@ -16,5 +16,5 @@ LazyData: yes
 Date: 2013-04-16
 BuildResaveData: best
 Depends: R (>= 2.10), BiocGenerics
-Imports: GenomicRanges, IRanges
+Imports: S4Vectors, IRanges, GenomicRanges
 biocViews: aCGH, SNP, CopyNumberVariation, Genetics, Visualization
