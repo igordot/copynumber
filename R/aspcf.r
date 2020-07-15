@@ -1,10 +1,10 @@
-  
+
 ####################################################################
-## Author: Gro Nilsen, Knut Liestøl and Ole Christian Lingjærde.
+## Author: Gro Nilsen, Knut Liest?l and Ole Christian Lingj?rde.
 ## Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 ## License: Artistic 2.0
 ## Part of the copynumber package
-## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
+## Reference: Nilsen and Liest?l et al. (2012), BMC Genomics
 ####################################################################
 
 
@@ -28,16 +28,16 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   if(!pos.unit %in% c("bp","kbp","mbp")){
     stop("pos.unit must be one of bp, kbp and mbp",call.=FALSE)
   }
-  
+
   #Check assembly input:
-  if(!assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
+  if(!assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9","hg38","mm10")){
     stop("assembly must be one of hg19, hg18, hg17 or hg16",call.=FALSE)
   }
-  
+
   #Check if logR and BAF are files:
   isfile.logR <- class(logR)=="character"
   isfile.BAF <- class(BAF)=="character"
-  
+
   #Check and extract logR-data input:
   if(!isfile.logR){
     #Input could come from winsorize and thus be a list; check and possibly retrieve data frame wins.data
@@ -63,7 +63,7 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
     chrom <- chrom.pos[,1]
     position <- chrom.pos[,2]
   }
-  
+
   #Make sure chrom is not factor:
   if(is.factor(chrom)){
     #If chrom is factor; convert to character
@@ -72,12 +72,12 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   #Make sure chromosomes are numeric (replace X and Y by 23 and 24)
   num.chrom <- numericChrom(chrom)
   nProbe <- length(num.chrom)
-  
+
   #Make sure position is numeric:
   if(!is.numeric(position)){
     stop("input in logR column 2 (posistions) must be numeric",call.=FALSE)
   }
-  
+
   #Get character arms:
 	if(is.null(arms)){
     arms <- getArms(num.chrom,position,pos.unit,get(assembly))
@@ -89,7 +89,7 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
 	#Unique arms:
 	arm.list <- unique(num.arms)
 	nArm <- length(arm.list)
-	
+
 
   #Check BAF input:
   if(!isfile.BAF){
@@ -105,13 +105,13 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   if(nrow.BAF!=nProbe || ncol.BAF!=nSample+2){
     stop("Input in BAF does not represent the same number of probes and samples as found in input in logR",call.=FALSE)
   }
-  
+
   #Initialize
 	yhat.names <- c("chrom","pos",sampleid)
 	seg.names <- c("sampleID","chrom","arm","start.pos","end.pos","n.probes","logR.mean","BAF.mean")
 	segments <- data.frame(matrix(nrow=0,ncol=8))
   colnames(segments) <- seg.names
-    
+
   if(return.est){
     logR.yhat <- matrix(nrow=0,ncol=nSample)
 	}
@@ -128,8 +128,8 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
       if(length(file.names)<2){
         stop("'file.names' must be of length 2", call.=FALSE)
       }
-    }  
-  } 
+    }
+  }
 
   #estimates must be returned from routines if return.est or save.res
   yest <- any(return.est,save.res)
@@ -138,13 +138,13 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   for(c in 1:nArm){
     probe.c <- which(num.arms==arm.list[c])
     pos.c <- position[probe.c]
-    
+
     #Result matrices for this arm
     segments.c <- data.frame(matrix(nrow=0,ncol=8))
     if(yest){
       logR.yhat.c <- matrix(nrow=length(probe.c),ncol=0)
     }
-    
+
     #Get data for this arm
     if(!isfile.logR){
 			arm.logR <- logR[probe.c,-c(1:2),drop=FALSE]
@@ -159,12 +159,12 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
       #Read data for this arm from file; since f is a opened connection, the reading will start on the next line which has not already been read
       arm.BAF <- read.table(f.BAF,nrows=length(probe.c),sep="\t",colClasses=c(rep("NULL",2),rep("numeric",nSample)))
     }
-    
+
     #Checking that there are no missing values in logR:
     if(any(is.na(arm.logR))){
       stop("Missing values are not allowed in logR input",call.=FALSE)
     }
-   
+
     #Make sure data is numeric:
     if(any(!sapply(arm.logR,is.numeric))){
       stop("input in logR columns 3 and onwards must be numeric",call.=FALSE)
@@ -172,28 +172,28 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
     if(any(!sapply(arm.BAF,is.numeric))){
       stop("input in BAF columns 3 and onwards must be numeric",call.=FALSE)
     }
-    
+
     #Run ASPCF separately for each sample:
     for(i in 1:nSample){
       sample.logR <- arm.logR[,i]
       sample.BAF <- arm.BAF[,i]
-      
+
       #Initialize:
 			yhat1 <- rep(NA,length(probe.c))
 			yhat2 <- rep(NA,length(probe.c))
-			
+
 			#Filter out BAF-values below/above threshold:
 			filt.baf <- sample.BAF
 			filt.baf[filt.baf<baf.thres[1]] <- NA
 			filt.baf[filt.baf>baf.thres[2]] <- NA
-			
+
 			obs <- !is.na(filt.baf)
-			
+
 			if(sum(obs)!=0){  #Making sure at least one BAF-value in this arm and this sample passes the threshold test!
   			#Find nearest non-missing neighbour for obs. that have been filtered:
         nn <- rep(NA,length(probe.c))
   			nn[obs] <- which(obs)
-        if(any(!obs)){    
+        if(any(!obs)){
           nn[!obs] <- findNN(pos=pos.c,obs=obs)
   			  #aggregate logR values for probes with the same NN:
   			  use.logR <- aggregate(sample.logR,by=list(nn),FUN=mean)$x
@@ -202,17 +202,17 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   			}
   			#use BAF-values inside threshold:
   			use.BAF <- filt.baf[obs]
-  			
+
         #Run ASPCF
         res <- fastAspcf(logR=use.logR,allB=use.BAF,kmin=kmin,gamma=gamma,skewed.SD=skew)
-     
+
         yhat1[obs] <- res$yhat1
         yhat2[obs] <- res$yhat2
-        
+
         #Interpolate over filtered positions:
         yhat1[!obs] <- yhat1[nn[!obs]]
         yhat2[!obs] <- yhat2[nn[!obs]]
-      
+
       }else{
         yhat1 <- rep(mean(sample.logR),length(probe.c))
         yhat2 <- rep(NA,length(probe.c))
@@ -221,25 +221,25 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
 			#Rounding:
  			yhat1 <- round(yhat1,digits=digits)
  			yhat2 <- round(yhat2,digits=digits)
-			
+
 			#Create segmentation information:
 		  #Note that yhat1 and yhat2 will have the same breakpoints; hence only use one of them to find these
       wd <- which(diff(yhat1)!=0)
-			seg.start <- c(1,wd+1)    
+			seg.start <- c(1,wd+1)
 			seg.stop <- c(wd,length(probe.c))
 			nSeg <- length(seg.start)
-									
+
 			#Create table with relevant segment-information
 			seg.arm <- rep(unique(arms[probe.c]),nSeg)
-      seg.chrom <- rep(unique(chrom[probe.c]),nSeg) 
+      seg.chrom <- rep(unique(chrom[probe.c]),nSeg)
 			pos.start <- pos.c[seg.start]
 			pos.stop <- pos.c[seg.stop]
 			n.pos <- seg.stop-seg.start+1
-			
+
 			logR.mean <- yhat1[seg.start]
 			BAF.mean <- yhat2[seg.start]
-			
-			#Data frame:					
+
+			#Data frame:
 			seg <- data.frame(rep(sampleid[i],nSeg),seg.chrom,seg.arm,pos.start,pos.stop,n.pos,logR.mean,BAF.mean,stringsAsFactors=FALSE)
 			colnames(seg) <- seg.names
 			segments.c <- rbind(segments.c,seg)
@@ -248,8 +248,8 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
         logR.yhat.c <- cbind(logR.yhat.c,yhat1)
       }
     }#endfor
-    
-    
+
+
     #Should results be written to files or returned to user:
     if(save.res){
       if(c==1){
@@ -259,22 +259,22 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
       }
       #Write estimated PCF-values file for this arm:
       write.table(data.frame(chrom[probe.c],pos.c,logR.yhat.c,stringsAsFactors=FALSE), file = w1,col.names=if(c==1) yhat.names else FALSE,row.names=FALSE,quote=FALSE,sep="\t")
-      
+
       #Write segments to file for this arm
       write.table(segments.c,file=w2,col.names=if(c==1) seg.names else FALSE,row.names=FALSE,quote=FALSE,sep="\t")
     }
-    
+
     #Append to results for other arms:
     segments <- rbind(segments,segments.c)
     if(return.est){
       logR.yhat <- rbind(logR.yhat,logR.yhat.c)
     }
- 		
+
  		if(verbose){
       cat(paste("aspcf finished for chromosome arm ",seg.chrom[1],seg.arm[1],sep=""),"\n")
     }
  	}#endfor
-	
+
 	if(isfile.logR){
     #Close connection
     close(f.logR)
@@ -283,30 +283,30 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
     #Close connection
     close(f.BAF)
   }
-  
+
   if(save.res){
     close(w1)
     close(w2)
-    
+
     cat(paste("logR-estimates were saved in file",file.names[1]),sep="\n")
     cat(paste("segments were saved in file",file.names[2]),sep="\n")
 	}
-	
+
 	if(return.est){
 	  logR_yhat <- data.frame(chrom,position,logR.yhat,stringsAsFactors=FALSE)
 		return(list(logR_estimates=logR.yhat,segments=segments))
 	}else{
     return(segments)
-	}                
-	
-	
+	}
+
+
 }#endfunction
 
 
 
 
- 
-# fast ASPCF  version 
+
+# fast ASPCF  version
 fastAspcf <- function(logR, allB, kmin, gamma,skewed.SD){
 
   N <- length(logR)
@@ -315,7 +315,7 @@ fastAspcf <- function(logR, allB, kmin, gamma,skewed.SD){
 
   startw = -d
   stopw = w-d
-  
+
   nseg = 0
   var2 = 0
   breakpts = 0
@@ -343,28 +343,28 @@ fastAspcf <- function(logR, allB, kmin, gamma,skewed.SD){
       var2 <- var2 + sd2^2
       nseg = nseg+1
     }
-    
+
     if(stopw < N+d){
       startw <- min(stopw-2*d + 1,N-2*d)
       stopw <- startw + w
     }else{
       break
     }
-    
+
   }#end repeat
   breakpts <- unique(c(breakpts, N))
   if(nseg==0){nseg=1}  #just in case the sd-test never passes.
   sd2 <- sqrt(var2/nseg)
-  
+
   # On each segment calculate mean of unflipped B allele data
   frst <- breakpts[1:length(breakpts)-1] + 1
   last <- breakpts[2:length(breakpts)]
   nseg <- length(frst)
-  	
+
 	yhat1 <- rep(NA,N)
   yhat2 <- rep(NA,N)
 
-  for(i in 1:nseg){ 
+  for(i in 1:nseg){
     yhat1[frst[i]:last[i]] <- rep(mean(logR[frst[i]:last[i]]), last[i]-frst[i]+1)
     yi2 <- allB[frst[i]:last[i]]
     # Center data around zero (by subtracting 0.5) and estimate mean
@@ -373,7 +373,7 @@ fastAspcf <- function(logR, allB, kmin, gamma,skewed.SD){
     }else{
       mu <- mean(abs(yi2-0.5))
     }
-    
+
     # Make a (slightly arbitrary) decision concerning branches
     # This may be improved by a test of equal variances
     if(sqrt(sd2^2+mu^2) < skewed.SD*sd2){
@@ -383,7 +383,7 @@ fastAspcf <- function(logR, allB, kmin, gamma,skewed.SD){
   }
 
   return(list(yhat1=yhat1,yhat2=yhat2))
-	
+
 }#end fastAspcf
 
 
@@ -393,21 +393,21 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma){
 	from <- max(c(1,a))
   usefrom <- max(c(1,a+d))
   useto <- min(c(N,b-d))
-  
+
   N <- length(logRpart)
-	y1 <- logRpart	
+	y1 <- logRpart
 	y2 <- allBflip
-	
+
 	#Check that vectors are long enough to run algorithm:
 	if(N < 2*kmin){
 	 breakpts <- 0
-   return(list(breakpts=breakpts))  
+   return(list(breakpts=breakpts))
 	}
- 
+
 	# Find initSum, initKvad, initAve for segment y[1..kmin]
 	initSum1 <- sum(y1[1:kmin])
 	initKvad1 <- sum(y1[1:kmin]^2)
-	initAve1 <- initSum1/kmin     
+	initAve1 <- initSum1/kmin
 	initSum2 <- sum(y2[1:kmin])
 	initKvad2 <- sum(y2[1:kmin]^2)
 	initAve2 <- initSum2/kmin
@@ -420,14 +420,14 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma){
 
 	# Define vector of best splits
 	bestSplit <- rep(0,N)
-		
+
 	# Define vector of best averages
 	bestAver1 <- rep(0,N)
 	bestAver2 <- rep(0,N)
 	bestAver1[kmin] <- initAve1
 	bestAver2[kmin] <- initAve2
 
-	
+
 	#Initialize
 	Sum1 <- rep(0,N)
   Sum2 <- rep(0,N)
@@ -436,7 +436,7 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma){
   Aver1 <- rep(0,N)
   Aver2 <- rep(0,N)
   Cost <- rep(0,N)
-  
+
   # We have to treat the region y(1..2*kmin-1) separately, as it
 	# cannot be split into two full segments
   kminP1 <- kmin+1
@@ -447,38 +447,38 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma){
 		Sum2[kminP1:k] <- Sum2[kminP1:k]+y2[k]
 		Aver2[kminP1:k] <- Sum2[kminP1:k]/((k-kmin):1)
 		Kvad2[kminP1:k] <- Kvad2[kminP1:k]+y2[k]^2
-		
-		
+
+
 		bestAver1[k] <- (initSum1+Sum1[kminP1])/k
 		bestAver2[k] <- (initSum2+Sum2[kminP1])/k
     cost1 <- ((initKvad1+Kvad1[kminP1])-k*bestAver1[k]^2)/sd1^2
     cost2 <- ((initKvad2+Kvad2[kminP1])-k*bestAver2[k]^2)/sd2^2
-  
+
     bestCost[k] <- cost1 + cost2
-	  
+
  	}
-  
+
 
   for (n in (2*kmin):N) {
-		
+
    		nMkminP1=n-kmin+1
-   		
+
    		Sum1[kminP1:n] <- Sum1[kminP1:n]+ y1[n]
    		Aver1[kminP1:n] <- Sum1[kminP1:n]/((n-kmin):1)
    		Kvad1[kminP1:n] <- Kvad1[kminP1:n]+ (y1[n])^2
-   		                          
+
    		cost1 <- (Kvad1[kminP1:nMkminP1]-Sum1[kminP1:nMkminP1]*Aver1[kminP1:nMkminP1])/sd1^2
-   		
+
       Sum2[kminP1:n] <- Sum2[kminP1:n]+ y2[n]
    		Aver2[kminP1:n] <- Sum2[kminP1:n]/((n-kmin):1)
    		Kvad2[kminP1:n] <- Kvad2[kminP1:n]+ (y2[n])^2
    		cost2 <- (Kvad2[kminP1:nMkminP1]-Sum2[kminP1:nMkminP1]*Aver2[kminP1:nMkminP1])/sd2^2
-   		
+
       Cost[kminP1:nMkminP1] <- bestCost[kmin:(n-kmin)] + cost1 + cost2
-      
+
       Pos <- which.min(Cost[kminP1:nMkminP1])+kmin
    		cost <- Cost[Pos] + gamma
-   		
+
    		aver1 <- Aver1[Pos]
    		aver2 <- Aver2[Pos]
    		totAver1 <- (Sum1[kminP1]+initSum1)/n
@@ -486,7 +486,7 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma){
       totAver2 <- (Sum2[kminP1]+initSum2)/n
       totCost2 <- ((Kvad2[kminP1]+initKvad2) - n*totAver2*totAver2)/sd2^2
       totCost <- totCost1 + totCost2
-   		
+
       if (totCost < cost) {
        		Pos <- 1
           cost <- totCost
@@ -497,10 +497,10 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma){
    		bestAver1[n] <- aver1
    		bestAver2[n] <- aver2
    		bestSplit[n] <- Pos-1
- 	
-	  
+
+
    }#endfor
- 	
+
 
 	# Trace back
 	n <- N
@@ -511,10 +511,10 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma){
 	}#endwhile
 
   breakpts <- breakpts + from -1
-  breakpts <- breakpts[breakpts>=usefrom & breakpts<=useto] 
-  
+  breakpts <- breakpts[breakpts>=usefrom & breakpts<=useto]
+
   return(list(breakpts=breakpts))
-  
+
 }#end aspcfpart
 
 

@@ -1,10 +1,10 @@
 
 ####################################################################
-## Author: Gro Nilsen, Knut Liestøl and Ole Christian Lingjærde.
+## Author: Gro Nilsen, Knut Liest?l and Ole Christian Lingj?rde.
 ## Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 ## License: Artistic 2.0
 ## Part of the copynumber package
-## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
+## Reference: Nilsen and Liest?l et al. (2012), BMC Genomics
 ####################################################################
 
 ##Required by:
@@ -21,20 +21,20 @@
 ## Main function for multipcf-analysis to be called by the user
 
 multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE,w=1,fast=TRUE,assembly="hg19",digits=4,return.est=FALSE,save.res=FALSE,file.names=NULL,verbose=TRUE){
-	
+
   #Check pos.unit input:
   if(!pos.unit %in% c("bp","kbp","mbp")){
     stop("'pos.unit' must be one of bp, kbp and mbp",call.=FALSE)
   }
-  
+
   #Check assembly input:
-  if(!assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
+  if(!assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9","hg38","mm10")){
     stop("assembly must be one of hg19, hg18, hg17 or hg16",call.=FALSE)
   }
 
   #Is data a file:
   isfile.data <- class(data)=="character"
-  
+
   #Check data input:
   if(!isfile.data){
     #Input could come from winsorize and thus be a list; check and possibly retrieve data frame wins.data
@@ -56,11 +56,11 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
     nSample <- length(sampleid)
 
     #Read just the two first columns to get chrom and pos
-    chrom.pos <- read.table(file=data,sep="\t",header=TRUE,colClasses=c(rep(NA,2),rep("NULL",nSample)),as.is=TRUE)          
+    chrom.pos <- read.table(file=data,sep="\t",header=TRUE,colClasses=c(rep(NA,2),rep("NULL",nSample)),as.is=TRUE)
     chrom <- chrom.pos[,1]
     position <- chrom.pos[,2]
   }
-  
+
   #Make sure chrom is not factor:
   if(is.factor(chrom)){
     #If chrom is factor; convert to character
@@ -69,12 +69,12 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
   #Make sure chromosomes are numeric (replace X and Y by 23 and 24)
   num.chrom <- numericChrom(chrom)
   nProbe <- length(num.chrom)
-  
+
   #Make sure position is numeric:
   if(!is.numeric(position)){
     stop("input in data column 2 (posistions) must be numeric",call.=FALSE)
   }
-  
+
   #Get character arms:
 	if(is.null(arms)){
     arms <- getArms(num.chrom,position,pos.unit,get(assembly))
@@ -83,7 +83,7 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
 	}
 	#Translate to numeric arms:
 	num.arms <- numericArms(num.chrom,arms)
-	
+
 	#Unique arms:
 	arm.list <- unique(num.arms)
 	nArm <- length(arm.list)
@@ -94,12 +94,12 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
   }else if(length(w)!=nSample){
     stop("'w' must be a single number or a vector of same length as the number of samples in 'data'",call.=FALSE)
   }
-  
+
   #Check Y input:
   if(!is.null(Y)){
     stopifnot(class(Y)%in%c("matrix","data.frame","character"))
     isfile.Y <- class(Y)=="character"
-    
+
     if(!isfile.Y){
       ncol.Y <- ncol(Y)
       nrow.Y <- nrow(Y)
@@ -130,14 +130,14 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
         dir.create(dir.res)
       }
       file.names <- c(paste(dir.res,"/","estimates.txt",sep=""),paste(dir.res,"/","segments.txt",sep=""))
-      
+
     }else{
       #Check that file.names is the correct length
       if(length(file.names)<2){
         stop("'file.names' must be of length 2", call.=FALSE)
       }
-    }  
-  } 
+    }
+  }
 
   #estimates must be returned from routines if return.est or save.res
   yest <- any(return.est,save.res)
@@ -157,10 +157,10 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
       sd[j] <- getMad(sample.data[!is.na(sample.data)],k=25)   #Take out missing values before calculating mad
     }
   }
-  
+
   #Scale gamma according to the number of samples:
-  gamma <- gamma*nSample 
-  
+  gamma <- gamma*nSample
+
 	#run multiPCF separately on each chromosomearm:
   for(c in 1:nArm){
     probe.c <- which(num.arms==arm.list[c])
@@ -175,22 +175,22 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
       #two first columns skipped
       arm.data <- read.table(f,nrows=nProbe.c,sep="\t",colClasses=c(rep("NULL",2),rep("numeric",nSample)))
     }
-   
+
     #Check that there are no missing values:
     if(any(is.na(arm.data))){
 	   stop("multiPCF cannot be run because there are missing data values, see 'imputeMissing' for imputation of missing values")
     }
-    
+
     #Make sure data is numeric:
     if(any(!sapply(arm.data,is.numeric))){
       stop("input in data columns 3 and onwards (copy numbers) must be numeric",call.=FALSE)
-    }  
-    
+    }
+
     #If normalize=T and nProbe>=100K, we calculate the MAD sd-estimate for each sample using only obs in this arm
     if(normalize && nProbe >= 100000){
-      sd <- apply(arm.data,2,getMad)   
+      sd <- apply(arm.data,2,getMad)
     }
-    
+
     #Check sd; cannot normalize if sd=0 or if sd=NA:
     if(any(sd==0) || any(is.na(sd))){
       #not run multipcf, return mean for each sample:
@@ -199,28 +199,28 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
       if(yest){
         yhat <- sapply(m,rep,nrow(arm.data))
         mpcf <- list(pcf=t(yhat),nIntervals=1,start0=1,length=nrow(arm.data),mean=m)
-      }else{	
+      }else{
         mpcf <- list(nIntervals=1,start0=1,length=nrow(arm.data),mean=m)
-      }	
-      
+      }
+
     }else{
       #normalize data data (sd=1 if normalize=FALSE)
-      arm.data <- sweep(arm.data,2,sd,"/")  
-   
+      arm.data <- sweep(arm.data,2,sd,"/")
+
       #weight data (default weights is 1)
       arm.data <- sweep(arm.data,2,w,"*")
-      
+
       #Run multipcf:
-      if(!fast || nrow(arm.data)<400){ 
+      if(!fast || nrow(arm.data)<400){
         mpcf <- doMultiPCF(as.matrix(t(arm.data)),gamma=gamma,yest=yest)   #requires samples in rows, probes in columns
         #note: returns samples in rows, estimates in columns.
-      }else{  
+      }else{
         mpcf <- selectFastMultiPcf(as.matrix(arm.data),gamma=gamma,L=15,yest=yest)    #requires samples in columns, probes in rows
       }
 
       #"Unweight" estimates:
   		mpcf$mean <- sweep(mpcf$mean,1,w,"/")
-      if(yest){      
+      if(yest){
         mpcf$pcf <- sweep(mpcf$pcf,1,w,"/")
   		}
   		#"Un-normalize" estimates:
@@ -228,8 +228,8 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
   		if(yest){
         mpcf$pcf <- sweep(mpcf$pcf,1,sd,"*")
       }
-  	}	
-		
+  	}
+
     #Information about segments:
     nSeg <- mpcf$nIntervals
 		start0 <- mpcf$start0
@@ -237,13 +237,13 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
 		seg.mean <- t(mpcf$mean)  #get samples in columns
 		posStart <- pos.c[start0]
 		posEnd <- c(pos.c[start0-1],pos.c[nProbe.c])
-		
+
     #Chromosome number and character arm id:
     chr <- unique(chrom[probe.c])
 		a <- unique(arms[probe.c])
 		chrid <- rep(chr,times=nSeg)
 		armid <- rep(a,times=nSeg)
-		
+
 	  #May use mean of input data or the observed data specified in Y:
 		if(!is.null(Y)){
       #get Y for this arm
@@ -263,14 +263,14 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
 				seg.mean[s,] <- apply(seg.Y,2,mean,na.rm=TRUE)
 			}
 		}
-		
+
 		#Round
 		if(yest){
 		  yhat <- round(mpcf$pcf,digits=digits)
     }
 		seg.mean <- round(seg.mean,digits=digits)
-		
-    #Data frame:					
+
+    #Data frame:
 		segments.c <- data.frame(chrid,armid,posStart,posEnd,n.pos,seg.mean,stringsAsFactors=FALSE)
 		colnames(segments.c) <- seg.names
 
@@ -281,26 +281,26 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
         w1 <- file(file.names[1],"w")
         w2 <- file(file.names[2],"w")
       }
-      
+
       #Write segments to file for this arm
       write.table(segments.c,file=w2,col.names=if(c==1) seg.names else FALSE,row.names=FALSE,quote=FALSE,sep="\t")
 			#Write estimated multiPCF-values file for this arm:
       write.table(data.frame(chrom[probe.c],pos.c,t(yhat),stringsAsFactors=FALSE), file = w1,col.names=if(c==1) mpcf.names else FALSE,row.names=FALSE,quote=FALSE,sep="\t")
-      
+
     }
-      
+
     #Append results for this arm:
     segments <- rbind(segments,segments.c)
     if(return.est){
       mpcf.est <- rbind(mpcf.est,t(yhat))
-    } 
+    }
 
   	if(verbose){
       cat(paste("multipcf finished for chromosome arm ",chr,a,sep=""),"\n")
     }
-    
+
   }#endfor
-	
+
 	#Close connections
 	if(isfile.data){
     close(f)
@@ -310,35 +310,35 @@ multipcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,gamma=40,normalize=TRUE
       close(f.y)
     }
   }
-  
+
   if(save.res){
     cat(paste("multipcf-estimates were saved in file",file.names[1]),sep="\n")
     close(w1)
     cat(paste("segments were saved in file",file.names[2]),sep="\n")
     close(w2)
-    
+
 	}
-	
+
   #return results:
 	if(return.est){
 	  mpcf.est <- data.frame(chrom,position,mpcf.est,stringsAsFactors=FALSE)
 	  colnames(mpcf.est) <- mpcf.names
 		return(list(estimates=mpcf.est,segments=segments))
 	}else{
-    return(segments) 
+    return(segments)
 	}
-	
-		
-	
+
+
+
 }#endfunction
 
 
 
-                                           
-#Run exact multipcf algorithm, to be called by multipcf (main function)                                             
+
+#Run exact multipcf algorithm, to be called by multipcf (main function)
 doMultiPCF <- function(y, gamma, yest) {
-  
-  ## y: input matrix of copy number estimates, samples in rows 
+
+  ## y: input matrix of copy number estimates, samples in rows
   ## gamma: penalty for discontinuities
  	## yest: logical, should estimates be returned
   N <- length(y)
@@ -372,11 +372,11 @@ doMultiPCF <- function(y, gamma, yest) {
 	bestAver[ ,1]<-y1
 	helper <- rep(1,nSamples)
 	## Solving for gradually longer arrays. Sum accumulates
-	## values for errors for righthand plateau downward from n;   
-	## this error added to gamma and the stored cost in bestCost 
-	## give the total cost. Cost stores the total cost for breaks 
-	## at any position below n, and which.min finds the position 
-	## with lowest cost (best split). Aver is the average of the 
+	## values for errors for righthand plateau downward from n;
+	## this error added to gamma and the stored cost in bestCost
+	## give the total cost. Cost stores the total cost for breaks
+	## at any position below n, and which.min finds the position
+	## with lowest cost (best split). Aver is the average of the
 	## righthand plateau.
 	for (n in 2:nProbes) {
    		Sum[ ,1:n] <- Sum[ ,1:n]+y[,n]
@@ -389,8 +389,8 @@ doMultiPCF <- function(y, gamma, yest) {
    		bestAver[ ,n] <- Aver[ ,Pos]
    		bestSplit[n] <- Pos-1
  	}
-	## The final solution is found iteratively from the sequence   
-	## of split positions stored in bestSplit and the averages 
+	## The final solution is found iteratively from the sequence
+	## of split positions stored in bestSplit and the averages
 	## for each plateau stored in bestAver
  	n <- nProbes
 	antInt <- 0
@@ -424,7 +424,7 @@ doMultiPCF <- function(y, gamma, yest) {
 }
 
 
-## Choose fast multipcf version, called by multipcf (main function)                                                   
+## Choose fast multipcf version, called by multipcf (main function)
 selectFastMultiPcf <- function(x,gamma,L,yest){
 	xLength <- nrow(x)
 	if (xLength< 1000) {
@@ -445,18 +445,18 @@ selectFastMultiPcf <- function(x,gamma,L,yest){
 
 
 # Fast version 1, for moderately long sequences, called by selectFastMultiPcf
-runFastMultiPCF <- function (x, gamma, L, frac1, frac2, yest) {   	
+runFastMultiPCF <- function (x, gamma, L, frac1, frac2, yest) {
   mark <- rep(0, nrow(x))
 	mark<-sawMarkM(x,L,frac1,frac2)
 	dense <- compactMulti(t(x), mark)
 	compPotts <- multiPCFcompact(dense$Nr, dense$Sum, gamma)
   if (yest) {
 		potts <- expandMulti(nrow(x),ncol(x), compPotts$Lengde,compPotts$mean)
-		return(list(pcf = potts, length = compPotts$Lengde, start0 = compPotts$sta, 
+		return(list(pcf = potts, length = compPotts$Lengde, start0 = compPotts$sta,
         		mean = compPotts$mean, nIntervals = compPotts$nIntervals))
 	} else {
-		return(list(length = compPotts$Lengde, start0 = compPotts$sta, 
-        		mean = compPotts$mean, nIntervals = compPotts$nIntervals))		
+		return(list(length = compPotts$Lengde, start0 = compPotts$sta,
+        		mean = compPotts$mean, nIntervals = compPotts$nIntervals))
 	}
 }
 
@@ -485,11 +485,11 @@ runMultiPcfSubset <- function(x,gamma,L,frac1,frac2,yest){
 	compPotts <- multiPCFcompact(compX$Nr,compX$Sum,gamma)
   if (yest) {
 		potts <- expandMulti(nrow(x),ncol(x), compPotts$Lengde,compPotts$mean)
-		return(list(pcf = potts, length = compPotts$Lengde, start0 = compPotts$sta, 
+		return(list(pcf = potts, length = compPotts$Lengde, start0 = compPotts$sta,
         		mean = compPotts$mean, nIntervals = compPotts$nIntervals))
 	} else {
-		return(list(length = compPotts$Lengde, start0 = compPotts$sta, 
-        		mean = compPotts$mean, nIntervals = compPotts$nIntervals))		
+		return(list(length = compPotts$Lengde, start0 = compPotts$sta,
+        		mean = compPotts$mean, nIntervals = compPotts$nIntervals))
 	}
 
 }
@@ -511,7 +511,7 @@ compactMulti <- function(y,mark){
 		while (mark[pos] < 1){
 			delSum <- delSum + y[,pos]
 			pos <- pos+1
-		}		
+		}
 		ant[count] <- pos-oldPos
 		sum[,count] <- delSum+y[,pos]
 		oldPos <- pos
@@ -526,7 +526,7 @@ compactMulti <- function(y,mark){
 # main calculations for fast multipcf-versions
 multiPCFcompact <- function(nr,sum,gamma) {
   ## nr,sum : numbers and sums for one analysis unit,
-  ## typically one chromosomal arm. Samples assumed to be in rows. 
+  ## typically one chromosomal arm. Samples assumed to be in rows.
   ## gamma: penalty for discontinuities
   N <- length(nr)
 	nSamples <- nrow(sum)
@@ -547,18 +547,18 @@ multiPCFcompact <- function(nr,sum,gamma) {
 	## Filling of first elements
 	Sum[ ,1]<-sum[,1]
 	Nevner[,1]<-nr[1]
-	bestSplit[1]<-0	
+	bestSplit[1]<-0
 	bestAver[,1] <- sum[,1]/nr[1]
 	helper <- rep(1, nSamples)
-	bestCost[1]<-helper%*%(-Sum[,1]*bestAver[,1])	
+	bestCost[1]<-helper%*%(-Sum[,1]*bestAver[,1])
   lengde <- rep(0,N)
 
 	## Solving for gradually longer arrays. Sum accumulates
-	## error values for righthand plateau downward from n;   
-	## this error added to gamma and the stored cost in bestCost 
-	## give the total cost. Cost stores the total cost for breaks 
-	## at any position below n, and which.min finds the position 
-	## with lowest cost (best split). Aver is the average of the 
+	## error values for righthand plateau downward from n;
+	## this error added to gamma and the stored cost in bestCost
+	## give the total cost. Cost stores the total cost for breaks
+	## at any position below n, and which.min finds the position
+	## with lowest cost (best split). Aver is the average of the
 	## righthand plateau.
 	for (n in 2:N) {
     Sum[ ,1:n] <- Sum[ ,1:n]+sum[,n]
@@ -575,8 +575,8 @@ multiPCFcompact <- function(nr,sum,gamma) {
 
  	}
 
-	## The final solution is found iteratively from the sequence   
-	## of split positions stored in bestSplit and the averages 
+	## The final solution is found iteratively from the sequence
+	## of split positions stored in bestSplit and the averages
 	## for each plateau stored in bestAver
 
  	n <- N
@@ -613,7 +613,7 @@ multiPCFcompact <- function(nr,sum,gamma) {
 # helper function for fast version 2
 markMultiPotts <- function(nr,sum,gamma,subsize) {
   ## nr,sum: numbers and sums for one analysis unit,
-  ##  typically one chromosomal arm. Samples assumed to be in rows. 
+  ##  typically one chromosomal arm. Samples assumed to be in rows.
   ## gamma: penalty for discontinuities
   N <- length(nr)
 	nSamples <- nrow(sum)
@@ -631,11 +631,11 @@ markMultiPotts <- function(nr,sum,gamma,subsize) {
 	Cost <- rep(0,N)
 	## Filling of first elements
 	Sum[ ,1]<-sum[,1]
-	Nevner[,1]<-nr[1]	
-	bestSplit[1]<-0	
+	Nevner[,1]<-nr[1]
+	bestSplit[1]<-0
 	bestAver[,1] <- sum[,1]/nr[1]
 	helper <- rep(1, nSamples)
-	bestCost[1]<-helper%*%(-Sum[,1]*bestAver[,1])	
+	bestCost[1]<-helper%*%(-Sum[,1]*bestAver[,1])
 	lengde <- rep(0,N)
 	for (n in 2:N) {
     Sum[ ,1:n] <- Sum[ ,1:n]+sum[,n]
@@ -665,7 +665,7 @@ findMarksMulti <- function(markSub,Nr,subsize){
 	mark <- rep(FALSE,subsize)  ## marks in original scale
 	if(sum(markSub)<1) {
     return(mark)
-  } else {	
+  } else {
 		N<-length(markSub)
 		ant <- seq(1:N)
 		help <- ant[markSub]
@@ -684,14 +684,14 @@ findMarksMulti <- function(markSub,Nr,subsize){
 		}
 		return(mark)
 	}
-	
+
 }
 
 
 ## expand compact solution
 expandMulti <- function(nProbes,nSamples,lengthInt, mean){
-  ##input: nr of probes, length of intervals, 
-  ## value in intervals; returns the expansion 
+  ##input: nr of probes, length of intervals,
+  ## value in intervals; returns the expansion
 
 	Potts <- rep(0,nProbes*nSamples)
 	dim(Potts) <- c(nSamples,nProbes)
@@ -703,11 +703,11 @@ expandMulti <- function(nProbes,nSamples,lengthInt, mean){
 			k <- k+1
 		}
 	}
-	return(Potts)	
+	return(Potts)
 }
 
-## sawtooth-filter for multiPCF - marks potential breakpoints. Uses two 
-## sawtoothfilters, one lang (length L) and one short (fixed length 6)	
+## sawtooth-filter for multiPCF - marks potential breakpoints. Uses two
+## sawtoothfilters, one lang (length L) and one short (fixed length 6)
 sawMarkM <- function(x,L,frac1,frac2){
 	nrProbes <- nrow(x)
  	nrSample <- ncol(x)
@@ -727,7 +727,7 @@ sawMarkM <- function(x,L,frac1,frac2){
 	}
 
 	for (l in 1:(nrProbes-2*L+1)){
-		for (m in 1:nrSample){	
+		for (m in 1:nrSample){
 			diff=crossprod(filter,x[l:(l+2*L-1),m])
 			sawValue[l+L-1]<-sawValue[l+L-1]+abs(diff)
 		}
@@ -739,7 +739,7 @@ sawMarkM <- function(x,L,frac1,frac2){
 		}
 	}
 	for (l in (L-1):(nrProbes-L-2)){
-		for (m in 1:nrSample){	
+		for (m in 1:nrSample){
 			diff2=crossprod(filter2,x[l:(l+5),m])
 			sawValue2[l+2]<-sawValue2[l+2]+abs(diff2)
 		}

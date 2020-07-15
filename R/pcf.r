@@ -1,10 +1,10 @@
 
 ####################################################################
-## Author: Gro Nilsen, Knut Liestøl and Ole Christian Lingjærde.
+## Author: Gro Nilsen, Knut Liest?l and Ole Christian Lingj?rde.
 ## Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 ## License: Artistic 2.0
 ## Part of the copynumber package
-## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
+## Reference: Nilsen and Liest?l et al. (2012), BMC Genomics
 ####################################################################
 
 
@@ -27,20 +27,20 @@
 ## Main function for pcf-analysis to be called by the user
 
 pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TRUE,fast=TRUE,assembly="hg19",digits=4,return.est=FALSE,save.res=FALSE,file.names=NULL,verbose=TRUE){
-   
+
   #Check pos.unit input:
   if(!pos.unit %in% c("bp","kbp","mbp")){
     stop("pos.unit must be one of bp, kbp and mbp",call.=FALSE)
   }
 
   #Check assembly input:
-  if(!assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
+  if(!assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9","hg38","mm10")){
     stop("assembly must be one of hg19, hg18, hg17 or hg16",call.=FALSE)
   }
-  
+
   #Is data a file:
   isfile.data <- class(data)=="character"
-  
+
   #Check data input:
   if(!isfile.data){
     #Input could come from winsorize and thus be a list; check and possibly retrieve data frame wins.data
@@ -51,7 +51,7 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
     position <- data[,2]
     nSample <- ncol(data)-2
     sampleid <- colnames(data)[-c(1:2)]
-    
+
   }else{
     #data is a datafile which contains data
     f <- file(data,"r")  #open file connection
@@ -67,18 +67,18 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
     chrom <- chrom.pos[,1]
     position <- chrom.pos[,2]
   }
-  
-  
+
+
   #Make sure chrom is not factor:
   if(is.factor(chrom)){
     #If chrom is factor; convert to character
     chrom <- as.character(chrom)
   }
-  
+
   #Make sure chromosomes are numeric (replace X and Y by 23 and 24)
   num.chrom <- numericChrom(chrom)
   nProbe <- length(num.chrom)
- 
+
   #Make sure position is numeric:
   if(!is.numeric(position)){
     stop("input in data column 2 (posistions) must be numeric",call.=FALSE)
@@ -94,7 +94,7 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
 	#Unique arms:
 	arm.list <- unique(num.arms)
 	nArm <- length(arm.list)
-	
+
   #Check Y input:
   if(!is.null(Y)){
     stopifnot(class(Y)%in%c("matrix","data.frame","character"))
@@ -113,8 +113,8 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
   }
 
   #save user's gamma
-	gamma0 <- gamma     
-	
+	gamma0 <- gamma
+
 	sd <- rep(1,nSample) #sd is only used if normalize=TRUE, and then these values are replaced by MAD-sd
 	#If number of probes in entire data set is less than 100K, the MAD sd-estimate is calculated using all obs for every sample
   #Only required if normalize=T
@@ -132,12 +132,12 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
       sd[j] <- getMad(sample.data[!is.na(sample.data)],k=25)   #Take out missing values before calculating mad
 		}
   }#endif
-  
-  
+
+
 	#Initialize
 	pcf.names <- c("chrom","pos",sampleid)
 	seg.names <- c("sampleID","chrom","arm","start.pos","end.pos","n.probes","mean")
-	
+
   segments <- data.frame(matrix(nrow=0,ncol=7))
   colnames(segments) <- seg.names
   if(return.est){
@@ -156,9 +156,9 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
       if(length(file.names)<2){
         stop("'file.names' must be of length 2", call.=FALSE)
       }
-    }  
-  } 
-  
+    }
+  }
+
   #estimates must be returned from routines if return.est or save.res
   yest <- any(return.est,save.res)
 
@@ -183,7 +183,7 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
       #two first columns are skipped
       arm.data <- read.table(f,nrows=length(probe.c),sep="\t",colClasses=c(rep("NULL",2),rep("numeric",nSample)))
     }
-    
+
     #Make sure data is numeric:
     if(any(!sapply(arm.data,is.numeric))){
       stop("input in data columns 3 and onwards (copy numbers) must be numeric",call.=FALSE)
@@ -200,85 +200,85 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
         stop("input in Y columns 3 and onwards (copy numbers) must be numeric",call.=FALSE)
       }
     }
-    
+
     #Run PCF separately for each sample:
     for(i in 1:nSample){
       sample.data <- arm.data[,i]
-      
+
 			#Remove probes with missing obs; Only run pcf on non-missing values
 			obs <- !is.na(sample.data)
 			obs.data <- sample.data[obs]
-		
+
 		  if(yest){
 			 #Initialize:
 			 yhat <- rep(NA,length(probe.c))
 			}
-			
+
       if(length(obs.data)>0){  ##Make sure there are observations on this arm, this sample! If not, estimates are left NA as well
-			
+
   			#If number of probes in entire data set is >= 100K, the MAD sd-estimate is calculated using obs in this arm for this sample.
-        #Only required if normalize=T 
+        #Only required if normalize=T
         if(nProbe>=100000 && normalize){
-          sd[i] <- getMad(obs.data,k=25)   
+          sd[i] <- getMad(obs.data,k=25)
         }
-      
-        #Scale gamma by variance if normalize is TRUE 
+
+        #Scale gamma by variance if normalize is TRUE
         use.gamma <- gamma0
         if(normalize){
           use.gamma <- gamma0*(sd[i])^2
         }
-        
+
     		#Must check that sd!=0 and sd!!=NA -> use.gamma=0/NA. If not, simply calculate mean of observations
-  			if(use.gamma==0 || is.na(use.gamma)){  
+  			if(use.gamma==0 || is.na(use.gamma)){
   			  if(yest){
             res <- list(Lengde=length(obs.data),sta=1,mean=mean(obs.data),nIntervals=1,yhat=rep(mean(obs.data)))
           }else{
             res <- list(Lengde=length(obs.data),sta=1,mean=mean(obs.data),nIntervals=1)
           }
-          
+
   			}else{
     			# Compute piecewise constant fit
     			#run fast approximate PCF if fast=TRUE and number of probes>400, or exact PCF otherwise
     			if(!fast || length(obs.data)<400){
-    				#Exact PCF:	
-    			 	res <- exactPcf(y=obs.data,kmin=kmin,gamma=use.gamma,yest=yest)	 			
+    				#Exact PCF:
+    			 	res <- exactPcf(y=obs.data,kmin=kmin,gamma=use.gamma,yest=yest)
     			}else{
             #Run fast PCF:
             res <- selectFastPcf(x=obs.data,kmin=kmin,gamma=use.gamma,yest=yest)
     			}#endif
-    			
-    			
+
+
   			}#endif
-  			
+
   			#Retrieve segment info from results:
   			seg.start <- res$sta
 			  seg.stop <- c(seg.start[-1]-1,length(obs.data))
 			  seg.npos <- res$Lengde
   			seg.mean <- res$mean
-  			nSeg <- res$nIntervals 
+  			nSeg <- res$nIntervals
         if(yest){
           yhat[obs] <- res$yhat
-        } 
+        }
         #Find genomic positions for start and stop of each segment:
 			  pos.start <- pos.c[obs][seg.start]        #pos.c[seg.start]   NOTE: THIS ERROR WAS CORRECTED 11/3-2013
 			  pos.stop <- pos.c[obs][seg.stop]          #pos.c[seg.stop]    NOTE: THIS ERROR WAS CORRECTED 11/3-2013
-  			
+
         #Handle missing values:
   			if(any(!obs)){
   			  #first find nearest non-missing neighbour for missing probes:
           nn <- findNN(pos=pos.c,obs=obs)
-       
+
           #Include probes with missing values in segments where their nearest neighbour probes are located
-          new.res <- handleMissing(nn=nn,pos=pos.c,obs=obs,pos.start=pos.start,pos.stop=pos.stop,seg.npos=seg.npos)  
+          new.res <- handleMissing(nn=nn,pos=pos.c,obs=obs,pos.start=pos.start,pos.stop=pos.stop,seg.npos=seg.npos)
           pos.start <- new.res$pos.start
           pos.stop <- new.res$pos.stop
           seg.npos <- new.res$seg.npos
-         
+
           if(yest){
             yhat[!obs] <- yhat[nn]
           }
   			}
-  			
+
 			}else{
 			  warning(paste("pcf is not run for sample ",i," on chromosome arm ",this.chrom,this.arm," because all observations are missing. NA is returned.",sep=""),immediate.=TRUE,call.=FALSE)
 			  seg.start <- 1
@@ -288,9 +288,9 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
 		    nSeg <- 1
 		    seg.mean <- NA
 		    seg.npos <- length(pos.c)
-		  }  
-			
-			
+		  }
+
+
       #Check if mean segment-value should be replaced by Y-values (possibly wins.data):
 			if(!is.null(Y)){
 				seg.mean <- rep(NA,nSeg)
@@ -305,8 +305,8 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
 			seg.mean <- round(seg.mean,digits=digits)
 			#Create table with relevant segment-information
 			seg.arm <- rep(this.arm,nSeg)
-      seg.chrom <- rep(this.chrom,nSeg) 
-			
+      seg.chrom <- rep(this.chrom,nSeg)
+
 			#Add results for this sample to results for other samples in data frame:
       seg <- data.frame(rep(sampleid[i],nSeg),seg.chrom,seg.arm,pos.start,pos.stop,seg.npos,seg.mean,stringsAsFactors=FALSE)
 			colnames(seg) <- seg.names
@@ -318,7 +318,7 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
         pcf.est.c <- cbind(pcf.est.c,yhat)
       }
     }#endfor
-    
+
 
     #Should results be written to files or returned to user:
     if(save.res){
@@ -329,23 +329,23 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
       }
       #Write estimated PCF-values file for this arm:
       write.table(data.frame(chrom[probe.c],pos.c,pcf.est.c,stringsAsFactors=FALSE), file = w1,col.names=if(c==1) pcf.names else FALSE,row.names=FALSE,quote=FALSE,sep="\t")
-		
+
       #Write segments to file for this arm
       write.table(segments.c,file=w2,col.names=if(c==1) seg.names else FALSE,row.names=FALSE,quote=FALSE,sep="\t")
     }
-    
-    
+
+
     #Append to results for other arms:
     segments <- rbind(segments,segments.c)
     if(return.est){
       pcf.est <- rbind(pcf.est,pcf.est.c)
     }
-      	
+
     if(verbose){
       cat(paste("pcf finished for chromosome arm ",this.chrom,this.arm,sep=""),"\n")
     }
  	}#endfor
-	
+
 	if(isfile.data){
     #Close connection
     close(f)
@@ -356,8 +356,8 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
       close(f.y)
     }
   }
-  
-	
+
+
 	if(save.res){
     close(w1)
     close(w2)
@@ -371,7 +371,7 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
 	}else{
 	 return(segments)
 	}
-	
+
 }#endfunction
 
 
@@ -385,7 +385,7 @@ exactPcf <- function(y, kmin=5, gamma, yest) {
 	## kmin: Mininal length of plateaus
 	## gamma: penalty for each discontinuity
 	## yest: logical, should estimates for each pos be returned
-	
+
   	N <- length(y)
   	yhat <- rep(0,N);
   	if (N < 2*kmin) {
@@ -447,7 +447,7 @@ exactPcf <- function(y, kmin=5, gamma, yest) {
 			antInt <- antInt+1
  		}
  	}
-	n <- N  
+	n <- N
 	lengde <- rep(0,antInt)
 	start <- rep(0,antInt)
 	verdi <- rep(0,antInt)
@@ -517,7 +517,7 @@ runPcfSubset <- function(x,kmin,gamma,frac1,frac2,yest){
 	markSub<-c(mark2[1:(start-1)],mark[start:antGen])
 	compX<-compact(x,markSub)
 	result <- PottsCompact(kmin,gamma,compX$Nr,compX$Sum,yest)
-  
+
   return(result)
 }
 
@@ -551,7 +551,7 @@ PottsCompact <- function(kmin, gamma, nr, res, yest) {
     Ant[2:k] <- Ant[2:k]+nr[k]
     Sum[2:k]<-Sum[2:k]+res[k]
     bestCost[k] <- (-(initSum+Sum[2])^2/(initAnt+Ant[2]))
-    k <- k+1	
+    k <- k+1
 	}
 	for (n in k:N) {
     Ant[2:n] <- Ant[2:n]+nr[n]
@@ -581,7 +581,7 @@ PottsCompact <- function(kmin, gamma, nr, res, yest) {
 
 # Accumulate information between potential breakpoints
 compact <- function(y,mark){
-  ## accumulates numbers of observations, sums and 
+  ## accumulates numbers of observations, sums and
   ## sums of squares between potential breakpoints
   ## y:  array to be compacted
   ## mark:  logical array of potential breakpoints
@@ -618,7 +618,7 @@ findEst <- function(bestSplit,N,Nr,Sum,yest){
 		startOrig[i+1] <- startOrig[i]+lengdeOrig[i]
 		verdi[i] <- sum(Sum[start[i]:(start[i+1]-1)])/lengdeOrig[i]
 	}
-	
+
 	if(yest){
 		yhat <- rep(0,startOrig[antInt+1]-1)
 		for (i in 1:antInt){
@@ -630,7 +630,7 @@ findEst <- function(bestSplit,N,Nr,Sum,yest){
 		startOrig <- startOrig[1:antInt]
 		return(list(Lengde=lengdeOrig,sta=startOrig,mean=verdi,nIntervals=antInt))
 	}
-	
+
 }
 
 
@@ -660,7 +660,7 @@ markWithPotts <- function(kmin, gamma, nr, res, subsize) {
     Ant[2:k] <- Ant[2:k]+nr[k]
     Sum[2:k]<-Sum[2:k]+res[k]
     bestCost[k] <- (-(initSum+Sum[2])^2/(initAnt+Ant[2]))
-		k <- k+1	
+		k <- k+1
  	}
  	for (n in k:N) {
     Ant[2:n] <- Ant[2:n]+nr[n]
@@ -684,14 +684,14 @@ markWithPotts <- function(kmin, gamma, nr, res, subsize) {
 }
 
 
-#Find breakpoints on original scale 
+#Find breakpoints on original scale
 findMarks <- function(markSub,Nr,subsize){
 	## markSub: marks in compressed scale
 	## NR: number of observations between potenstial breakpoints
 	mark <- rep(FALSE,subsize)  ## marks in original scale
 	if(sum(markSub)<1) {
     return(mark)
-  } else {	
+  } else {
 		N <- length(markSub)
 		ant <- seq(1:N)
 		help <- ant[markSub]
@@ -725,7 +725,7 @@ filterMarkS4 <- function(x,kmin,L,L2,frac1,frac2,frac3,thres){
 	ind13 <- ind11+3*L
 	ind14 <- ind11+5*L
 	ind15 <- ind11+6*L
-	cost1 <- abs(4*xc[ind13]-xc[ind11]-xc[ind12]-xc[ind14]-xc[ind15])	
+	cost1 <- abs(4*xc[ind13]-xc[ind11]-xc[ind12]-xc[ind14]-xc[ind15])
 	cost1 <- c(rep(0,3*L-1),cost1,rep(0,3*L))
 	##mark shortening in here
 	in1 <- 1:(lengdeArr-6)
@@ -740,9 +740,9 @@ filterMarkS4 <- function(x,kmin,L,L2,frac1,frac2,frac3,thres){
 	cost1B <- cost1[cost1>=thres*test]
 	frac1B <- min(0.8,frac1*length(cost1)/length(cost1B))
 	limit <- quantile(cost1B,(1-frac1B),names=FALSE)
-	mark <- (cost1>limit)&(cost1>0.9*test)	
-	
-	
+	mark <- (cost1>limit)&(cost1>0.9*test)
+
+
 	ind21 <- 1:(lengdeArr-6*L2+1)
 	ind22 <- ind21+L2
 	ind23 <- ind21+3*L2
@@ -791,7 +791,7 @@ filterMarkS4 <- function(x,kmin,L,L2,frac1,frac2,frac3,thres){
 		mark[kmin:(3*L-1)] <- TRUE
 		mark[(lengdeArr-3*L+1):(lengdeArr-kmin)] <- TRUE
 		mark[(lengdeArr-kmin+1):(lengdeArr-1)] <- FALSE
-		mark[lengdeArr] <- TRUE	
+		mark[lengdeArr] <- TRUE
 	}else{
 		mark[1:(kmin-1)] <- FALSE
 		mark[(lengdeArr-kmin+1):(lengdeArr-1)] <- FALSE
