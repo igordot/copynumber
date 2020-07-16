@@ -2,6 +2,8 @@
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/igordot/copynumber.svg?branch=master)](https://travis-ci.org/igordot/copynumber)
+![R-CMD-check](https://github.com/igordot/copynumber/workflows/R-CMD-check/badge.svg)
+![R-CMD-check-bioc](https://github.com/igordot/copynumber/workflows/R-CMD-check-bioc/badge.svg)
 <!-- badges: end -->
 
 This is an updated version of the [copynumber](http://bioconductor.org/packages/release/bioc/html/copynumber.html) R package. It has been modified to support the human hg38 and mouse mm10 genome builds (`assembly` parameter in `aspcf`, `multipcf`, `pcf`, and `winsorize` functions).
