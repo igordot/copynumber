@@ -1,5 +1,9 @@
 # copynumber with hg38 and mm10
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.com/igordot/copynumber.svg?branch=master)](https://travis-ci.org/igordot/copynumber)
+<!-- badges: end -->
+
 This is an updated version of the [copynumber](http://bioconductor.org/packages/release/bioc/html/copynumber.html) R package. It has been modified to support the human hg38 and mouse mm10 genome builds (`assembly` parameter in `aspcf`, `multipcf`, `pcf`, and `winsorize` functions).
 
 You can install the package from GitHub with:
