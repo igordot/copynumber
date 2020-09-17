@@ -1,7 +1,7 @@
 # copynumber with hg38 and mm10
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/igordot/copynumber.svg?branch=master)](https://travis-ci.org/igordot/copynumber)
+[![Travis build status](https://travis-ci.com/igordot/copynumber.svg?branch=master)](https://travis-ci.com/igordot/copynumber)
 ![R-CMD-check](https://github.com/igordot/copynumber/workflows/R-CMD-check/badge.svg)
 <!-- badges: end -->
 
