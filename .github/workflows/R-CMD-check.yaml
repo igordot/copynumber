@@ -23,7 +23,8 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: '3.0'}
+          # some dependencies may require a more recent minimum version
+          - {os: ubuntu-latest,   r: '3.6'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -48,4 +49,4 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          build_args: 'c("--no-manual","--no-build-vignettes")'
+          build_args: 'c("--no-manual","--ignore-vignettes")'
