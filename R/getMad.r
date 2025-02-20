@@ -1,40 +1,39 @@
 ####################################################################
-## Author: Gro Nilsen, Knut Liestøl and Ole Christian Lingjærde.
+## Author: Gro Nilsen, Knut LiestÃ¸l and Ole Christian LingjÃ¦rde.
 ## Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 ## License: Artistic 2.0
 ## Part of the copynumber package
-## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
+## Reference: Nilsen and LiestÃ¸l et al. (2012), BMC Genomics
 ####################################################################
 
-#Get mad SD-estimate
+# Get mad SD-estimate
 
-##Input:
+## Input:
 ### x: vector of observations for which mad Sd is to be calculated
 ### k: window size to be used in median filtering
 
-##Output:
+## Output:
 ### SD: mad sd estimate
 
-##Required by:
+## Required by:
 ### multipcf
 ### pcf
 ### aspcf
 
 
-##Requires:
+## Requires:
 ### medianFilter
 
 
-getMad <- function(x,k=25){
-  
-  #Remove observations that are equal to zero; are likely to be imputed, should not contribute to sd:
-  x <- x[x!=0]
-  
-  #Calculate runMedian  
-  runMedian <- medianFilter(x,k)
-  
-  dif <- x-runMedian
+getMad <- function(x, k = 25) {
+  # Remove observations that are equal to zero; are likely to be imputed, should not contribute to sd:
+  x <- x[x != 0]
+
+  # Calculate runMedian
+  runMedian <- medianFilter(x, k)
+
+  dif <- x - runMedian
   SD <- mad(dif)
- 
-	return(SD)
+
+  return(SD)
 }

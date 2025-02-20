@@ -85,28 +85,28 @@ data(lymphoma)
 @
 The data set has chromosomes and probe positions in the two first columns, and the copy number measurements for 21 samples in the subsequent columns. In this example we will only use a subset containing the first 3 samples, which corresponds to three biopsies from one patient taken at different time points. We can use the function \verb subsetData  to retrieve the desired data subset:
 <<>>=
-sub.lymphoma <- subsetData(data=lymphoma,sample=1:3) 
-sub.lymphoma[1:10,]
+sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
+sub.lymphoma[1:10, ]
 @
 
 Next we identify and modify outliers by the function \verb winsorize : 
 <<>>=
-lymph.wins <- winsorize(data=sub.lymphoma,verbose=FALSE)
+lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
 @
 The parameter \verb verbose=FALSE  just keeps the function from printing a progress message each time the analysis is finished for a new chromosome arm. The primary output from \verb winsorize  is then a new data frame (\verb lymph.wins ) on the same format as the input data where the sample columns now contain the Winsorized data values:
 <<>>=
-lymph.wins[1:10,]
+lymph.wins[1:10, ]
 @ 
 In addition, if the parameter \verb return.outliers  is set to \verb TRUE , the method also returns a data frame which shows which observations have been classified as outliers:
 <<>>=
-wins.res <- winsorize(data=sub.lymphoma,return.outliers=TRUE,verbose=FALSE)
-wins.res$wins.outliers[1:10,]
+wins.res <- winsorize(data = sub.lymphoma, return.outliers = TRUE, verbose = FALSE)
+wins.res$wins.outliers[1:10, ]
 @
 The values 1 and -1 indicate outliers, reflecting that the original observation has been truncated to a smaller and higher value, respectively. The value 0 indicates that the observation is not an outlier and that the Winsorized value is identical to the original value. Note that one may obtain the winsorized data values in this setting by \verb wins.res$wins.data .
 
 Next we want to fit segmentation curves to each of the samples in our data using the function \verb pcf . When Winsorization has been done, the Winsorized data should be the input (if one wants the segment values to equal the means of the observed data instead of the Winsorized data, one may in addition give the original data as input via the parameter \verb Y=sub.lymphoma  ). The penalty parameter \verb gamma  is in this case set to 12 to achieve high sensitivity on these low-resolution data. 
 <<>>=
-single.seg <- pcf(data=lymph.wins,gamma=12,verbose=FALSE)
+single.seg <- pcf(data = lymph.wins, gamma = 12, verbose = FALSE)
 @
 
 The default output of \verb pcf  is a data frame with 7 columns giving information about each segment found in the data. SampleIDs are given in the first column. Below we see the first six segments found in the subset of lymphoma samples:
@@ -121,7 +121,7 @@ png("plotGenome.png", width = 900, height = 500)
 @
 
 <<label=plotGenome>>=
-plotGenome(data=sub.lymphoma,segments=single.seg,sample=1,cex=3) 
+plotGenome(data = sub.lymphoma, segments = single.seg, sample = 1, cex = 3)
 @
 
 <<label=genomeClose, echo=FALSE>>=
@@ -144,7 +144,7 @@ png("plotSample.png", width = 900, height = 700)
 @
 
 <<label=plotSample>>=
-plotSample(data=sub.lymphoma,segments=single.seg,layout=c(5,5),sample=1,cex=3)
+plotSample(data = sub.lymphoma, segments = single.seg, layout = c(5, 5), sample = 1, cex = 3)
 @
 
 <<label=sampleClose, echo=FALSE>>=
@@ -163,18 +163,18 @@ null <- dev.off()
 \subsection{Multi-sample segmentation}
 In the second example we illustrate multi-sample segmentation using the function \verb multipcf  on the three successive biopsies for sample X01. Input parameters and the output is similar to that of \verb pcf , but the data frame holding the segmentation results now have common rows for all samples since they all have common segment boundaries:
 <<>>=
-multi.seg <- multipcf(data=lymph.wins,verbose=FALSE)
+multi.seg <- multipcf(data = lymph.wins, verbose = FALSE)
 head(multi.seg)
 @
 
 To compare the segmentation results between samples we may use the function \verb plotChrom. Here data and segments are plotted for one chromosome with samples in different panels, as illustrated in Figure \ref{fig:chromPlot}. 
 
 <<label=chromFile, echo=FALSE>>=
-png("chromPlot.png", width = 480, height=480)
+png("chromPlot.png", width = 480, height = 480)
 @
 
 <<label=chromPlot>>=
-plotChrom(data=lymph.wins,segments=multi.seg,layout=c(3,1),chrom=1)
+plotChrom(data = lymph.wins, segments = multi.seg, layout = c(3, 1), chrom = 1)
 @
 
 <<label=chromClose, echo=FALSE>>=
@@ -199,12 +199,12 @@ data(BAF)
 @
 We start by Winsorizing the LogR data:
 <<>>=
-logR.wins <- winsorize(logR,verbose=FALSE)
+logR.wins <- winsorize(logR, verbose = FALSE)
 @ 
 The function \verb aspcf  will perform the allele-specific segmentation, taking both (Winsorized) LogR data and BAF data as input:
 <<>>=
-allele.seg <- aspcf(logR.wins,BAF,verbose=FALSE)
-head(allele.seg) 
+allele.seg <- aspcf(logR.wins, BAF, verbose = FALSE)
+head(allele.seg)
 @
 Note that the output is similar to that of \verb pcf , except for an extra 8'th column giving the segment BAF-values. 
 
@@ -215,7 +215,7 @@ png("plotAllele.png", width = 800, height = 500)
 @
 
 <<label=chromPlot>>=
-plotAllele(logR,BAF,allele.seg,sample=1,chrom=c(1:4),layout=c(2,2))
+plotAllele(logR, BAF, allele.seg, sample = 1, chrom = c(1:4), layout = c(2, 2))
 @
 
 <<label=aspcfClose, echo=FALSE>>=
@@ -235,7 +235,7 @@ null <- dev.off()
 \subsubsection{Frequency plot}
 A useful graphical tool is \verb plotFreq , where we plot the frequency of samples in the data set with a gain or a loss at a genomic position. In this example we use \verb pcf  to obtain copy number estimates for the entire lymphoma data set:
 <<>>=
-lymphoma.res <- pcf(data=lymphoma,gamma=12,verbose=FALSE)
+lymphoma.res <- pcf(data = lymphoma, gamma = 12, verbose = FALSE)
 @
 Gains and losses will be regions where the copy number estimate is above or below some defined thresholds specified by the parameters \verb thres.gain  and \verb thres.loss  , respectively.
 
@@ -244,7 +244,7 @@ png("freqPlot.png", width = 800, height = 400)
 @
 
 <<label=freqPlot>>=
-plotFreq(segments=lymphoma.res,thres.gain=0.2,thres.loss=-0.1)
+plotFreq(segments = lymphoma.res, thres.gain = 0.2, thres.loss = -0.1)
 @
 
 <<label=freqClose, echo=FALSE>>=
@@ -267,12 +267,12 @@ A similar plotting routine is \verb plotCircle  which also shows the aberration 
 Below, we assume that \verb multipcf  has been run on the \verb lymphoma  data, and we have calculated the interchromosomal correlations between all segment pairs (see the help file for \verb plotCircle  for details). Say strong positive correlations were found between a segment with middle position 168754669 on chromosome 2 and a segment with middle position 61475398 on chromosome 14, as well as between a segment with middle position 847879349 on chromosome 12 and a segment with middle position 30195556 on chromosome 21. In addition, a strong negative correlation was found between a segment with middle position 121809306 on chromosome 4 and a segment with middle position 12364465 on chromosome 17. 
 Having found the location of the associations we want to visualize we can then define the matrix \verb arcs  holding the chromosome number and position of a segment in the first two columns, and the chromsome number and position of the associated segment in the next two columns. The fifth column identifies positive correlations and negative correlations as class 1 and 2, respectively:
 <<>>=
-chr.from <- c(2,12,4)
-pos.from <- c(168754669,847879349,121809306)
-chr.to <- c(14,21,17)
-pos.to <- c(6147539,301955563,12364465)
-cl <- c(1,1,2)
-arcs <- cbind(chr.from,pos.from,chr.to,pos.to,cl)  
+chr.from <- c(2, 12, 4)
+pos.from <- c(168754669, 847879349, 121809306)
+chr.to <- c(14, 21, 17)
+pos.to <- c(6147539, 301955563, 12364465)
+cl <- c(1, 1, 2)
+arcs <- cbind(chr.from, pos.from, chr.to, pos.to, cl)
 @
 Figure \ref{fig:circlePlot} shows a circle plot. The gain frequencies are shown in red, while loss frequencies are shown in green. In addition, the orange and blue arcs connect the segments which were found to have high positive and negative correlations, respectively.
     
@@ -281,7 +281,7 @@ png("circlePlot.png", width = 600, height = 600)
 @
 
 <<label=circlePlot>>=
-plotCircle(segments=lymphoma.res,thres.gain=0.15,arcs=arcs) 
+plotCircle(segments = lymphoma.res, thres.gain = 0.15, arcs = arcs)
 @
 
 <<label=circleClose, echo=FALSE>>=
@@ -308,7 +308,7 @@ png("plotHeatmap.png", width = 800, height = 400)
 @
 
 <<label=plotHeatmap>>=
-plotHeatmap(segments=lymphoma.res,upper.lim=0.3)
+plotHeatmap(segments = lymphoma.res, upper.lim = 0.3)
 @
 
 <<label=heatClose, echo=FALSE>>=
@@ -331,7 +331,7 @@ png("plotAberration.png", width = 800, height = 400)
 @
 
 <<label=plotAberration>>=
-plotAberration(segments=lymphoma.res,thres.gain=0.2)
+plotAberration(segments = lymphoma.res, thres.gain = 0.2)
 @
 
 <<label=aberrationClose, echo=FALSE>>=
@@ -356,7 +356,7 @@ png("plotGamma.png", width = 800, height = 600)
 
 <<label=plotGamma>>=
 data(micma)
-plotGamma(micma,chrom=17,cex=3)
+plotGamma(micma, chrom = 17, cex = 3)
 @
 
 <<label=gammaClose, echo=FALSE>>=

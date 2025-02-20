@@ -1,47 +1,46 @@
 ####################################################################
-## Author: Gro Nilsen, Knut Liestøl and Ole Christian Lingjærde.
+## Author: Gro Nilsen, Knut LiestÃ¸l and Ole Christian LingjÃ¦rde.
 ## Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 ## License: Artistic 2.0
 ## Part of the copynumber package
-## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
+## Reference: Nilsen and LiestÃ¸l et al. (2012), BMC Genomics
 ####################################################################
 
 
 # Function to calculate running median for a given a window size
 
-##Input:
+## Input:
 ### x: vector of numeric values
 ### k: window size to be used for the sliding window (actually half-window size)
 
 ## Output:
 ### runMedian : the running median corresponding to each observation
 
-##Required by:
+## Required by:
 ### getMad
 ### medianFilter
 
 
-##Requires:
+## Requires:
 ### none
 
-medianFilter <- function(x,k){
+medianFilter <- function(x, k) {
   n <- length(x)
-  filtWidth <- 2*k + 1
-  
-  #Make sure filtWidth does not exceed n
-  if(filtWidth > n){
-    if(n==0){
+  filtWidth <- 2 * k + 1
+
+  # Make sure filtWidth does not exceed n
+  if (filtWidth > n) {
+    if (n == 0) {
       filtWidth <- 1
-    }else if(n%%2 == 0){
-      #runmed requires filtWidth to be odd, ensure this:
+    } else if (n %% 2 == 0) {
+      # runmed requires filtWidth to be odd, ensure this:
       filtWidth <- n - 1
-    }else{
+    } else {
       filtWidth <- n
     }
   }
-  
-  runMedian <- runmed(x,k=filtWidth,endrule="median")
+
+  runMedian <- runmed(x, k = filtWidth, endrule = "median")
 
   return(runMedian)
-
 }
