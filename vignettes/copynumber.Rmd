@@ -1,6 +1,5 @@
 ---
 title: "An overview of the copynumber package"
-author: "Gro Nilsen"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -17,6 +16,8 @@ knitr::opts_chunk$set(fig.align = "center")
 ## Introduction
 
 This document gives an overview and demonstration of the `copynumber` package, which provides tools for the segmentation and visualization of copy number data. In the analysis of such data a goal is to detect and locate areas of the genome with copy number abberations. This may help identify genes that are critical to the development and progression of cancer. To locate areas or segments of equal copy numbers, our methods make *Piecewise Constant Fits* to the data through penalized least squares minimization (Nilsen et al., 2012). That is, piecewise constant curves are fitted to the data by minimizing the distance between the curve and the observed data, while imposing a penalty for each discontinuity in the curve. Segmentation may be done on a single sample, simultaneously on several samples or simultaneously on different data tracks.
+
+This is a fork of the archived Bioconductor package, adding support for more recent genome builds. See the [GitHub repository](https://github.com/igordot/copynumber) for source and issues.
 
 ## Overview
 
