@@ -23,8 +23,8 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          # R 3.6 has no build for ubuntu-latest (24.04)
-          - {os: ubuntu-22.04,   r: '3.6'}
+          # R 4.0 is the oldest version on this runner
+          - {os: ubuntu-latest,   r: '4.0'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
