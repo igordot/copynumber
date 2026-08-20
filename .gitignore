@@ -18,6 +18,13 @@ vignettes/*.html
 vignettes/*.pdf
 vignettes/*.md
 vignettes/*.R
+# Sweave/LaTeX build byproducts (from vignettes/*.rnw)
+vignettes/*.tex
+vignettes/*.aux
+vignettes/*.log
+vignettes/*.toc
+vignettes/*.t2d/
+vignettes/*.png
 inst/doc
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
