@@ -26,8 +26,6 @@
 ###  pcf
 ### pullOutContent
 
-
-
 imputeMissing <- function(data, method, c = 0, pcf.est = NULL, ...) {
   # Check input
   # First check if data comes from winsorize, and if so make sure it is a data frame
@@ -39,7 +37,8 @@ imputeMissing <- function(data, method, c = 0, pcf.est = NULL, ...) {
     stop("method must be one of 'constant' and 'pcf'", call. = FALSE)
   }
 
-  imp.data <- switch(method,
+  imp.data <- switch(
+    method,
     constant = imp.constant(data, c),
     pcf = imp.pcf(data, yhat = pcf.est, ...)
   )
@@ -67,7 +66,10 @@ imp.pcf <- function(data, yhat, ...) {
     # Run pcf:
     s <- apply(na, 2, any) # find samples with missing values
     if (any(s[1:2] == TRUE)) {
-      stop("missing values are not allowed in data columns 1 and 2", call. = FALSE)
+      stop(
+        "missing values are not allowed in data columns 1 and 2",
+        call. = FALSE
+      )
     }
     pcf.res <- pcf(data = data[, c(1:2, which(s))], return.est = TRUE, ...) # Only run PCF on samples with missing values
     # Make sure yhat is the same size as cn.data to maintain location of na

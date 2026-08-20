@@ -3,7 +3,11 @@ getGRangesFormat <- function(segments) {
   if (!is.multiseg(segments)) {
     gr <- GRanges(
       seqnames = segments$chrom,
-      ranges = IRanges(start = segments$start.pos, end = segments$end.pos, names = segments$sampleID)
+      ranges = IRanges(
+        start = segments$start.pos,
+        end = segments$end.pos,
+        names = segments$sampleID
+      )
     )
     mcols(gr) <- DataFrame(segments[, c(3, 6:nc)])
   } else {

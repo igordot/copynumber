@@ -15,7 +15,6 @@
 ### segments: a list containing one or more segmentations
 ### type: plot type (sample,chromosome,aspcf)
 
-
 ## Output:
 ### use.chrom : a vector of unique selected chromosomes to be plotted
 
@@ -37,7 +36,6 @@ checkChrom <- function(data, segments, chrom) {
   if (!is.null(segments)) {
     all.chrom <- sapply(segments, "[", i = 2) # returns a list with chromsome numbers for each segmentation
     seg.chrom <- lapply(all.chrom, unique)
-
 
     # Find common chromosomes in data and all segmentations:
     i <- 1

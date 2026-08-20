@@ -6,7 +6,6 @@
 ## Reference: Nilsen and Liest?l et al. (2012), BMC Genomics
 ####################################################################
 
-
 # Function that detects and modifies outliers by winsorization
 
 ## Input:
@@ -28,10 +27,8 @@
 ### wins.data :a matrix with chromosomes numbers in the first column, probe positions in the second and the winsorized copy number values for the sample(s) in subsequent column(s)
 ### outliers : a matrix with chromosome numbers in the first column, probe positions in the second and outlier statuses for each sample in the subsequent column(s). The values +/- 1 indicate that the observation is an outlier, whereas the value 0 indicates that it is not
 
-
 ## Required by:
 ### plotGamma
-
 
 ## Requires:
 ### getArms
@@ -40,7 +37,22 @@
 ### pcf (exactPcf)
 ### medianFilter
 
-winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 2.5, k = 25, gamma = 40, iter = 1, assembly = "hg19", digits = 4, return.outliers = FALSE, save.res = FALSE, file.names = NULL, verbose = TRUE) {
+winsorize <- function(
+  data,
+  pos.unit = "bp",
+  arms = NULL,
+  method = "mad",
+  tau = 2.5,
+  k = 25,
+  gamma = 40,
+  iter = 1,
+  assembly = "hg19",
+  digits = 4,
+  return.outliers = FALSE,
+  save.res = FALSE,
+  file.names = NULL,
+  verbose = TRUE
+) {
   # Check pos.unit input:
   stopifnot(pos.unit %in% c("bp", "kbp", "mbp"))
 
@@ -48,7 +60,10 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
   stopifnot(method %in% c("mad", "pcf"))
 
   # Check assembly input:
-  if (!assembly %in% c("hg19", "hg18", "hg17", "hg16", "mm7", "mm8", "mm9", "hg38", "mm10")) {
+  if (
+    !assembly %in%
+      c("hg19", "hg18", "hg17", "hg16", "mm7", "mm8", "mm9", "hg38", "mm10")
+  ) {
     stop("assembly must be one of hg19, hg18, hg17 or hg16", call. = FALSE)
   }
 
@@ -77,7 +92,13 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
     nSample <- length(sample.names)
 
     # Read just the two first columns to get chrom and pos
-    chrom.pos <- read.table(file = data, sep = "\t", header = TRUE, colClasses = c(rep(NA, 2), rep("NULL", nSample)), as.is = TRUE) # chromosomes could be character or numeric
+    chrom.pos <- read.table(
+      file = data,
+      sep = "\t",
+      header = TRUE,
+      colClasses = c(rep(NA, 2), rep("NULL", nSample)),
+      as.is = TRUE
+    ) # chromosomes could be character or numeric
     chrom <- chrom.pos[, 1]
     pos <- chrom.pos[, 2]
   }
@@ -102,7 +123,10 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
     arms <- getArms(num.chrom, pos, pos.unit, get(assembly))
   } else {
     if (length(arms) != nProbe) {
-      stop("'arms' must be the same length as number of rows in data", call. = FALSE)
+      stop(
+        "'arms' must be the same length as number of rows in data",
+        call. = FALSE
+      )
     }
   }
   # Translate to numeric arms:
@@ -124,7 +148,10 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
         # Create folder in working directory where results are saved:
         dir.create(dir.res)
       }
-      file.names <- c(paste(dir.res, "/", "wins.data.txt", sep = ""), paste(dir.res, "/", "wins.outliers.txt", sep = ""))
+      file.names <- c(
+        paste(dir.res, "/", "wins.data.txt", sep = ""),
+        paste(dir.res, "/", "wins.outliers.txt", sep = "")
+      )
     } else {
       # Check that file.names is the correct length
       if (length(file.names) < 2) {
@@ -132,8 +159,6 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
       }
     }
   } # endif
-
-
 
   # Run Winsorization separately on the chromosomearms:
   for (c in 1:nArm) {
@@ -150,12 +175,20 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
     } else {
       # Read data for this arm from file; since f is a opened connection, the reading will start on the next line which has not already been read
       # two first columns are skipped
-      arm.data <- read.table(f, nrows = length(probe.c), sep = "\t", colClasses = c(rep("NULL", 2), rep("numeric", nSample)))
+      arm.data <- read.table(
+        f,
+        nrows = length(probe.c),
+        sep = "\t",
+        colClasses = c(rep("NULL", 2), rep("numeric", nSample))
+      )
     }
     # Make sure data is numeric:
     if (any(!sapply(arm.data, is.numeric))) {
       # arm.data = sapply(arm.data,as.numeric)}
-      stop("input in data columns 3 and onwards (copy numbers) must be numeric", call. = FALSE)
+      stop(
+        "input in data columns 3 and onwards (copy numbers) must be numeric",
+        call. = FALSE
+      )
     }
 
     # Run winsorization independently on each sample:
@@ -172,9 +205,17 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
       outliers <- rep(NA, length(y))
 
       # Do winsorization
-      wins <- switch(method,
+      wins <- switch(
+        method,
         mad = madWins(use.y, tau = tau, k = k, digits = digits),
-        pcf = pcfWins(use.y, tau = tau, k = k, gamma = gamma, iter = iter, digits = digits)
+        pcf = pcfWins(
+          use.y,
+          tau = tau,
+          k = k,
+          gamma = gamma,
+          iter = iter,
+          digits = digits
+        )
       )
       ywins[!na] <- wins$ywin
       outliers[!na] <- wins$outliers
@@ -202,15 +243,42 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
         wd <- file(file.names[1], "w")
         wo <- file(file.names[2], "w")
       }
-      write.table(data.frame(chrom[probe.c], pos[probe.c], wins.data.c, stringsAsFactors = FALSE), file = wd, col.names = if (c == 1) c("chrom", "pos", sample.names) else FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+      write.table(
+        data.frame(
+          chrom[probe.c],
+          pos[probe.c],
+          wins.data.c,
+          stringsAsFactors = FALSE
+        ),
+        file = wd,
+        col.names = if (c == 1) c("chrom", "pos", sample.names) else FALSE,
+        row.names = FALSE,
+        quote = FALSE,
+        sep = "\t"
+      )
 
-      write.table(data.frame(chrom[probe.c], pos[probe.c], wins.outliers.c, stringsAsFactors = FALSE), file = wo, col.names = if (c == 1) c("chrom", "pos", sample.names) else FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+      write.table(
+        data.frame(
+          chrom[probe.c],
+          pos[probe.c],
+          wins.outliers.c,
+          stringsAsFactors = FALSE
+        ),
+        file = wo,
+        col.names = if (c == 1) c("chrom", "pos", sample.names) else FALSE,
+        row.names = FALSE,
+        quote = FALSE,
+        sep = "\t"
+      )
     }
 
     if (verbose) {
       chr <- unique(chrom[probe.c])
       a <- unique(arms[probe.c])
-      cat(paste("winsorize finished for chromosome arm ", chr, a, sep = ""), "\n")
+      cat(
+        paste("winsorize finished for chromosome arm ", chr, a, sep = ""),
+        "\n"
+      )
     }
   } # endfor
 
@@ -222,7 +290,12 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
     wins.data <- data.frame(chrom, pos, wins.data, stringsAsFactors = FALSE)
     colnames(wins.data) <- c("chrom", "pos", sample.names)
     if (return.outliers) {
-      wins.outliers <- data.frame(chrom, pos, wins.outliers, stringsAsFactors = FALSE)
+      wins.outliers <- data.frame(
+        chrom,
+        pos,
+        wins.outliers,
+        stringsAsFactors = FALSE
+      )
       colnames(wins.outliers) <- c("chrom", "pos", sample.names)
       return(list(wins.data = wins.data, wins.outliers = wins.outliers))
     } else {
@@ -239,7 +312,6 @@ winsorize <- function(data, pos.unit = "bp", arms = NULL, method = "mad", tau = 
 } # end winsorize
 
 
-
 # Perform MAD winsorization:
 madWins <- function(x, tau, k, digits) {
   xhat <- medianFilter(x, k)
@@ -254,7 +326,6 @@ madWins <- function(x, tau, k, digits) {
 }
 
 
-
 # PCF winsorization:
 
 pcfWins <- function(x, tau, k, gamma, iter, digits) {
@@ -265,9 +336,19 @@ pcfWins <- function(x, tau, k, gamma, iter, digits) {
     z <- tau * sdev
     xwin <- xhat + pmax(pmin(d, z), -z)
     if (length(x) < 400) {
-      xhat <- exactPcf(y = xwin, gamma = gamma * sdev^2, kmin = 5, yest = TRUE)$yhat
+      xhat <- exactPcf(
+        y = xwin,
+        gamma = gamma * sdev^2,
+        kmin = 5,
+        yest = TRUE
+      )$yhat
     } else {
-      xhat <- selectFastPcf(x = xwin, gamma = gamma * sdev^2, kmin = 5, yest = TRUE)$yhat
+      xhat <- selectFastPcf(
+        x = xwin,
+        gamma = gamma * sdev^2,
+        kmin = 5,
+        yest = TRUE
+      )$yhat
     }
   }
   sdev <- mad(xwin - xhat)

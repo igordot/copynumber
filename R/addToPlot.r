@@ -11,8 +11,6 @@
 ### op: other plot parameters
 ### type: plot type; genome, sample, chromosome or aspcf
 
-
-
 ## Required by:
 ### plotObs
 ### plotSegments
@@ -25,12 +23,26 @@
 addToPlot <- function(plot.ideo, op, type) {
   if (!plot.ideo && type != "genome") {
     # Labels along xaxis
-    axis(side = 1, cex.axis = op$cex.axis, at = op$at.x, labels = as.integer(op$at.x), mgp = op$mgp, tcl = op$tcl)
+    axis(
+      side = 1,
+      cex.axis = op$cex.axis,
+      at = op$at.x,
+      labels = as.integer(op$at.x),
+      mgp = op$mgp,
+      tcl = op$tcl
+    )
   } else {
     # No labels
     axis(side = 1, labels = FALSE, tcl = 0, at = op$xlim)
   }
-  axis(side = 2, cex.axis = op$cex.axis, at = op$at.y, mgp = op$mgp.y, las = op$las, tcl = op$tcl)
+  axis(
+    side = 2,
+    cex.axis = op$cex.axis,
+    at = op$at.y,
+    mgp = op$mgp.y,
+    las = op$las,
+    tcl = op$tcl
+  )
 
   # x- and y-lab
   mtext(text = op$xlab, side = 1, line = op$mgp[1], cex = op$cex.lab)

@@ -44,18 +44,16 @@ getArmandChromStop <- function(cyto.data, unit) {
 
   # Get p-arm stopping positions:
   arm.char <- substring(cyto.data[, 4], 1, 1) # Retrive first character in name which identifies p and q arms
-  arm.stop <- which(arm.char[1:length(arm.char) - 1] != arm.char[2:length(arm.char)])
+  arm.stop <- which(
+    arm.char[1:length(arm.char) - 1] != arm.char[2:length(arm.char)]
+  )
   p.stop <- arm.stop[-which(arm.stop %in% chrom.stop)] # Remove qstops
 
   pos.chromstop <- cyto.data[chrom.stop, 3] # Local stopping position for each chromosome
   pos.pstop <- cyto.data[p.stop, 3] # Local stopping position for each p-arm
 
   # Factor used to convert positions into desired unit
-  f <- switch(unit,
-    bp = 1,
-    kbp = 10^(-3),
-    mbp = 10^(-6)
-  )
+  f <- switch(unit, bp = 1, kbp = 10^(-3), mbp = 10^(-6))
 
   return(list(pstop = pos.pstop * f, chromstop = pos.chromstop * f))
 }

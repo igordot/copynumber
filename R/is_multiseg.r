@@ -8,7 +8,6 @@
 
 # Function to check if segments come from pcf-routine or multipcf-routine
 
-
 ## Input:
 ### segments: a data frame with segmentation results from pcf, multipcf or aspcf
 
@@ -22,7 +21,6 @@
 
 ## Requires:
 ## none
-
 
 is.multiseg <- function(segments) {
   # If not multisegment, the first column name should be "sampleID"

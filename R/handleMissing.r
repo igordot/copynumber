@@ -12,7 +12,6 @@
 ## Requires:
 ## none
 
-
 # find nearest non-missing neighbour, and add missing obs to segment where nearest neighbour is located
 handleMissing <- function(nn, pos, obs, pos.start, pos.stop, seg.npos) {
   # find out which segment interval nn belongs to,

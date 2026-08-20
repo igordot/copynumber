@@ -8,7 +8,6 @@
 
 # Function to set range of colors for heatplot:
 
-
 ## Input:
 ### upper.lim, lower.lim: limits for aberration calling
 ### op: list with other plot parameters

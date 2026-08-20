@@ -24,7 +24,6 @@
 ### winsorize
 ### aspcf
 
-
 ## Requires:
 ### getArmandChromStop
 ### numericChrom

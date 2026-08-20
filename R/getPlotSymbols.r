@@ -29,7 +29,6 @@
 ## Required by:
 ### plotObs
 
-
 ## Requires:
 ###
 
@@ -64,7 +63,20 @@ getPlotSymbols <- function(y, winsoutliers, type, x, xmax, print.xwarn, k, op) {
   out.pos <- x[x > xmax]
   if (length(out.pos) > 0 && print.xwarn) {
     # Print warning:
-    warning(paste("Chromosome", k, "ranges from position 0 to", xmax, "mbp.", length(out.pos), "probe positions are outside this range.", sep = " "), call. = FALSE, immediate. = TRUE)
+    warning(
+      paste(
+        "Chromosome",
+        k,
+        "ranges from position 0 to",
+        xmax,
+        "mbp.",
+        length(out.pos),
+        "probe positions are outside this range.",
+        sep = " "
+      ),
+      call. = FALSE,
+      immediate. = TRUE
+    )
   }
 
   # Plot observations that fall outside x-range on the borders of the plot and mark by different symbol:
@@ -72,5 +84,11 @@ getPlotSymbols <- function(y, winsoutliers, type, x, xmax, print.xwarn, k, op) {
   pch.obs[x > xmax] <- op$q.pch
   x[x > xmax] <- xmax
 
-  return(list(colobs = colobs, cex.obs = cex.obs, pch.obs = pch.obs, y = y, x = x))
+  return(list(
+    colobs = colobs,
+    cex.obs = cex.obs,
+    pch.obs = pch.obs,
+    y = y,
+    x = x
+  ))
 } # end getPlotSymbols

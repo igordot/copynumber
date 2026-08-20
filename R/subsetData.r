@@ -25,7 +25,6 @@
 ### numericChrom
 ### pullOutContent
 
-
 subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
   # Check if data is a file:
   isfile <- class(data) == "character"
@@ -34,7 +33,13 @@ subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
   if (isfile) {
     head <- scan(data, nlines = 1, what = "character", quiet = TRUE, sep = sep) # Read header
     # Read just the two first columns to get chrom and pos
-    data.chrom <- read.table(file = data, sep = sep, header = TRUE, colClasses = c(NA, rep("NULL", length(head) - 1)), as.is = TRUE)[, 1] # could be character or numeric
+    data.chrom <- read.table(
+      file = data,
+      sep = sep,
+      header = TRUE,
+      colClasses = c(NA, rep("NULL", length(head) - 1)),
+      as.is = TRUE
+    )[, 1] # could be character or numeric
   } else {
     # In case data comes from winsorize: check and possibly pull out data frame with wins.data
     data <- pullOutContent(data, what = "wins.data")
@@ -56,7 +61,10 @@ subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
   if (!is.null(sample)) {
     keepsample <- keepsample[sample]
     if (any(is.na(keepsample))) {
-      stop("Input in 'sample' is outside the number of samples represented in data", .call = FALSE)
+      stop(
+        "Input in 'sample' is outside the number of samples represented in data",
+        .call = FALSE
+      )
     }
   }
 
@@ -74,7 +82,11 @@ subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
       stop(msg, call. = FALSE)
     } else if (length(use.chrom) != length(chrom)) {
       not.use <- paste(chrom[!use], sep = "", collapse = ",")
-      msg <- paste("The following chromosome(s) are not found in data:", not.use, sep = " ")
+      msg <- paste(
+        "The following chromosome(s) are not found in data:",
+        not.use,
+        sep = " "
+      )
       warning(msg, call. = FALSE, immediate. = TRUE)
     }
     keepchrom <- data.chrom %in% use.chrom
@@ -104,7 +116,18 @@ subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
     cc[c(1:2, keepsample + 2)] <- NA # decide on which columns to read
     nreads <- length(nrows)
     for (i in 1:nreads) {
-      sel.data <- rbind(sel.data, read.table(data, header = FALSE, sep = sep, skip = skip[i] + 1, nrows = nrows[i], colClasses = cc, as.is = TRUE))
+      sel.data <- rbind(
+        sel.data,
+        read.table(
+          data,
+          header = FALSE,
+          sep = sep,
+          skip = skip[i] + 1,
+          nrows = nrows[i],
+          colClasses = cc,
+          as.is = TRUE
+        )
+      )
     }
   } else {
     sel.data <- data[keepchrom, c(1:2, keepsample + 2)]

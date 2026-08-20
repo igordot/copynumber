@@ -19,10 +19,8 @@
 ### plot.ideo: should ideogram be plotted below plots
 ### ... : other optional plot parameters
 
-
 ## Required by:
 ### none
-
 
 ## Requires:
 ### checkAndRetrievePlotInput
@@ -35,16 +33,35 @@
 ### plotObs
 ### plotSegments
 
-
-plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = NULL, chrom = NULL, assembly = "hg19", winsoutliers = NULL, xaxis = "pos", layout = c(1, 1), plot.ideo = TRUE, ...) {
+plotSample <- function(
+  data = NULL,
+  segments = NULL,
+  pos.unit = "bp",
+  sample = NULL,
+  chrom = NULL,
+  assembly = "hg19",
+  winsoutliers = NULL,
+  xaxis = "pos",
+  layout = c(1, 1),
+  plot.ideo = TRUE,
+  ...
+) {
   # Check, modify and retrieve plot input:
-  input <- checkAndRetrievePlotInput(data = data, segments = segments, winsoutliers = winsoutliers, type = "sample", xaxis = xaxis, pos.unit = pos.unit, sample = sample, chrom = chrom)
+  input <- checkAndRetrievePlotInput(
+    data = data,
+    segments = segments,
+    winsoutliers = winsoutliers,
+    type = "sample",
+    xaxis = xaxis,
+    pos.unit = pos.unit,
+    sample = sample,
+    chrom = chrom
+  )
   data <- input$data
   segments <- input$segments
   sampleID <- input$sampleID
   chrom <- input$chrom
   winsoutliers <- input$winsoutliers
-
 
   nSample <- length(sampleID)
   nChrom <- length(chrom)
@@ -60,7 +77,16 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
     plot.ideo <- FALSE
   }
   # Set default plot parameters and change these if user has specified other choices via ... :
-  arg <- getPlotParameters(type = "sample", nSeg = nSeg, cr = nc * nr, sampleID = sampleID, plot.ideo = plot.ideo, xaxis = xaxis, assembly = assembly, ...)
+  arg <- getPlotParameters(
+    type = "sample",
+    nSeg = nSeg,
+    cr = nc * nr,
+    sampleID = sampleID,
+    plot.ideo = plot.ideo,
+    xaxis = xaxis,
+    assembly = assembly,
+    ...
+  )
 
   # Margins used for the plot window:
   if (arg$title[1] == "") {
@@ -69,7 +95,6 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
     oma <- c(0, 0, 1, 0)
   }
   mar <- c(0.2, 0.2, 0.3, 0.2)
-
 
   # Check if there should be more than one file/window with plot(s), and get file.name accordingly
   nPage <- ifelse(arg$onefile, 1, nSample)
@@ -85,10 +110,21 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
     if (!arg$onefile || i == 1) {
       # Either print to file, or plot on screen
       if (!is.null(arg$dir.print)) {
-        pdf(file = paste(arg$dir.print, "/", file.name[i], ".pdf", sep = ""), width = arg$plot.size[1], height = arg$plot.size[2], onefile = TRUE, paper = "a4") # a4-paper
+        pdf(
+          file = paste(arg$dir.print, "/", file.name[i], ".pdf", sep = ""),
+          width = arg$plot.size[1],
+          height = arg$plot.size[2],
+          onefile = TRUE,
+          paper = "a4"
+        ) # a4-paper
       } else {
-        if (dev.cur() <= i) { # to make Sweave work
-          dev.new(width = arg$plot.size[1], height = arg$plot.size[2], record = TRUE)
+        if (dev.cur() <= i) {
+          # to make Sweave work
+          dev.new(
+            width = arg$plot.size[1],
+            height = arg$plot.size[2],
+            record = TRUE
+          )
         }
       }
     } else {
@@ -103,7 +139,6 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
     clm <- 1
     new <- FALSE
 
-
     # Which sample is this:
     id <- sampleID[i]
     ind.sample <- which(sample.names == id) # will be integer(0) if data=NULL
@@ -111,27 +146,47 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
     # Get data limits for this sample if range should include all chromosomes (equalRange=TRUE)
     if (!is.null(data) && arg$equalRange) {
       all.chrom <- which(data[, 1] %in% chrom)
-      data.lim <- quantile(data[all.chrom, ind.sample + 2], probs = c(arg$q / 2, (1 - arg$q / 2)), names = FALSE, type = 4, na.rm = TRUE)
+      data.lim <- quantile(
+        data[all.chrom, ind.sample + 2],
+        probs = c(arg$q / 2, (1 - arg$q / 2)),
+        names = FALSE,
+        type = 4,
+        na.rm = TRUE
+      )
     }
     # Picking out all segments where sampleid (in first column) is id, returns new list
     if (!is.null(segments)) {
-      sample.segments <- lapply(segments, function(seg, id) {
-        seg[seg[, 1] == id, ]
-      }, id = id)
+      sample.segments <- lapply(
+        segments,
+        function(seg, id) {
+          seg[seg[, 1] == id, ]
+        },
+        id = id
+      )
     }
-
 
     # Make separate plots for each chromosome:
 
     for (c in 1:nChrom) {
       # Frame dimensions for plot c:
-      fig.c <- c(frames$left[clm], frames$right[clm], frames$bot[row], frames$top[row])
+      fig.c <- c(
+        frames$left[clm],
+        frames$right[clm],
+        frames$bot[row],
+        frames$top[row]
+      )
       par(fig = fig.c, new = new, oma = oma, mar = mar)
-      frame.c <- list(left = frames$left[clm], right = frames$right[clm], bot = frames$bot[row], top = frames$top[row])
+      frame.c <- list(
+        left = frames$left[clm],
+        right = frames$right[clm],
+        bot = frames$bot[row],
+        top = frames$top[row]
+      )
 
       # Divide frame for this chromosome into a frame for the actual plot and a frame for the ideogram:
       plot.frame <- frame.c
-      plot.frame$bot <- frame.c$bot + (frame.c$top - frame.c$bot) * arg$ideo.frac
+      plot.frame$bot <- frame.c$bot +
+        (frame.c$top - frame.c$bot) * arg$ideo.frac
       ideo.frame <- frame.c
       ideo.frame$top <- plot.frame$bot
 
@@ -140,18 +195,36 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
 
       if (!is.null(segments)) {
         # Get min and max values in segments to make sure all are shown in plot
-        seg.lim <- sapply(sample.segments, get.seglim, equalRange = arg$equalRange, k = k) # matrix with limits for each segmentation for this sample, min in row 1, max in row2
-        seg.lim <- c(min(seg.lim[1, ], na.rm = TRUE), max(seg.lim[2, ], na.rm = TRUE)) # Get overall min and max over all segments
+        seg.lim <- sapply(
+          sample.segments,
+          get.seglim,
+          equalRange = arg$equalRange,
+          k = k
+        ) # matrix with limits for each segmentation for this sample, min in row 1, max in row2
+        seg.lim <- c(
+          min(seg.lim[1, ], na.rm = TRUE),
+          max(seg.lim[2, ], na.rm = TRUE)
+        ) # Get overall min and max over all segments
       } else {
         seg.lim <- NULL
       }
 
       # Get maximum position on chromosome from cytoband info
       if (plot.ideo) {
-        xmax <- chromMax(chrom = k, cyto.data = arg$assembly, pos.unit = arg$plot.unit)
+        xmax <- chromMax(
+          chrom = k,
+          cyto.data = arg$assembly,
+          pos.unit = arg$plot.unit
+        )
         # PLOT IDEOGRAM
         par(fig = unlist(ideo.frame), new = new, mar = arg$mar.i)
-        plotIdeogram(chrom = k, arg$cyto.text, cyto.data = arg$assembly, cex = arg$cex.cytotext, unit = arg$plot.unit)
+        plotIdeogram(
+          chrom = k,
+          arg$cyto.text,
+          cyto.data = arg$assembly,
+          cex = arg$cex.cytotext,
+          unit = arg$plot.unit
+        )
         new <- TRUE
       } else {
         xmax <- NULL
@@ -163,12 +236,30 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
         ind.chrom <- which(data[, 1] == k)
         if (!arg$equalRange) {
           # Get data limits for this sample using just this chromosome (equalRange=FALSE)
-          data.lim <- quantile(data[ind.chrom, ind.sample + 2], probs = c(arg$q / 2, (1 - arg$q / 2)), names = FALSE, type = 4, na.rm = TRUE)
+          data.lim <- quantile(
+            data[ind.chrom, ind.sample + 2],
+            probs = c(arg$q / 2, (1 - arg$q / 2)),
+            names = FALSE,
+            type = 4,
+            na.rm = TRUE
+          )
         }
 
         plotObs(
-          y = data[ind.chrom, ind.sample + 2], pos = data[ind.chrom, 2], unit = pos.unit, winsoutliers = winsoutliers[ind.chrom, ind.sample + 2], type = "sample", xaxis = xaxis,
-          plot.ideo = plot.ideo, k = k, frame = plot.frame, new = new, op = arg, data.lim = data.lim, seg.lim = seg.lim, xmax = xmax
+          y = data[ind.chrom, ind.sample + 2],
+          pos = data[ind.chrom, 2],
+          unit = pos.unit,
+          winsoutliers = winsoutliers[ind.chrom, ind.sample + 2],
+          type = "sample",
+          xaxis = xaxis,
+          plot.ideo = plot.ideo,
+          k = k,
+          frame = plot.frame,
+          new = new,
+          op = arg,
+          data.lim = data.lim,
+          seg.lim = seg.lim,
+          xmax = xmax
         )
 
         add <- TRUE ## segment plot will be added on top of data plot
@@ -181,9 +272,22 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
         # Plot all segments in list:
         for (s in 1:nSeg) {
           use.segments <- sample.segments[[s]]
-          plotSegments(use.segments[use.segments[, 2] == k, , drop = FALSE],
-            type = "sample", k = k, xaxis = xaxis, add = add, plot.ideo = plot.ideo, col = arg$seg.col[s],
-            lty = arg$seg.lty[s], lwd = arg$seg.lwd[s], frame = plot.frame, new = new, unit = pos.unit, seg.lim = seg.lim, data.lim = data.lim, op = arg
+          plotSegments(
+            use.segments[use.segments[, 2] == k, , drop = FALSE],
+            type = "sample",
+            k = k,
+            xaxis = xaxis,
+            add = add,
+            plot.ideo = plot.ideo,
+            col = arg$seg.col[s],
+            lty = arg$seg.lty[s],
+            lwd = arg$seg.lwd[s],
+            frame = plot.frame,
+            new = new,
+            unit = pos.unit,
+            seg.lim = seg.lim,
+            data.lim = data.lim,
+            op = arg
           )
           if (k %in% use.segments[, 2]) {
             add <- TRUE
@@ -192,11 +296,15 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
 
         # Add segmentation legends:
         if (!is.null(arg$legend)) {
-          legend("topright", legend = arg$legend, col = arg$seg.col, lty = arg$seg.lty, cex = arg$cex.axis)
+          legend(
+            "topright",
+            legend = arg$legend,
+            col = arg$seg.col,
+            lty = arg$seg.lty,
+            cex = arg$cex.axis
+          )
         }
       }
-
-
 
       # If page is full; plot on new page
       if (c %% (nr * nc) == 0) {
@@ -231,11 +339,19 @@ plotSample <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
     # Close graphcis:
     if (!is.null(arg$dir.print)) {
       if (!arg$onefile) {
-        cat("Plot was saved in ", paste(arg$dir.print, "/", file.name[i], ".pdf", sep = ""), "\n")
+        cat(
+          "Plot was saved in ",
+          paste(arg$dir.print, "/", file.name[i], ".pdf", sep = ""),
+          "\n"
+        )
         graphics.off()
       } else {
         if (i == nSample) {
-          cat("Plot was saved in ", paste(arg$dir.print, "/", file.name, ".pdf", sep = ""), "\n")
+          cat(
+            "Plot was saved in ",
+            paste(arg$dir.print, "/", file.name, ".pdf", sep = ""),
+            "\n"
+          )
           graphics.off()
         }
       }

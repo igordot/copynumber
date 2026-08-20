@@ -26,13 +26,11 @@
 ### op:  other parameters
 ### xmax: maximum on x-axis, will be NULL if ideogram is not plotted
 
-
 ## Required by:
 ### plotAllele
 ### plotChrom
 ### plotGenome
 ### plotSample
-
 
 ## Requires:
 ### addChromlines
@@ -41,8 +39,26 @@
 ### connectSeg
 ### updatePlotParameters
 
-plotSegments <- function(type, segments, unit, xaxis, k = NULL, sampleID = NULL, frame = NULL, plot.ideo = FALSE, add = FALSE, col, lty, lwd, new = FALSE,
-                         print.xwarn = FALSE, seg.lim = NULL, data.lim = NULL, op, xmax = NULL) {
+plotSegments <- function(
+  type,
+  segments,
+  unit,
+  xaxis,
+  k = NULL,
+  sampleID = NULL,
+  frame = NULL,
+  plot.ideo = FALSE,
+  add = FALSE,
+  col,
+  lty,
+  lwd,
+  new = FALSE,
+  print.xwarn = FALSE,
+  seg.lim = NULL,
+  data.lim = NULL,
+  op,
+  xmax = NULL
+) {
   # Check that segments contains any information, and retrieve info
   if (nrow(segments) > 0) {
     # Retrieve segmentinfo
@@ -54,9 +70,19 @@ plotSegments <- function(type, segments, unit, xaxis, k = NULL, sampleID = NULL,
     nPos <- segments[, 6]
     seg.mean <- segments[, 7]
 
-
     # Adjust start and stop according to plot type, xaxis, and connect
-    a <- adjustSeg(chrom, arms, start, stop, nPos, type, xaxis, unit, op$connect, op)
+    a <- adjustSeg(
+      chrom,
+      arms,
+      start,
+      stop,
+      nPos,
+      type,
+      xaxis,
+      unit,
+      op$connect,
+      op
+    )
     use.start <- a$use.start
     use.stop <- a$use.stop
     sep.arm <- a$sep.arm
@@ -64,11 +90,18 @@ plotSegments <- function(type, segments, unit, xaxis, k = NULL, sampleID = NULL,
       xmax <- max(use.stop)
     }
 
-
     # Plotting:
     if (add) {
       # add segments to existing plot:
-      segments(x0 = use.start, y0 = seg.mean, x1 = use.stop, y1 = seg.mean, col = col, lwd = lwd, lty = lty)
+      segments(
+        x0 = use.start,
+        y0 = seg.mean,
+        x1 = use.stop,
+        y1 = seg.mean,
+        col = col,
+        lwd = lwd,
+        lty = lty
+      )
 
       # Should segments be connected?
       if (op$connect) {
@@ -78,15 +111,34 @@ plotSegments <- function(type, segments, unit, xaxis, k = NULL, sampleID = NULL,
       # Set up plot; only segments are to be plotted
 
       # Update diverse plotparameters (ylim,xlim,main,ticks,mar)
-      op <- updatePlotParameters(seg.lim, xmax, type, xaxis, op, data.lim = data.lim, sampleID = sampleID, k = k)
+      op <- updatePlotParameters(
+        seg.lim,
+        xmax,
+        type,
+        xaxis,
+        op,
+        data.lim = data.lim,
+        sampleID = sampleID,
+        k = k
+      )
 
       # Check if end of any segments is larger than max in ideogram; if this is the case
       # a warning is printed
       out.seg <- use.stop[use.stop > xmax]
       if (length(out.seg) > 0 && print.xwarn) {
         # Print warning:
-        warning(paste("Chromosome", k, "ranges from position 0 to", paste(xmax, ".", sep = ""), length(out.seg), "segments are outside this range.", sep = " "),
-          call. = FALSE, immediate. = TRUE
+        warning(
+          paste(
+            "Chromosome",
+            k,
+            "ranges from position 0 to",
+            paste(xmax, ".", sep = ""),
+            length(out.seg),
+            "segments are outside this range.",
+            sep = " "
+          ),
+          call. = FALSE,
+          immediate. = TRUE
         )
       }
 
@@ -94,13 +146,31 @@ plotSegments <- function(type, segments, unit, xaxis, k = NULL, sampleID = NULL,
 
       # Empty plot with desired dimensions:
       par(fig = unlist(frame), new = new, mar = op$mar)
-      plot(1, 1,
-        type = "n", main = "", xlab = "",
-        xlim = op$xlim, las = op$las, ylab = "", ylim = op$ylim, xaxt = "n", yaxt = "n", xaxs = "i"
+      plot(
+        1,
+        1,
+        type = "n",
+        main = "",
+        xlab = "",
+        xlim = op$xlim,
+        las = op$las,
+        ylab = "",
+        ylim = op$ylim,
+        xaxt = "n",
+        yaxt = "n",
+        xaxs = "i"
       )
 
       # Plot segments
-      segments(x0 = use.start, y0 = seg.mean, x1 = use.stop, y1 = seg.mean, col = col, lwd = lwd, lty = lty)
+      segments(
+        x0 = use.start,
+        y0 = seg.mean,
+        x1 = use.stop,
+        y1 = seg.mean,
+        col = col,
+        lwd = lwd,
+        lty = lty
+      )
 
       # Should segments be connected?
       if (op$connect) {
@@ -112,7 +182,14 @@ plotSegments <- function(type, segments, unit, xaxis, k = NULL, sampleID = NULL,
 
       # Separate chromosomes by vertical lines (only done for type=="genome")
       if (type == "genome") {
-        addChromlines(chrom, xaxis, unit, ind = c(use.start, use.stop[length(use.stop)]), cex = op$cex.chrom, op = op)
+        addChromlines(
+          chrom,
+          xaxis,
+          unit,
+          ind = c(use.start, use.stop[length(use.stop)]),
+          cex = op$cex.chrom,
+          op = op
+        )
       }
     } # endif
   } # endif

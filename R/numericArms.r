@@ -8,7 +8,6 @@
 
 # Function that converts character arms to numeric
 
-
 ## Input:
 ### chrom : vector with chromosome numbers corresponding to each character arm
 ### char.arms : vector containing charcter arms; dentoed p or q
@@ -27,7 +26,6 @@
 
 ## Requires:
 ###  none
-
 
 numericArms <- function(chrom, char.arms) {
   p.arm <- which(char.arms == "p")

@@ -12,7 +12,11 @@ test_that("plotGamma(cv = TRUE) returns a gamma grid that matches gammaRange", {
   pdf(NULL)
   on.exit(dev.off())
   res <- plotGamma(
-    micma, chrom = 17, gammaRange = c(10, 100), cv = TRUE, K = 2
+    micma,
+    chrom = 17,
+    gammaRange = c(10, 100),
+    cv = TRUE,
+    K = 2
   )
 
   # These are known ahead of running plotGamma(): 10 evenly spaced gamma

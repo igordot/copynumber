@@ -23,20 +23,32 @@
 ### plotFreq (genomeFreq and chromosomeFreq)
 ### plotWeightedFreq (weightedGenomeFreq and weightedChromosomeFreq)
 
-
 ## Requires:
 ### getx
 ### getArms
 ### numericArms
 
-
 adjustPos <- function(position, chromosomes, pos.unit, type, op) {
   if (type == "chromosome") {
     # Only need to scale positions first
-    pos <- getx(xaxis = "pos", type = type, chromosomes = NULL, pos = position, unit = pos.unit, op = op)
+    pos <- getx(
+      xaxis = "pos",
+      type = type,
+      chromosomes = NULL,
+      pos = position,
+      unit = pos.unit,
+      op = op
+    )
   } else if (type == "genome") {
     # Need to scale and convert to global pos:
-    pos <- getx(xaxis = "pos", type = type, chromosomes = chromosomes, pos = position, unit = pos.unit, op = op)
+    pos <- getx(
+      xaxis = "pos",
+      type = type,
+      chromosomes = chromosomes,
+      pos = position,
+      unit = pos.unit,
+      op = op
+    )
   }
 
   nPos <- length(position)
@@ -55,7 +67,6 @@ adjustPos <- function(position, chromosomes, pos.unit, type, op) {
     xleft[2:nPos] <- xleft[2:nPos] - 0.5
     xright[1:(nPos - 1)] <- xright[1:(nPos - 1)] + 0.5
   }
-
 
   if (type != "genome") {
     # First find locations for change in arm number:

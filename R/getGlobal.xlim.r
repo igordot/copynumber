@@ -22,11 +22,9 @@
 ### plotWeightedFreq
 ### plotGenome
 
-
 ## Requires:
 ### getArmandChromStop
 ### convert.unit
-
 
 getGlobal.xlim <- function(op, pos.unit, chrom) {
   # Set xlim using chromosome information in cytoband; must transform to global information

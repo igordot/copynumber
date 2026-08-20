@@ -26,8 +26,13 @@
 ### numericChrom
 ### pullOutContent
 
-
-subsetSegments <- function(segments, chrom = NULL, sample = NULL, sep = "\t", ...) {
+subsetSegments <- function(
+  segments,
+  chrom = NULL,
+  sample = NULL,
+  sep = "\t",
+  ...
+) {
   # Check if segments is a file:
   isfile <- class(segments) == "character"
 
@@ -67,7 +72,11 @@ subsetSegments <- function(segments, chrom = NULL, sample = NULL, sep = "\t", ..
       stop(msg, call. = FALSE)
     } else if (length(use.chrom) != length(chrom)) {
       not.use <- paste(chrom[!use], sep = "", collapse = ",")
-      msg <- paste("The following chromosome(s) are not found in segments:", not.use, sep = " ")
+      msg <- paste(
+        "The following chromosome(s) are not found in segments:",
+        not.use,
+        sep = " "
+      )
       warning(msg, call. = FALSE, immediate. = TRUE)
     }
     keepchrom <- which(seg.chrom %in% use.chrom)
@@ -82,14 +91,20 @@ subsetSegments <- function(segments, chrom = NULL, sample = NULL, sep = "\t", ..
     id <- as.character(unique(seg.sampleid))
     sampleID <- id[sample]
     if (any(is.na(sampleID))) {
-      stop("Input in 'sample' is outside the number of samples represented in segments", .call = FALSE)
+      stop(
+        "Input in 'sample' is outside the number of samples represented in segments",
+        .call = FALSE
+      )
     }
 
     # selct segments for this sampleID(s)
     if (multi) {
       keepsample <- which(colnames(segments) %in% sampleID)
       sel.segments <- sel.segments[, c(1:5, keepsample)]
-      colnames(sel.segments) <- c(colnames(segments)[1:5], colnames(segments)[keepsample])
+      colnames(sel.segments) <- c(
+        colnames(segments)[1:5],
+        colnames(segments)[keepsample]
+      )
     } else {
       keepsample <- which(sel.segments[, 1] %in% sampleID)
       sel.segments <- sel.segments[keepsample, , drop = FALSE]

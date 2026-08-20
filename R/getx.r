@@ -21,7 +21,6 @@
 ### Output:
 ### x: a vector containg the numbers to be plotted along xaxis of plot
 
-
 ## Required by:
 ### adjustPos
 ### plotObs
@@ -30,13 +29,17 @@
 ### getGlobPos
 ### convert.unit
 
-
 getx <- function(xaxis, type, chromosomes, pos, unit, op) {
   if (xaxis == "pos") {
     x <- pos
     if (type == "genome") {
       # Convert to global position:
-      global.pos <- getGlobPos(chromosomes, pos, pos.unit = unit, cyto.data = op$assembly)
+      global.pos <- getGlobPos(
+        chromosomes,
+        pos,
+        pos.unit = unit,
+        cyto.data = op$assembly
+      )
       x <- global.pos
     }
 

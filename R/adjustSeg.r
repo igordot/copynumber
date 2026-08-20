@@ -6,7 +6,6 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-
 # Function that adjusts segment start and stop positions according to plot type, plot unit, xaxis etc
 
 ## Input:
@@ -30,7 +29,6 @@
 ### plotGamma
 ### plotSegments
 
-
 ## Requires:
 ### convert.unit
 ### getGlobPos
@@ -39,8 +37,18 @@
 ### getArmandChromStop
 ### numericChrom
 
-
-adjustSeg <- function(chrom, char.arms, start, stop, nPos, type, xaxis, unit, connect, op) {
+adjustSeg <- function(
+  chrom,
+  char.arms,
+  start,
+  stop,
+  nPos,
+  type,
+  xaxis,
+  unit,
+  connect,
+  op
+) {
   # Make sure chromosome is numeric:
   chrom <- numericChrom(chrom)
   nSeg <- length(chrom)
@@ -62,10 +70,18 @@ adjustSeg <- function(chrom, char.arms, start, stop, nPos, type, xaxis, unit, co
 
     if (type == "genome") {
       # Use global positions
-      start <- getGlobPos(chrom, start, pos.unit = unit, cyto.data = op$assembly)
+      start <- getGlobPos(
+        chrom,
+        start,
+        pos.unit = unit,
+        cyto.data = op$assembly
+      )
       stop <- getGlobPos(chrom, stop, pos.unit = unit, cyto.data = op$assembly)
       # Retrieve chromosomestop positions from cytoband data
-      chromstop <- getArmandChromStop(cyto.data = op$assembly, unit = unit)$chromstop
+      chromstop <- getArmandChromStop(
+        cyto.data = op$assembly,
+        unit = unit
+      )$chromstop
       glob.chromstop <- cumsum(chromstop)
     }
 
@@ -85,7 +101,10 @@ adjustSeg <- function(chrom, char.arms, start, stop, nPos, type, xaxis, unit, co
           unik.chrom <- unique(chrom)
           use.stop[c(sep - 1, nSeg)] <- glob.chromstop[unik.chrom]
           # use.start[c(1,sep)] <- c(0,glob.chromstop[unik.chrom[-length(unik.chrom)]]+1)
-          use.start[c(1, sep)] <- c(use.start[1], glob.chromstop[unik.chrom[-1] - 1] + 1)
+          use.start[c(1, sep)] <- c(
+            use.start[1],
+            glob.chromstop[unik.chrom[-1] - 1] + 1
+          )
         } else {
           # No connection of segments across arms when type is "chromosome" or "sample"
           use.start[sep] <- start[sep]

@@ -27,13 +27,11 @@
 ### op:  other parameters
 ### xmax: maximum on x-axis, will be NULL if ideogram is not plotted
 
-
 ## Required by:
 ### plotAllele
 ### plotChrom
 ### plotGenome
 ### plotSample
-
 
 ## Requires:
 ### addChromlines
@@ -42,7 +40,25 @@
 ### getx
 ### updatePlotParameters
 
-plotObs <- function(type, y, pos, unit, winsoutliers, xaxis, plot.ideo = FALSE, k = NULL, sampleID = NULL, frame = NULL, new = FALSE, print.xwarn = FALSE, seg.lim = NULL, op, xmax = NULL, chromosomes = NULL, data.lim = NULL) {
+plotObs <- function(
+  type,
+  y,
+  pos,
+  unit,
+  winsoutliers,
+  xaxis,
+  plot.ideo = FALSE,
+  k = NULL,
+  sampleID = NULL,
+  frame = NULL,
+  new = FALSE,
+  print.xwarn = FALSE,
+  seg.lim = NULL,
+  op,
+  xmax = NULL,
+  chromosomes = NULL,
+  data.lim = NULL
+) {
   # Pick out what should be plotted on x-axis (position or index). If type=genome positions are converted to global positions
   x <- getx(xaxis, type, chromosomes, pos, unit, op)
   if (is.null(xmax)) {
@@ -50,7 +66,16 @@ plotObs <- function(type, y, pos, unit, winsoutliers, xaxis, plot.ideo = FALSE, 
   }
 
   # Update diverse plotparameters (ylim,xlim,main,ticks,mar)
-  op <- updatePlotParameters(seg.lim = seg.lim, xmax = xmax, type = type, xaxis = xaxis, op = op, data.lim = data.lim, sampleID = sampleID, k = k)
+  op <- updatePlotParameters(
+    seg.lim = seg.lim,
+    xmax = xmax,
+    type = type,
+    xaxis = xaxis,
+    op = op,
+    data.lim = data.lim,
+    sampleID = sampleID,
+    k = k
+  )
 
   # Get colours, symbols and size for plotting observations. Truncate observations outside limits
   s <- getPlotSymbols(y, winsoutliers, type, x, xmax, print.xwarn, k, op)
@@ -65,7 +90,22 @@ plotObs <- function(type, y, pos, unit, winsoutliers, xaxis, plot.ideo = FALSE, 
 
   # Empty plot with right dimensions:
   par(fig = unlist(frame), new = new, mar = op$mar)
-  plot(x, y, ylab = "", xlab = "", main = "", pch = pch.obs, cex = cex.obs, col = colobs, ylim = op$ylim, xlim = op$xlim, xaxt = "n", yaxt = "n", xaxs = "i", yaxs = "r")
+  plot(
+    x,
+    y,
+    ylab = "",
+    xlab = "",
+    main = "",
+    pch = pch.obs,
+    cex = cex.obs,
+    col = colobs,
+    ylim = op$ylim,
+    xlim = op$xlim,
+    xaxt = "n",
+    yaxt = "n",
+    xaxs = "i",
+    yaxs = "r"
+  )
 
   # Add axes, labels, title and reference line
   addToPlot(plot.ideo, op, type = type)

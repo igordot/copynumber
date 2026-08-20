@@ -6,7 +6,6 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-
 # Function to set default ylim and at.y for plotFreq
 
 ## Input:
@@ -22,7 +21,6 @@
 ### plotWeightedFreq (weightedGenomeFreq and weightedChromosomeFreq)
 
 ## Requires: none
-
 
 updateFreqParameters <- function(freq.del, freq.amp, op) {
   # Y-limits; symmetric:

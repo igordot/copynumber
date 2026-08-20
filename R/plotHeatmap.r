@@ -6,7 +6,6 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-
 # Function that plots heatmap given limits - by genome og chromosomes
 
 ## Input:
@@ -16,7 +15,6 @@
 ### chrom: a vector with chromosomes to be plotted. If specified the frequencies are plotted with one panel for each chromosome
 ### layout: number of columns and rows in plot
 ### ... : other optional plot parameters
-
 
 ## Required by: none
 
@@ -30,7 +28,15 @@
 ### pullOutContent
 
 # Main function for heatmap plotting:
-plotHeatmap <- function(segments, upper.lim, lower.lim = -upper.lim, pos.unit = "bp", chrom = NULL, layout = c(1, 1), ...) {
+plotHeatmap <- function(
+  segments,
+  upper.lim,
+  lower.lim = -upper.lim,
+  pos.unit = "bp",
+  chrom = NULL,
+  layout = c(1, 1),
+  ...
+) {
   # If chrom is unspecified, the whole genome is plotted. Otherwise, selected chromosomes are plotted
   type <- ifelse(is.null(chrom), "genome", "bychrom")
 
@@ -56,7 +62,10 @@ plotHeatmap <- function(segments, upper.lim, lower.lim = -upper.lim, pos.unit = 
 
   # Make sure upper.lim is positive and lower.lim is negative:
   if (!all(upper.lim > 0) || !all(lower.lim < 0)) {
-    stop("upper.lim must be positive and lower.lim must be negative", call. = FALSE)
+    stop(
+      "upper.lim must be positive and lower.lim must be negative",
+      call. = FALSE
+    )
   }
 
   # Making sure number of upperlimits and lowerlimits are the same:
@@ -65,12 +74,29 @@ plotHeatmap <- function(segments, upper.lim, lower.lim = -upper.lim, pos.unit = 
   lower.lim <- lower.lim[1:nT]
 
   # plot heatmap, either over genome or by chromosomes:
-  switch(type,
-    genome = genomeHeat(segments, upper.lim, lower.lim, pos.unit, sampleID, layout, ...),
-    bychrom = chromosomeHeat(segments, upper.lim, lower.lim, pos.unit, sampleID, chrom, layout, ...)
+  switch(
+    type,
+    genome = genomeHeat(
+      segments,
+      upper.lim,
+      lower.lim,
+      pos.unit,
+      sampleID,
+      layout,
+      ...
+    ),
+    bychrom = chromosomeHeat(
+      segments,
+      upper.lim,
+      lower.lim,
+      pos.unit,
+      sampleID,
+      chrom,
+      layout,
+      ...
+    )
   )
 }
-
 
 
 # Function that plots heatmap by genome
@@ -83,7 +109,6 @@ plotHeatmap <- function(segments, upper.lim, lower.lim = -upper.lim, pos.unit = 
 ### layout: number of columns and rows in plot
 ### ... : other optional plot parameters
 
-
 ## Required by: plotHeatmap
 
 ## Requires:
@@ -95,23 +120,43 @@ plotHeatmap <- function(segments, upper.lim, lower.lim = -upper.lim, pos.unit = 
 ### getCol
 ### addChromlines
 
-genomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, layout, ...) {
+genomeHeat <- function(
+  segments,
+  upper.lim,
+  lower.lim,
+  pos.unit,
+  sampleID,
+  layout,
+  ...
+) {
   nT <- length(upper.lim)
   nr <- layout[1]
   nc <- layout[2]
   rc <- nr * nc
   nSample <- length(sampleID)
 
-  op <- getHeatParameters(type = "genome", nc = nc, nr = nr, nSample = nSample, upper.lim = upper.lim, lower.lim = lower.lim, ...)
+  op <- getHeatParameters(
+    type = "genome",
+    nc = nc,
+    nr = nr,
+    nSample = nSample,
+    upper.lim = upper.lim,
+    lower.lim = lower.lim,
+    ...
+  )
 
   # Set global xlimits if not specified by user:
   if (is.null(op$xlim)) {
-    op$xlim <- getGlobal.xlim(op = op, pos.unit = pos.unit, chrom = unique(segments[, 2]))
+    op$xlim <- getGlobal.xlim(
+      op = op,
+      pos.unit = pos.unit,
+      chrom = unique(segments[, 2])
+    )
   }
 
-
   # Check if there should be more than one file/window with plot(s), and get file.name accordingly
-  if (dev.cur() <= 1) { # to make Sweave work
+  if (dev.cur() <= 1) {
+    # to make Sweave work
     dev.new(width = op$plot.size[1], height = op$plot.size[2], record = TRUE)
   }
 
@@ -123,27 +168,51 @@ genomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, layou
   # Division of plotting window:
   frames <- framedim(nr, nc)
 
-
   for (t in 1:nT) {
     # Frame dimensions for plot t:
-    fig.t <- c(frames$left[clm], frames$right[clm], frames$bot[row], frames$top[row])
+    fig.t <- c(
+      frames$left[clm],
+      frames$right[clm],
+      frames$bot[row],
+      frames$top[row]
+    )
     par(fig = fig.t, new = new, oma = c(0, 0, 0.5, 0), mar = op$mar)
 
     # Empty plot with correct dimensions:
-    plot(1, 1,
-      type = "n", ylim = c(0, nSample), ylab = op$ylab, xlab = op$xlab, xlim = op$xlim,
-      xaxs = "i", yaxt = "n", xaxt = "n", yaxs = "i", cex.lab = 0.9, mgp = op$mgp, main = ""
+    plot(
+      1,
+      1,
+      type = "n",
+      ylim = c(0, nSample),
+      ylab = op$ylab,
+      xlab = op$xlab,
+      xlim = op$xlim,
+      xaxs = "i",
+      yaxt = "n",
+      xaxt = "n",
+      yaxs = "i",
+      cex.lab = 0.9,
+      mgp = op$mgp,
+      main = ""
     )
     # Let background be black to avoid white parts in arms without probes:
-    rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = op$colors[2])
-
-
+    rect(
+      par("usr")[1],
+      par("usr")[3],
+      par("usr")[2],
+      par("usr")[4],
+      col = op$colors[2]
+    )
 
     # main title for this plot
     title(main = op$main[t], line = op$main.line, cex.main = op$cex.main)
 
     # Get colorsetup for these limits:
-    cs <- colorSetup(upper.lim = upper.lim[t], lower.lim = lower.lim[t], op = op)
+    cs <- colorSetup(
+      upper.lim = upper.lim[t],
+      lower.lim = lower.lim[t],
+      op = op
+    )
 
     # Plot heatmap for each sample:
     for (i in 1:nSample) {
@@ -151,12 +220,25 @@ genomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, layou
 
       # Adjust positions to be plotted along xaxis; i.e. get global positions, scale according to plot.unit, and get left and right pos for rectangles
       # to be plotted (either continuous or 1 probe long):
-      x <- adjustSegPos(chrom = sample.segments[, 2], char.arms = sample.segments[, 3], start = sample.segments[, 4], stop = sample.segments[, 5], type = "genome", unit = pos.unit, op = op)
+      x <- adjustSegPos(
+        chrom = sample.segments[, 2],
+        char.arms = sample.segments[, 3],
+        start = sample.segments[, 4],
+        stop = sample.segments[, 5],
+        type = "genome",
+        unit = pos.unit,
+        op = op
+      )
       xleft <- x$use.start
       xright <- x$use.stop
 
       # Find appropriate colour for each probe:
-      heat.col <- sapply(sample.segments[, 7], getCol, colors = cs$colors, intervals = cs$intervals)
+      heat.col <- sapply(
+        sample.segments[, 7],
+        getCol,
+        colors = cs$colors,
+        intervals = cs$intervals
+      )
 
       # Plot rectangles with appropriate color for each probe:
       ytop <- i - op$sep.samples
@@ -166,12 +248,28 @@ genomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, layou
 
       # Add sampleid on yaxis
       if (op$sample.labels) {
-        axis(side = 2, at = (ytop - (ytop - ybottom) / 2), labels = sampleID[i], line = op$sample.line, tcl = 0, cex.axis = op$sample.cex, las = 1, mgp = op$mgp, tick = FALSE)
+        axis(
+          side = 2,
+          at = (ytop - (ytop - ybottom) / 2),
+          labels = sampleID[i],
+          line = op$sample.line,
+          tcl = 0,
+          cex.axis = op$sample.cex,
+          las = 1,
+          mgp = op$mgp,
+          tick = FALSE
+        )
       }
     } # endfor
 
     # Separate chromosomes by vertical lines:
-    addChromlines(chromosomes = segments[, 2], xaxis = "pos", unit = pos.unit, cex = op$cex.chrom, op = op)
+    addChromlines(
+      chromosomes = segments[, 2],
+      xaxis = "pos",
+      unit = pos.unit,
+      cex = op$cex.chrom,
+      op = op
+    )
 
     # Box:
     abline(v = op$xlim)
@@ -210,7 +308,6 @@ genomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, layou
 ### layout: number of columns and rows in plot
 ### ... : other optional plot parameters
 
-
 ## Required by: plotHeatmap
 
 ## Requires:
@@ -223,17 +320,33 @@ genomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, layou
 ### getCol
 ### get.xticks
 
-
-chromosomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, chrom, layout, ...) {
+chromosomeHeat <- function(
+  segments,
+  upper.lim,
+  lower.lim,
+  pos.unit,
+  sampleID,
+  chrom,
+  layout,
+  ...
+) {
   nT <- length(upper.lim)
   nr <- layout[1]
   nc <- layout[2]
   nChrom <- length(chrom)
   nSample <- length(sampleID)
 
-
   # Default plot options:
-  op <- getHeatParameters(type = "bychrom", nc = nc, nr = nr, nSample = nSample, upper.lim = upper.lim, lower.lim = lower.lim, chrom = chrom, ...)
+  op <- getHeatParameters(
+    type = "bychrom",
+    nc = nc,
+    nr = nr,
+    nSample = nSample,
+    upper.lim = upper.lim,
+    lower.lim = lower.lim,
+    chrom = chrom,
+    ...
+  )
 
   # Margins for entire plot in window:
   if (all(op$title == "")) {
@@ -243,15 +356,14 @@ chromosomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, c
   }
   mar <- c(0.2, 0.2, 0.3, 0.2)
 
-
   # Divide the plotting window by the function "framedim":
   frames <- framedim(nr, nc)
-
 
   # make separate plots for each value of limits
   for (t in 1:nT) {
     # Start new window/file:
-    if (dev.cur() <= 1) { # to make Sweave work
+    if (dev.cur() <= 1) {
+      # to make Sweave work
       dev.new(width = op$plot.size[1], height = op$plot.size[2], record = TRUE)
     }
 
@@ -261,16 +373,30 @@ chromosomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, c
     new <- FALSE
 
     # Get colorsetup for these limits
-    cs <- colorSetup(upper.lim = upper.lim[t], lower.lim = lower.lim[t], op = op)
+    cs <- colorSetup(
+      upper.lim = upper.lim[t],
+      lower.lim = lower.lim[t],
+      op = op
+    )
 
     # Separate plots for each chromosome:
     for (c in 1:nChrom) {
       # Frame dimensions for plot c:
-      fig.c <- c(frames$left[clm], frames$right[clm], frames$bot[row], frames$top[row])
+      fig.c <- c(
+        frames$left[clm],
+        frames$right[clm],
+        frames$bot[row],
+        frames$top[row]
+      )
       par(fig = fig.c, new = new, oma = oma, mar = mar)
 
       # Make list with frame dimensions:
-      frame.c <- list(left = frames$left[clm], right = frames$right[clm], bot = frames$bot[row], top = frames$top[row])
+      frame.c <- list(
+        left = frames$left[clm],
+        right = frames$right[clm],
+        bot = frames$bot[row],
+        top = frames$top[row]
+      )
 
       # Select relevant chromosome number
       k <- chrom[c]
@@ -287,14 +413,25 @@ chromosomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, c
       if (op$plot.ideo) {
         # Ideogram frame:
         ideo.frame <- frame.c
-        ideo.frame$top <- frame.c$bot + (frame.c$top - frame.c$bot) * op$ideo.frac
+        ideo.frame$top <- frame.c$bot +
+          (frame.c$top - frame.c$bot) * op$ideo.frac
 
         par(fig = unlist(ideo.frame), new = new, mar = op$mar.i)
         # Plot ideogram and get maximum probe position in ideogram:
-        plotIdeogram(chrom = k, cyto.text = op$cyto.text, cyto.data = op$assembly, cex = op$cex.cytotext, unit = op$plot.unit)
+        plotIdeogram(
+          chrom = k,
+          cyto.text = op$cyto.text,
+          cyto.data = op$assembly,
+          cex = op$cex.cytotext,
+          unit = op$plot.unit
+        )
 
         # Get maximum position for this chromosome:
-        xmaxI <- chromMax(chrom = k, cyto.data = op$assembly, pos.unit = op$plot.unit)
+        xmaxI <- chromMax(
+          chrom = k,
+          cyto.data = op$assembly,
+          pos.unit = op$plot.unit
+        )
         xlim <- c(0, xmaxI)
 
         new <- TRUE
@@ -310,12 +447,29 @@ chromosomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, c
       }
 
       # empty plot set up:
-      plot(1, 1,
-        type = "n", ylim = c(0, nSample), xlim = xlim, ylab = op$ylab, xlab = op$xlab,
-        xaxs = "i", yaxt = "n", xaxt = "n", yaxs = "i", mgp = op$mgp, main = ""
+      plot(
+        1,
+        1,
+        type = "n",
+        ylim = c(0, nSample),
+        xlim = xlim,
+        ylab = op$ylab,
+        xlab = op$xlab,
+        xaxs = "i",
+        yaxt = "n",
+        xaxt = "n",
+        yaxs = "i",
+        mgp = op$mgp,
+        main = ""
       )
       # Let background be black to avoid white parts between arms:
-      rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = op$colors[2])
+      rect(
+        par("usr")[1],
+        par("usr")[3],
+        par("usr")[2],
+        par("usr")[4],
+        col = op$colors[2]
+      )
 
       # main title for this plot
       title(main = op$main[c], line = op$main.line, cex.main = op$cex.main)
@@ -325,11 +479,24 @@ chromosomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, c
         sample.segments <- chrom.segments[chrom.segments[, 1] == sampleID[i], ]
         # Adjust positions to be plotted along xaxis; i.e. scale according to plot.unit, and get left and right pos for rectangles to be plotted (either continuous
         # or 1 probe long):
-        x <- adjustSegPos(chrom = sample.segments[, 2], char.arms = sample.segments[, 3], start = sample.segments[, 4], stop = sample.segments[, 5], type = "chromosome", unit = pos.unit, op = op)
+        x <- adjustSegPos(
+          chrom = sample.segments[, 2],
+          char.arms = sample.segments[, 3],
+          start = sample.segments[, 4],
+          stop = sample.segments[, 5],
+          type = "chromosome",
+          unit = pos.unit,
+          op = op
+        )
         xleft <- x$use.start
         xright <- x$use.stop
 
-        heat.col <- sapply(sample.segments[, 7], getCol, colors = cs$colors, intervals = cs$intervals)
+        heat.col <- sapply(
+          sample.segments[, 7],
+          getCol,
+          colors = cs$colors,
+          intervals = cs$intervals
+        )
         # Plot rectangles with appropriate color for each probe:
         ytop <- i - op$sep.samples
         ybottom <- i - (1 - op$sep.samples)
@@ -337,24 +504,36 @@ chromosomeHeat <- function(segments, upper.lim, lower.lim, pos.unit, sampleID, c
 
         # Add sampleid on yaxis
         if (op$sample.labels) {
-          axis(side = 2, at = (ytop - (ytop - ybottom) / 2), labels = sampleID[i], line = op$sample.line, tcl = 0, cex.axis = op$sample.cex, las = 1, mgp = op$mgp, tick = FALSE)
+          axis(
+            side = 2,
+            at = (ytop - (ytop - ybottom) / 2),
+            labels = sampleID[i],
+            line = op$sample.line,
+            tcl = 0,
+            cex.axis = op$sample.cex,
+            las = 1,
+            mgp = op$mgp,
+            tick = FALSE
+          )
         }
       } # endfor
-
 
       if (!op$plot.ideo) {
         # Add xaxis:
         at.x <- get.xticks(xlim[1], xlim[2], unit = op$plot.unit, ideal.n = 6)
-        axis(side = 1, tcl = -0.2, at = at.x, cex.axis = op$cex.axis, mgp = op$mgp)
+        axis(
+          side = 1,
+          tcl = -0.2,
+          at = at.x,
+          cex.axis = op$cex.axis,
+          mgp = op$mgp
+        )
         title(xlab = op$xlab, cex.lab = op$cex.lab, line = op$mgp[1])
       }
-
 
       # Add box around plot:
       abline(v = xlim)
       abline(h = c(0, nSample))
-
-
 
       # If page is full; start plotting on new page
       if (c %% (nr * nc) == 0 && c != nChrom) {

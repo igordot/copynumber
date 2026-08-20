@@ -24,7 +24,23 @@
 
 get.yticks <- function(min, max) {
   ideal.n <- 5
-  by <- c(0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000)
+  by <- c(
+    0.05,
+    0.1,
+    0.2,
+    0.5,
+    1,
+    2,
+    5,
+    10,
+    50,
+    100,
+    500,
+    1000,
+    2000,
+    5000,
+    10000
+  )
   use.min <- rep(NA, length(by))
   use.max <- rep(NA, length(by))
   n.tick <- rep(NA, length(by))

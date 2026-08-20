@@ -23,8 +23,14 @@
 ### is.multiseg
 ### pullOutContent
 
-
-selectSegments <- function(segments, what = "variance", thres = NULL, nseg = 10, large = TRUE, p = 0.1) {
+selectSegments <- function(
+  segments,
+  what = "variance",
+  thres = NULL,
+  nseg = 10,
+  large = TRUE,
+  p = 0.1
+) {
   # Check input
   if (!what %in% c("variance", "length", "aberration")) {
     stop("'what' must be one of variance, length and aberration")
@@ -38,10 +44,14 @@ selectSegments <- function(segments, what = "variance", thres = NULL, nseg = 10,
 
   if (is.null(thres) && nseg > nrow(segments)) {
     nseg <- nrow(segments)
-    warning("'nseg' is larger than number of rows in 'segments'. Returning all segments.", call. = FALSE)
+    warning(
+      "'nseg' is larger than number of rows in 'segments'. Returning all segments.",
+      call. = FALSE
+    )
     return(segments)
   } else {
-    sel.res <- switch(what,
+    sel.res <- switch(
+      what,
       variance = subset.var(segments, nseg, thres, large),
       length = subset.length(segments, nseg, thres, large),
       aberration = subset.abe(segments, nseg, thres, p, large)
@@ -63,12 +73,28 @@ subset.var <- function(segments, nseg, thres, large) {
     if (large) {
       sel.seg <- segments[seg.var > thres, ]
       if (nrow(sel.seg) == 0) {
-        warning(paste("none of the segments have variance above ", thres, ". Returning empty data frame.", sep = ""), call. = FALSE)
+        warning(
+          paste(
+            "none of the segments have variance above ",
+            thres,
+            ". Returning empty data frame.",
+            sep = ""
+          ),
+          call. = FALSE
+        )
       }
     } else {
       sel.seg <- segments[seg.var < thres, ]
       if (nrow(sel.seg) == 0) {
-        warning(paste("none of the segments have variance below ", thres, ". Returning empty data frame.", sep = ""), call. = FALSE)
+        warning(
+          paste(
+            "none of the segments have variance below ",
+            thres,
+            ". Returning empty data frame.",
+            sep = ""
+          ),
+          call. = FALSE
+        )
       }
     }
   } else {
@@ -91,13 +117,29 @@ subset.length <- function(segments, nseg, thres, large) {
       # Pick out long segments:
       sel.seg <- segments[L > thres, ]
       if (nrow(sel.seg) == 0) {
-        warning(paste("none of the segments are longer than ", thres, ". Returning empty data frame.", sep = ""), call. = FALSE)
+        warning(
+          paste(
+            "none of the segments are longer than ",
+            thres,
+            ". Returning empty data frame.",
+            sep = ""
+          ),
+          call. = FALSE
+        )
       }
     } else {
       # Pick out short segments:
       sel.seg <- segments[L < thres, ]
       if (nrow(sel.seg) == 0) {
-        warning(paste("none of the segments are shorter than ", thres, ". Returning empty data frame.", sep = ""), call. = FALSE)
+        warning(
+          paste(
+            "none of the segments are shorter than ",
+            thres,
+            ". Returning empty data frame.",
+            sep = ""
+          ),
+          call. = FALSE
+        )
       }
     }
   } else {
@@ -122,9 +164,29 @@ subset.abe <- function(segments, nseg, thres, p, large) {
     sel.seg <- segments[prop.ab >= p, ]
     if (nrow(sel.seg) == 0) {
       if (large) {
-        warning(paste("none of the segments have mean value above ", thres, "for minimum ", p * 100, "% of the samples. Returning empty data frame.", sep = ""), call. = FALSE)
+        warning(
+          paste(
+            "none of the segments have mean value above ",
+            thres,
+            "for minimum ",
+            p * 100,
+            "% of the samples. Returning empty data frame.",
+            sep = ""
+          ),
+          call. = FALSE
+        )
       } else {
-        warning(paste("none of the segments have mean value below ", thres, "for minimum ", p * 100, "% of the samples. Returning empty data frame.", sep = ""), call. = FALSE)
+        warning(
+          paste(
+            "none of the segments have mean value below ",
+            thres,
+            "for minimum ",
+            p * 100,
+            "% of the samples. Returning empty data frame.",
+            sep = ""
+          ),
+          call. = FALSE
+        )
       }
     }
     return(list(sel.seg = sel.seg, seg.ab.prop = prop.ab))

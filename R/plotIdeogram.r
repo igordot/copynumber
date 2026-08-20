@@ -16,7 +16,6 @@
 ### cyto.unit: the unit used to represent positons in cyto.data
 ### unit: the unit used for positions in the plot
 
-
 ## Required by:
 ### plotFreq (chromosomeFreq)
 ### plotAllele
@@ -28,14 +27,23 @@
 ## Requires:
 ### convert.unit
 
-plotIdeogram <- function(chrom, cyto.text = FALSE, cex = 0.6, cyto.data, cyto.unit = "bp", unit) {
+plotIdeogram <- function(
+  chrom,
+  cyto.text = FALSE,
+  cex = 0.6,
+  cyto.data,
+  cyto.unit = "bp",
+  unit
+) {
   if (chrom == 23) {
     chrom.cytoband <- cyto.data[cyto.data[, 1] == "chrX", ]
   } else {
     if (chrom == 24) {
       chrom.cytoband <- cyto.data[cyto.data[, 1] == "chrY", ]
     } else {
-      chrom.cytoband <- cyto.data[cyto.data[, 1] == paste("chr", chrom, sep = ""), ]
+      chrom.cytoband <- cyto.data[
+        cyto.data[, 1] == paste("chr", chrom, sep = ""),
+      ]
     }
   }
 
@@ -68,46 +76,120 @@ plotIdeogram <- function(chrom, cyto.text = FALSE, cex = 0.6, cyto.data, cyto.un
   angle <- rep(45, n)
   density[stain == "gvar"] <- 15
 
-
   ylow <- 0
   yhigh <- 1
 
-
-  plot(x = c(0, max(xright)), y = c(ylow, yhigh), type = "n", axes = FALSE, xlab = "", ylab = "", xlim = c(0, max(xright)), ylim = c(0, 1), xaxs = "i")
+  plot(
+    x = c(0, max(xright)),
+    y = c(ylow, yhigh),
+    type = "n",
+    axes = FALSE,
+    xlab = "",
+    ylab = "",
+    xlim = c(0, max(xright)),
+    ylim = c(0, 1),
+    xaxs = "i"
+  )
 
   # Rectangles:
   skip.rect <- c(1, centromere, n, stalk)
-  rect(xleft[-skip.rect], rep(ylow, n - length(skip.rect)), xright[-skip.rect], rep(yhigh, n - length(skip.rect)),
-    col = col[-skip.rect], border = "black", density = density[-skip.rect], angle = angle[-skip.rect]
+  rect(
+    xleft[-skip.rect],
+    rep(ylow, n - length(skip.rect)),
+    xright[-skip.rect],
+    rep(yhigh, n - length(skip.rect)),
+    col = col[-skip.rect],
+    border = "black",
+    density = density[-skip.rect],
+    angle = angle[-skip.rect]
   )
 
   # Round edges at ideogram start, stop and at centromere:
-  draw.roundEdge(start = xleft[1], stop = xright[1], y0 = ylow, y1 = yhigh, col = col[1], bow = "left", density = density[1], angle = angle[1], chrom.length = chrom.length)
   draw.roundEdge(
-    start = xleft[centromere[1]], stop = xright[centromere[1]], y0 = ylow, y1 = yhigh, col = col[centromere[1]], bow = "right", density = density[centromere[1]],
-    angle = angle[centromere[1]], lwd = 1, chrom.length = chrom.length
+    start = xleft[1],
+    stop = xright[1],
+    y0 = ylow,
+    y1 = yhigh,
+    col = col[1],
+    bow = "left",
+    density = density[1],
+    angle = angle[1],
+    chrom.length = chrom.length
   )
   draw.roundEdge(
-    start = xleft[centromere[2]], stop = xright[centromere[2]], y0 = ylow, y1 = yhigh, col = col[centromere[2]], bow = "left", density = density[centromere[2]],
-    angle = angle[centromere[2]], lwd = 1, chrom.length = chrom.length
+    start = xleft[centromere[1]],
+    stop = xright[centromere[1]],
+    y0 = ylow,
+    y1 = yhigh,
+    col = col[centromere[1]],
+    bow = "right",
+    density = density[centromere[1]],
+    angle = angle[centromere[1]],
+    lwd = 1,
+    chrom.length = chrom.length
   )
-  draw.roundEdge(start = xleft[n], stop = xright[n], y0 = ylow, y1 = yhigh, col = col[n], bow = "right", density = density[n], angle = angle[n], chrom.length = chrom.length)
+  draw.roundEdge(
+    start = xleft[centromere[2]],
+    stop = xright[centromere[2]],
+    y0 = ylow,
+    y1 = yhigh,
+    col = col[centromere[2]],
+    bow = "left",
+    density = density[centromere[2]],
+    angle = angle[centromere[2]],
+    lwd = 1,
+    chrom.length = chrom.length
+  )
+  draw.roundEdge(
+    start = xleft[n],
+    stop = xright[n],
+    y0 = ylow,
+    y1 = yhigh,
+    col = col[n],
+    bow = "right",
+    density = density[n],
+    angle = angle[n],
+    chrom.length = chrom.length
+  )
 
   # Draw stalk-segment:
   if (length(stalk) > 0) {
     for (i in 1:length(stalk)) {
-      drawStalk(xleft[stalk[i]], xright[stalk[i]], ylow, yhigh, col = col[stalk[i]])
+      drawStalk(
+        xleft[stalk[i]],
+        xright[stalk[i]],
+        ylow,
+        yhigh,
+        col = col[stalk[i]]
+      )
     }
   }
   if (cyto.text) {
-    mtext(text = paste(chrom.cytoband[, 4], "-", sep = " "), side = 1, at = (xleft + (xright - xleft) / 2), cex = cex, las = 2, adj = 1, xpd = NA) # ,line=-1)#,outer=TRUE)
+    mtext(
+      text = paste(chrom.cytoband[, 4], "-", sep = " "),
+      side = 1,
+      at = (xleft + (xright - xleft) / 2),
+      cex = cex,
+      las = 2,
+      adj = 1,
+      xpd = NA
+    ) # ,line=-1)#,outer=TRUE)
   }
 }
 
 
-
-
-draw.roundEdge <- function(start, stop, y0, y1, col, bow, density = NA, angle = 45, lwd = 1, chrom.length) {
+draw.roundEdge <- function(
+  start,
+  stop,
+  y0,
+  y1,
+  col,
+  bow,
+  density = NA,
+  angle = 45,
+  lwd = 1,
+  chrom.length
+) {
   # Y points in round edge:
   f <- rep(0, 0)
   f[1] <- 0.001
@@ -147,7 +229,15 @@ draw.roundEdge <- function(start, stop, y0, y1, col, bow, density = NA, angle = 
     }
   }
 
-  polygon(x = X, y = Y, col = col, border = "black", density = density, angle = angle, lwd = lwd)
+  polygon(
+    x = X,
+    y = Y,
+    col = col,
+    border = "black",
+    density = density,
+    angle = angle,
+    lwd = lwd
+  )
 }
 
 drawStalk <- function(start, stop, y0, y1, col) {

@@ -6,7 +6,6 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-
 # Function that calls segments as gain, normal or loss
 
 ## Input:
@@ -19,13 +18,16 @@
 ### is.multiseg
 ### pullOutContent
 
-
 callAberrations <- function(segments, thres.gain, thres.loss = -thres.gain) {
   # Make sure segments is a data frame
   segments <- pullOutContent(res = segments, what = "segments")
 
   if (is.multiseg(segments)) {
-    call.seg <- matrix("normal", nrow = nrow(segments), ncol = ncol(segments) - 5)
+    call.seg <- matrix(
+      "normal",
+      nrow = nrow(segments),
+      ncol = ncol(segments) - 5
+    )
     colnames(call.seg) <- colnames(segments)[-c(1:5)]
     gain <- segments[, -c(1:5), drop = FALSE] > thres.gain
     call.seg[gain] <- "gain"

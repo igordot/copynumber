@@ -17,7 +17,6 @@
 ## Requires:
 ### get.xticks
 
-
 ## Function that adds percentagelines, yaxis, xaxis and labels to frequency plots
 addToFreqPlot <- function(op, type) {
   # Add y-lines if wanted
@@ -38,7 +37,15 @@ addToFreqPlot <- function(op, type) {
     op$at.y <- op$percentLines
   }
   op$at.y <- c(-op$at.y, op$at.y)
-  axis(side = 2, cex.axis = op$cex.axis, at = op$at.y, mgp = op$mgp.y, las = op$las, tcl = -0.2, labels = abs(op$at.y))
+  axis(
+    side = 2,
+    cex.axis = op$cex.axis,
+    at = op$at.y,
+    mgp = op$mgp.y,
+    las = op$las,
+    tcl = -0.2,
+    labels = abs(op$at.y)
+  )
   title(ylab = op$ylab, cex.lab = op$cex.lab, line = op$mgp.y[1])
 
   # Add xaxis:
@@ -48,7 +55,13 @@ addToFreqPlot <- function(op, type) {
     if (is.null(op$at.x)) {
       op$at.x <- get.xticks(0, op$xlim[2], unit = op$plot.unit, ideal.n = 6)
     }
-    axis(side = 1, tcl = -0.2, at = op$at.x, cex.axis = op$cex.axis, mgp = op$mgp)
+    axis(
+      side = 1,
+      tcl = -0.2,
+      at = op$at.x,
+      cex.axis = op$cex.axis,
+      mgp = op$mgp
+    )
     title(xlab = op$xlab, cex.lab = op$cex.lab, line = op$mgp[1])
   }
 } # end addToFreqPlot

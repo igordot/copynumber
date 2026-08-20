@@ -8,7 +8,6 @@
 
 # Function to retrieve color in heatplot to be used for each segment:
 
-
 ## Input:
 ### seg.mean: the segment mean value
 ### colors: the range of color nuances to be applied

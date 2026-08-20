@@ -25,10 +25,8 @@
 ### plotHeatmap
 ### plotWeightedFreq
 
-
 ## Requires:
 ### convert.unit
-
 
 chromMax <- function(chrom, cyto.data, pos.unit, cyto.unit = "bp") {
   # Get scaling factor for positions

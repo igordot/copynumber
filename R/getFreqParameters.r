@@ -23,14 +23,19 @@
 ### plotFreq (genomeFreq and chromosomeFreq)
 ### plotWeightedFreq (weightedGenomeFreq and weightedChromosomeFreq)
 
-
-
-getFreqPlotParameters <- function(type, nc, nr, thres.gain, thres.loss, chrom = NULL, ...) {
+getFreqPlotParameters <- function(
+  type,
+  nc,
+  nr,
+  thres.gain,
+  thres.loss,
+  chrom = NULL,
+  ...
+) {
   # Apply a scaling factor according to number of columns and rows in plot:
   # seems to work ok:
   cr <- nc * nr
   f <- 1 - 0.013 * cr
-
 
   # Common default parameters for genome and bychrom:
   op <- list(
@@ -69,7 +74,14 @@ getFreqPlotParameters <- function(type, nc, nr, thres.gain, thres.loss, chrom = 
   # Defaults specific to plot type:
   # For genome plot:
   if (type == "genome") {
-    op$main <- paste("Thresholds = [", thres.loss, ",", thres.gain, "]", sep = "")
+    op$main <- paste(
+      "Thresholds = [",
+      thres.loss,
+      ",",
+      thres.gain,
+      "]",
+      sep = ""
+    )
     op$main.line <- 1.5 * f
     op$xlab <- ""
     op$plot.ideo <- FALSE
@@ -79,7 +91,14 @@ getFreqPlotParameters <- function(type, nc, nr, thres.gain, thres.loss, chrom = 
   # For chromosome plot:
   if (type == "bychrom") {
     op$main <- paste("Chromosome ", chrom, sep = "")
-    op$title <- paste("Thresholds = [", thres.loss, ",", thres.gain, "]", sep = "")
+    op$title <- paste(
+      "Thresholds = [",
+      thres.loss,
+      ",",
+      thres.gain,
+      "]",
+      sep = ""
+    )
     op$plot.ideo <- TRUE
   }
 
@@ -107,7 +126,11 @@ getFreqPlotParameters <- function(type, nc, nr, thres.gain, thres.loss, chrom = 
 
   # margins:
   if (is.null(op$mar)) {
-    op$mar <- if (op$plot.ideo) c(0.2 * f, 3 * f, 2.5 * f, f) else c(1.5 * f, 3 * f, 2.5 * f, f)
+    op$mar <- if (op$plot.ideo) {
+      c(0.2 * f, 3 * f, 2.5 * f, f)
+    } else {
+      c(1.5 * f, 3 * f, 2.5 * f, f)
+    }
   }
 
   # Set default ideo.frac and ideogram margins:

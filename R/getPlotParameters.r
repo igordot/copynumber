@@ -27,14 +27,20 @@
 ### plotGenome
 ### plotSample
 
-
-
-
-getPlotParameters <- function(type, cr, nSeg, sampleID = NULL, chrom = NULL, plot.ideo, xaxis, assembly, ...) {
+getPlotParameters <- function(
+  type,
+  cr,
+  nSeg,
+  sampleID = NULL,
+  chrom = NULL,
+  plot.ideo,
+  xaxis,
+  assembly,
+  ...
+) {
   # Apply a scaling factor according to number of columns and rows in plot:
   # seems to work ok:
   f <- 1 - 0.013 * cr
-
 
   # List with default plotting parameters:
   arg <- list(
@@ -65,7 +71,11 @@ getPlotParameters <- function(type, cr, nSeg, sampleID = NULL, chrom = NULL, plo
     q = 0.01,
     # Parameters that depend on the number grid layout in plot:
     f = f,
-    mar = if (plot.ideo) c(0.2 * f, 3 * f, 2.5 * f, f) else c(1.5 * f, 3 * f, 2.5 * f, f),
+    mar = if (plot.ideo) {
+      c(0.2 * f, 3 * f, 2.5 * f, f)
+    } else {
+      c(1.5 * f, 3 * f, 2.5 * f, f)
+    },
     cex = 2.5 * f,
     wins.cex = 0.4,
     q.cex = 0.4,
@@ -90,7 +100,6 @@ getPlotParameters <- function(type, cr, nSeg, sampleID = NULL, chrom = NULL, plo
     assembly = assembly
   )
 
-
   if (type == "genome") {
     arg$main.line <- 1.7 * f
     arg$xlab <- ""
@@ -108,7 +117,6 @@ getPlotParameters <- function(type, cr, nSeg, sampleID = NULL, chrom = NULL, plo
     arg$h <- c(0, 0.5)
     arg$title <- sampleID
   }
-
 
   # Check for USER MODIFICATIONS:
   arg <- modifyList(arg, list(...))
@@ -142,7 +150,10 @@ getPlotParameters <- function(type, cr, nSeg, sampleID = NULL, chrom = NULL, plo
   } else {
     # Check length of user input for legend:
     if (!length(arg$legend) == nSeg) {
-      warning("Length of 'legend' does not match the number of segmentations, default legends are used instead", call. = FALSE)
+      warning(
+        "Length of 'legend' does not match the number of segmentations, default legends are used instead",
+        call. = FALSE
+      )
       arg$legend <- paste("Seg", 1:nSeg, sep = "")
     }
   } # endif
@@ -168,7 +179,6 @@ getPlotParameters <- function(type, cr, nSeg, sampleID = NULL, chrom = NULL, plo
   } else {
     arg$ideo.frac <- 0
   }
-
 
   return(arg)
 } # endgetPlotParameters

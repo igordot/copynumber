@@ -24,12 +24,16 @@
 ### plotGenome
 ### plotSample
 
-
-
 ## Requires:
 ### none
 
-get.seglim <- function(segments, equalRange, sampleID = NULL, k = NULL, baf = FALSE) {
+get.seglim <- function(
+  segments,
+  equalRange,
+  sampleID = NULL,
+  k = NULL,
+  baf = FALSE
+) {
   if (equalRange) {
     # Use all segments to determine limits:
     use.segments <- segments

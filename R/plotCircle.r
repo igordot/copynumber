@@ -30,13 +30,33 @@
 ## pullOutContent
 ## getFreqData
 
-
-plotCircle <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit = "bp", freq.colors = c("red", "limegreen"), alpha = 1 / 7, arcs = NULL, arc.colors = c("goldenrod1", "dodgerblue"), d = 0.3, assembly = "hg19") {
+plotCircle <- function(
+  segments,
+  thres.gain,
+  thres.loss = -thres.gain,
+  pos.unit = "bp",
+  freq.colors = c("red", "limegreen"),
+  alpha = 1 / 7,
+  arcs = NULL,
+  arc.colors = c("goldenrod1", "dodgerblue"),
+  d = 0.3,
+  assembly = "hg19"
+) {
   delta <- 20000000 # defines the amount of space to be plotted between each chromosome
 
   # Empty plot
   par(mar = c(0, 0, 0, 0))
-  plot(0, 0, xlim = c(-1.2, 1.2), ylim = c(-1.2, 1.2), axes = F, xlab = "", ylab = "", asp = 1, type = "n")
+  plot(
+    0,
+    0,
+    xlim = c(-1.2, 1.2),
+    ylim = c(-1.2, 1.2),
+    axes = F,
+    xlab = "",
+    ylab = "",
+    asp = 1,
+    type = "n"
+  )
 
   outer.circ <- 0 # location of outer circle
   inner.circ <- 0.1 # location of inner circle
@@ -53,9 +73,24 @@ plotCircle <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit 
   cytoband <- cytoband[o, ]
 
   chr.end <- diff(cyto.chr) > 0
-  cyto.start <- getGlobPos(cyto.chr, cytoband[, 2], pos.unit, cytoband, delta = delta)
-  cyto.end <- getGlobPos(cyto.chr, cytoband[, 3], pos.unit, cytoband, delta = delta)
-  cyto.end[chr.end[1]:length(cyto.end)] <- cyto.end[chr.end[1]:length(cyto.end)] + delta # need to add delta between first and second chromosome
+  cyto.start <- getGlobPos(
+    cyto.chr,
+    cytoband[, 2],
+    pos.unit,
+    cytoband,
+    delta = delta
+  )
+  cyto.end <- getGlobPos(
+    cyto.chr,
+    cytoband[, 3],
+    pos.unit,
+    cytoband,
+    delta = delta
+  )
+  cyto.end[chr.end[1]:length(cyto.end)] <- cyto.end[
+    chr.end[1]:length(cyto.end)
+  ] +
+    delta # need to add delta between first and second chromosome
 
   cyto.stain <- cytoband[, 5]
   xmin <- cyto.start[1]
@@ -78,7 +113,8 @@ plotCircle <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit 
     # Check if we are within chromosome or in the delta-region added at the end of each chrom
     if (gridpts[i] <= (chr.stop.pos[grid.chr] - delta)) {
       band <- which(cyto.end >= gridpts[i])[1]
-      c0[i] <- switch(cyto.stain[band],
+      c0[i] <- switch(
+        cyto.stain[band],
         "gneg" = "white",
         "gpos100" = "black",
         "gpos75" = "gray25",
@@ -95,7 +131,14 @@ plotCircle <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit 
     }
   }
   # Plot cytobands:
-  segments(tmp0$x[-delta.gridpts], tmp0$y[-delta.gridpts], tmp1$x[-delta.gridpts], tmp1$y[-delta.gridpts], col = c0[-delta.gridpts], lwd = 2)
+  segments(
+    tmp0$x[-delta.gridpts],
+    tmp0$y[-delta.gridpts],
+    tmp1$x[-delta.gridpts],
+    tmp1$y[-delta.gridpts],
+    col = c0[-delta.gridpts],
+    lwd = 2
+  )
 
   # Plot outer circle
   x <- seq(0, 1, len = 2000)
@@ -108,7 +151,14 @@ plotCircle <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit 
   c.lines(x, y, xmax = 1)
 
   # Plot the white area between each chromosome:
-  segments(tmp0$x[delta.gridpts], tmp0$y[delta.gridpts], tmp1$x[delta.gridpts], tmp1$y[delta.gridpts], col = c0[delta.gridpts], lwd = 2)
+  segments(
+    tmp0$x[delta.gridpts],
+    tmp0$y[delta.gridpts],
+    tmp1$x[delta.gridpts],
+    tmp1$y[delta.gridpts],
+    col = c0[delta.gridpts],
+    lwd = 2
+  )
 
   # Plot chromosome borders
   borders <- c(chr.stop.pos, chr.stop.pos - delta)
@@ -119,7 +169,6 @@ plotCircle <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit 
   tmp0 <- circ(x0, y0, xmax)
   tmp1 <- circ(x1, y1, xmax)
   segments(tmp0$x, tmp0$y, tmp1$x, tmp1$y, lwd = 3)
-
 
   # Plot chromosome numbers
   chrmiddle <- (chr.stop.pos[1:23] + (chr.stop.pos - delta)[2:24]) / 2
@@ -159,7 +208,6 @@ plotCircle <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit 
   tmp1 <- circ(x1, y1, xmax)
   segments(tmp0$x, tmp0$y, tmp1$x, tmp1$y, col = freq.colors[1], lwd = 2)
 
-
   m <- freq.circ - (freq.circ - inner.circ) # max space for del frequencies
   DelFreq <- apply(yhat < thres.loss, 1, mean)
   x0 <- glob.pos
@@ -176,15 +224,16 @@ plotCircle <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit 
   y <- rep(freq.circ, 2000)
   c.lines(x, y, xmax = 1)
 
-
-
   # Plot arcs if specified
   if (!is.null(arcs)) {
     cl <- arcs[, 5]
     u.cl <- sort(unique(cl))
     if (length(arc.colors) < length(u.cl)) {
       arc.colors <- rep(arc.colors, length(u.cl))
-      warning("Number of colors in 'arc.colors' is fewer than number of unique classes in 'arcs'. Colors are reused.", call.s = FALSE)
+      warning(
+        "Number of colors in 'arc.colors' is fewer than number of unique classes in 'arcs'. Colors are reused.",
+        call.s = FALSE
+      )
     }
     chr0 <- arcs[, 1]
     chr1 <- arcs[, 3]

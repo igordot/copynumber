@@ -26,8 +26,6 @@
 ## Requires:
 ### getArmandChromStop
 
-
-
 getGlobPos <- function(chromosomes, position, pos.unit, cyto.data, delta = 0) {
   # Get local stopping posistions for each p-arm and each chromosome from cytoband data
   l <- getArmandChromStop(cyto.data = cyto.data, unit = pos.unit)
@@ -46,6 +44,7 @@ getGlobPos <- function(chromosomes, position, pos.unit, cyto.data, delta = 0) {
   chromstop <- chromstop + delta
   glob.chromstop <- cumsum(chromstop) # Global stopping position for each chromosome
 
-  glob.pos <- new.pos + c(0, glob.chromstop[-length(glob.chromstop)])[chromosomes] # Calculate global positions by adding global chromstop (for chrom > 1, for chrom=1 positions remain unchanged
+  glob.pos <- new.pos +
+    c(0, glob.chromstop[-length(glob.chromstop)])[chromosomes] # Calculate global positions by adding global chromstop (for chrom > 1, for chrom=1 positions remain unchanged
   return(glob.pos)
 } # end getGlobPos

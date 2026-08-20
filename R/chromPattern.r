@@ -15,8 +15,6 @@
 ## getArmandChromStop
 ## convert.unit
 
-
-
 chromPattern <- function(pos.unit, op) {
   # Use cytoband data information to get stopping points of chromosomes:
   chromstop <- getArmandChromStop(op$assembly, pos.unit)$chromstop
@@ -30,7 +28,13 @@ chromPattern <- function(pos.unit, op) {
   # rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white")
   for (i in 1:(length(chrom.mark) - 1)) {
     if (i %% 2 == 0) {
-      rect(chrom.mark[i], par("usr")[3], chrom.mark[i + 1], par("usr")[4], col = "grey95") # , border=NA)
+      rect(
+        chrom.mark[i],
+        par("usr")[3],
+        chrom.mark[i + 1],
+        par("usr")[4],
+        col = "grey95"
+      ) # , border=NA)
     }
   }
 }

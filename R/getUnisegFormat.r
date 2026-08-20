@@ -20,7 +20,6 @@
 ## Requires:
 ### is.multiseg
 
-
 getUnisegFormat <- function(segments) {
   # Check that the segments are really on a multiseg format first:
   stopifnot(is.multiseg(segments))

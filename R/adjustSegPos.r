@@ -24,14 +24,12 @@
 ## Required by:
 ### plotHeat
 
-
 ## Requires:
 ### convert.unit
 ### getGlobPos
 ### numericArms
 ### separateChrom
 ### numericChrom
-
 
 adjustSegPos <- function(chrom, char.arms, start, stop, type, unit, op) {
   # Make sure chromosome is numeric:

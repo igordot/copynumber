@@ -9,8 +9,14 @@ test_that("aspcf() reproduces the vignette's SNP-array workflow", {
   expect_named(
     allele.seg,
     c(
-      "sampleID", "chrom", "arm", "start.pos", "end.pos", "n.probes",
-      "logR.mean", "BAF.mean"
+      "sampleID",
+      "chrom",
+      "arm",
+      "start.pos",
+      "end.pos",
+      "n.probes",
+      "logR.mean",
+      "BAF.mean"
     )
   )
   # a real invariant, known without running aspcf(): segments partition

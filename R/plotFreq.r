@@ -16,7 +16,6 @@
 ### layout: number of columns and rows in plot
 ### ... : other optional plot parameters
 
-
 ## Required by: none
 
 ## Requires:
@@ -27,7 +26,15 @@
 ### pullOutContent
 ### getFreqData
 
-plotFreq <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit = "bp", chrom = NULL, layout = c(1, 1), ...) {
+plotFreq <- function(
+  segments,
+  thres.gain,
+  thres.loss = -thres.gain,
+  pos.unit = "bp",
+  chrom = NULL,
+  layout = c(1, 1),
+  ...
+) {
   # Check data input:
   # Make sure data is a data frame (could be a list if it contains segmentation results or results from winsorize)
   data <- segments
@@ -60,9 +67,18 @@ plotFreq <- function(segments, thres.gain, thres.loss = -thres.gain, pos.unit = 
   thres.loss <- thres.loss[1:nT]
 
   # plot frequency, either over genome or by chromosomes:
-  switch(type,
+  switch(
+    type,
     genome = genomeFreq(data, thres.gain, thres.loss, pos.unit, layout, ...),
-    bychrom = chromosomeFreq(data, thres.gain, thres.loss, pos.unit, chrom, layout, ...)
+    bychrom = chromosomeFreq(
+      data,
+      thres.gain,
+      thres.loss,
+      pos.unit,
+      chrom,
+      layout,
+      ...
+    )
   )
 }
 
@@ -90,26 +106,41 @@ genomeFreq <- function(data, thres.gain, thres.loss, pos.unit, layout, ...) {
   nProbe <- nrow(data)
   nT <- length(thres.gain)
 
-
   # Get plot parameters:
-  op <- getFreqPlotParameters(type = "genome", nc = nc, nr = nr, thres.gain = thres.gain, thres.loss = thres.loss, ...)
+  op <- getFreqPlotParameters(
+    type = "genome",
+    nc = nc,
+    nr = nr,
+    thres.gain = thres.gain,
+    thres.loss = thres.loss,
+    ...
+  )
 
   # Set global xlimits if not specified by user:
   if (is.null(op$xlim)) {
-    op$xlim <- getGlobal.xlim(op = op, pos.unit = pos.unit, chrom = unique(data[, 1]))
+    op$xlim <- getGlobal.xlim(
+      op = op,
+      pos.unit = pos.unit,
+      chrom = unique(data[, 1])
+    )
   }
 
   # Adjust positions to be plotted along xaxis; i.e. get global positions, scale according to plot.unit, and get left and right pos for freq.rectangles
   # to be plotted (either continuous or 1 probe long):
-  x <- adjustPos(position = data[, 2], chromosomes = data[, 1], pos.unit = pos.unit, type = "genome", op = op)
+  x <- adjustPos(
+    position = data[, 2],
+    chromosomes = data[, 1],
+    pos.unit = pos.unit,
+    type = "genome",
+    op = op
+  )
   xleft <- x$xleft
   xright <- x$xright
 
-
-  if (dev.cur() <= 1) { # to make Sweave work
+  if (dev.cur() <= 1) {
+    # to make Sweave work
     dev.new(width = op$plot.size[1], height = op$plot.size[2], record = TRUE)
   }
-
 
   # Initialize:
   row <- 1
@@ -122,7 +153,12 @@ genomeFreq <- function(data, thres.gain, thres.loss, pos.unit, layout, ...) {
   # One plot for each value in thres.gain/thres.loss:
   for (t in 1:nT) {
     # Frame dimensions for plot t:
-    fig.t <- c(frames$left[clm], frames$right[clm], frames$bot[row], frames$top[row])
+    fig.t <- c(
+      frames$left[clm],
+      frames$right[clm],
+      frames$bot[row],
+      frames$top[row]
+    )
     par(fig = fig.t, new = new, oma = c(0, 0, 1, 0), mar = op$mar)
 
     # Calculate the percentage of samples that have estimated copy number larger than thres at given position:
@@ -133,7 +169,20 @@ genomeFreq <- function(data, thres.gain, thres.loss, pos.unit, layout, ...) {
     op <- updateFreqParameters(freq.del, freq.amp, op)
 
     # Empty plot with correct limits
-    plot(1, 1, type = "n", ylim = op$ylim, xlim = op$xlim, xaxs = "i", main = "", frame.plot = TRUE, yaxt = "n", xaxt = "n", ylab = "", xlab = "")
+    plot(
+      1,
+      1,
+      type = "n",
+      ylim = op$ylim,
+      xlim = op$xlim,
+      xaxs = "i",
+      main = "",
+      frame.plot = TRUE,
+      yaxt = "n",
+      xaxt = "n",
+      ylab = "",
+      xlab = ""
+    )
 
     # Add shifting white/grey pattern to backgroud to separate chromosomes:
     chromPattern(pos.unit, op)
@@ -145,8 +194,22 @@ genomeFreq <- function(data, thres.gain, thres.loss, pos.unit, layout, ...) {
     addToFreqPlot(op, type = "genome")
 
     # Plot frequencies:
-    rect(xleft = xleft, ybottom = 0, xright = xright, ytop = freq.amp, col = op$col.gain, border = op$col.gain)
-    rect(xleft = xleft, ybottom = 0, xright = xright, ytop = -freq.del, col = op$col.loss, border = op$col.loss)
+    rect(
+      xleft = xleft,
+      ybottom = 0,
+      xright = xright,
+      ytop = freq.amp,
+      col = op$col.gain,
+      border = op$col.gain
+    )
+    rect(
+      xleft = xleft,
+      ybottom = 0,
+      xright = xright,
+      ytop = -freq.del,
+      col = op$col.loss,
+      border = op$col.loss
+    )
 
     # Add line at y=0:
     abline(h = 0, lty = 1, col = "grey82", lwd = 1.5)
@@ -156,8 +219,20 @@ genomeFreq <- function(data, thres.gain, thres.loss, pos.unit, layout, ...) {
 
     # Separate chromosomes by vertical lines:
     op$chrom.lty <- 1
-    addChromlines(data[, 1], xaxis = "pos", unit = pos.unit, cex = op$cex.chrom, op = op)
-    addArmlines(data[, 1], xaxis = "pos", unit = pos.unit, cex = op$cex.chrom, op = op)
+    addChromlines(
+      data[, 1],
+      xaxis = "pos",
+      unit = pos.unit,
+      cex = op$cex.chrom,
+      op = op
+    )
+    addArmlines(
+      data[, 1],
+      xaxis = "pos",
+      unit = pos.unit,
+      cex = op$cex.chrom,
+      op = op
+    )
 
     # Get new page, or update column/row:
     if (t %% (nr * nc) == 0) {
@@ -182,10 +257,7 @@ genomeFreq <- function(data, thres.gain, thres.loss, pos.unit, layout, ...) {
 } # end function
 
 
-
-
 # Function that plots frequencies by chromosomes (each chrom in separate panel)
-
 
 ## Required by: plotFreq
 
@@ -198,8 +270,15 @@ genomeFreq <- function(data, thres.gain, thres.loss, pos.unit, layout, ...) {
 ### chromMax
 ### addToFreqPlot
 
-
-chromosomeFreq <- function(data, thres.gain, thres.loss, pos.unit, chrom, layout, ...) {
+chromosomeFreq <- function(
+  data,
+  thres.gain,
+  thres.loss,
+  pos.unit,
+  chrom,
+  layout,
+  ...
+) {
   nProbe <- nrow(data)
   nT <- length(thres.gain)
   nChrom <- length(chrom)
@@ -209,7 +288,15 @@ chromosomeFreq <- function(data, thres.gain, thres.loss, pos.unit, chrom, layout
   nc <- layout[2]
 
   # Get plot parameters:
-  op <- getFreqPlotParameters(type = "bychrom", nc = nc, nr = nr, thres.gain = thres.gain, thres.loss = thres.loss, chrom = chrom, ...)
+  op <- getFreqPlotParameters(
+    type = "bychrom",
+    nc = nc,
+    nr = nr,
+    thres.gain = thres.gain,
+    thres.loss = thres.loss,
+    chrom = chrom,
+    ...
+  )
 
   # Margins for entire plot in window:
   if (all(op$title == "")) {
@@ -219,10 +306,15 @@ chromosomeFreq <- function(data, thres.gain, thres.loss, pos.unit, chrom, layout
   }
   mar <- c(0.2, 0.2, 0.3, 0.2)
 
-
   # Adjust positions to be plotted along xaxis; i.e. scale according to plot.unit, and get left and right pos for freq.rectangles to be plotted (either continuous
   # or 1 probe long):
-  x <- adjustPos(position = data[, 2], chromosomes = data[, 1], pos.unit = pos.unit, type = "chromosome", op = op)
+  x <- adjustPos(
+    position = data[, 2],
+    chromosomes = data[, 1],
+    pos.unit = pos.unit,
+    type = "chromosome",
+    op = op
+  )
   xleft <- x$xleft
   xright <- x$xright
 
@@ -231,7 +323,8 @@ chromosomeFreq <- function(data, thres.gain, thres.loss, pos.unit, chrom, layout
 
   # make separate plots for each value of thres.gain/thres.loss
   for (t in 1:nT) {
-    if (dev.cur() <= 1) { # to make Sweave work
+    if (dev.cur() <= 1) {
+      # to make Sweave work
       dev.new(width = op$plot.size[1], height = op$plot.size[2], record = TRUE)
     }
 
@@ -252,11 +345,21 @@ chromosomeFreq <- function(data, thres.gain, thres.loss, pos.unit, chrom, layout
 
     for (c in 1:nChrom) {
       # Frame dimensions for plot c:
-      fig.c <- c(frames$left[clm], frames$right[clm], frames$bot[row], frames$top[row])
+      fig.c <- c(
+        frames$left[clm],
+        frames$right[clm],
+        frames$bot[row],
+        frames$top[row]
+      )
       par(fig = fig.c, new = new, oma = oma, mar = mar)
 
       # Make list with frame dimensions:
-      frame.c <- list(left = frames$left[clm], right = frames$right[clm], bot = frames$bot[row], top = frames$top[row])
+      frame.c <- list(
+        left = frames$left[clm],
+        right = frames$right[clm],
+        bot = frames$bot[row],
+        top = frames$top[row]
+      )
 
       # Select relevant chromosome number
       k <- chrom[c]
@@ -272,14 +375,25 @@ chromosomeFreq <- function(data, thres.gain, thres.loss, pos.unit, chrom, layout
       if (op$plot.ideo) {
         # Ideogram frame:
         ideo.frame <- frame.c
-        ideo.frame$top <- frame.c$bot + (frame.c$top - frame.c$bot) * op$ideo.frac
+        ideo.frame$top <- frame.c$bot +
+          (frame.c$top - frame.c$bot) * op$ideo.frac
 
         par(fig = unlist(ideo.frame), new = new, mar = op$mar.i)
         # Plot ideogram and get maximum probe position in ideogram:
-        plotIdeogram(chrom = k, cyto.text = op$cyto.text, cyto.data = op$assembly, cex = op$cex.cytotext, unit = op$plot.unit)
+        plotIdeogram(
+          chrom = k,
+          cyto.text = op$cyto.text,
+          cyto.data = op$assembly,
+          cex = op$cex.cytotext,
+          unit = op$plot.unit
+        )
 
         # Get maximum position for this chromosome:
-        xmaxI <- chromMax(chrom = k, cyto.data = op$assembly, pos.unit = op$plot.unit)
+        xmaxI <- chromMax(
+          chrom = k,
+          cyto.data = op$assembly,
+          pos.unit = op$plot.unit
+        )
         xlim <- c(0, xmaxI)
 
         new <- TRUE
@@ -295,7 +409,21 @@ chromosomeFreq <- function(data, thres.gain, thres.loss, pos.unit, chrom, layout
       }
 
       # Empty plot:
-      plot(1, 1, type = "n", ylim = op$ylim, xlim = xlim, xaxs = "i", main = op$main[c], frame.plot = FALSE, yaxt = "n", xaxt = "n", cex.main = op$cex.main, ylab = "", xlab = "")
+      plot(
+        1,
+        1,
+        type = "n",
+        ylim = op$ylim,
+        xlim = xlim,
+        xaxs = "i",
+        main = op$main[c],
+        frame.plot = FALSE,
+        yaxt = "n",
+        xaxt = "n",
+        cex.main = op$cex.main,
+        ylab = "",
+        xlab = ""
+      )
 
       # Add axes, labels and percentageLines:
       chrom.op <- op
@@ -304,15 +432,26 @@ chromosomeFreq <- function(data, thres.gain, thres.loss, pos.unit, chrom, layout
       addToFreqPlot(chrom.op, type = "bychrom")
 
       # Plot frequencies as rectangles
-      rect(xleft = xleft[ind.c], ybottom = 0, xright = xright[ind.c], ytop = freqamp.c, col = op$col.gain, border = op$col.gain)
-      rect(xleft = xleft[ind.c], ybottom = 0, xright = xright[ind.c], ytop = -freqdel.c, col = op$col.loss, border = op$col.loss)
-
+      rect(
+        xleft = xleft[ind.c],
+        ybottom = 0,
+        xright = xright[ind.c],
+        ytop = freqamp.c,
+        col = op$col.gain,
+        border = op$col.gain
+      )
+      rect(
+        xleft = xleft[ind.c],
+        ybottom = 0,
+        xright = xright[ind.c],
+        ytop = -freqdel.c,
+        col = op$col.loss,
+        border = op$col.loss
+      )
 
       # Add line at y=0 and x=0
       abline(h = 0, lty = 1, col = "grey90")
       abline(v = 0)
-
-
 
       # If page is full; start plotting on new page
       if (c %% (nr * nc) == 0 && c != nChrom) {

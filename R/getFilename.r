@@ -23,14 +23,12 @@
 ### plotGenome
 ### plotSample
 
-
-
-
 ## Requires:
 ### none
 
 getFilename <- function(nPage, file.name, ID, type) {
-  def.name <- switch(type,
+  def.name <- switch(
+    type,
     genome = "genomeplot",
     sample = "sampleplot",
     chromosome = "chromosomeplot",
@@ -43,10 +41,18 @@ getFilename <- function(nPage, file.name, ID, type) {
   if (nPage == 1) {
     # Only one file/window
     if (is.null(file.name)) {
-      file.name <- ifelse(length(ID) == 1, paste(def.name, "_", ID, sep = ""), def.name)
+      file.name <- ifelse(
+        length(ID) == 1,
+        paste(def.name, "_", ID, sep = ""),
+        def.name
+      )
     } else {
       if (length(file.name) != nPage) {
-        warning("Length of 'file.name' is not equal to number of files to be saved, first element in 'file.name' is used", call. = FALSE, immediate. = TRUE)
+        warning(
+          "Length of 'file.name' is not equal to number of files to be saved, first element in 'file.name' is used",
+          call. = FALSE,
+          immediate. = TRUE
+        )
       }
       file.name <- file.name[1] # in case more than one name has been specified
     }
@@ -61,7 +67,11 @@ getFilename <- function(nPage, file.name, ID, type) {
     } else {
       if (length(file.name) < nPage) {
         file.name <- paste(file.name[1], 1:nPage, sep = "")
-        warning("Length of 'file.name' is less than number of files to be saved, first element in 'file.name' is reused", call. = FALSE, immediate. = TRUE)
+        warning(
+          "Length of 'file.name' is less than number of files to be saved, first element in 'file.name' is reused",
+          call. = FALSE,
+          immediate. = TRUE
+        )
       } else {
         if (length(file.name) > nPage) {
           file.name <- file.name[1:nPage]

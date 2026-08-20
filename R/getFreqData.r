@@ -32,7 +32,10 @@ getFreqData <- function(data) {
     bpts <- matrix(NA, nrow = 0, ncol = 2)
     for (j in 1:length(chr)) {
       subseg <- subsetSegments(data, chrom = chr[j])
-      bpts <- rbind(bpts, data.frame(chr[j], sort(unique(c(subseg$start.pos, subseg$end.pos)))))
+      bpts <- rbind(
+        bpts,
+        data.frame(chr[j], sort(unique(c(subseg$start.pos, subseg$end.pos))))
+      )
     }
     colnames(bpts) <- c("chrom", "pos")
 

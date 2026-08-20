@@ -6,7 +6,6 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-
 # Function to check that samples are found in both data and segments
 # If sample=NULL; all unique sampleIDs found in both data and segments are selected
 
@@ -14,7 +13,6 @@
 ### data: the copy number data frame
 ### segments: a list containing one or more segmentations
 ### sample: a vector of sample numbers, or NULL
-
 
 ## Output:
 ### sampleID: a vector of unique selected sampleIDs to be plotted
@@ -33,7 +31,10 @@ checkSampleID <- function(data, segments, sample) {
     if (!is.null(sample)) {
       sampleID <- sample.names[sample]
       if (length(sampleID) == 0) {
-        stop("Input in 'sample' is larger than the number of samples found in 'data'", .call = FALSE)
+        stop(
+          "Input in 'sample' is larger than the number of samples found in 'data'",
+          .call = FALSE
+        )
       }
     } else {
       sampleID <- sample.names
@@ -47,13 +48,17 @@ checkSampleID <- function(data, segments, sample) {
 
     # Find common sampleIDs in data and all segmentations, given input in sample
     i <- 1
-    if (is.null(sampleID)) { # data is NULL
+    if (is.null(sampleID)) {
+      # data is NULL
       # Get sampleIDs to be plotted for the first segmentation result
       sampleID <- all.segid[[1]]
       if (!is.null(sample)) {
         sampleID <- sampleID[sample]
         if (length(sampleID) == 0) {
-          stop("Input in 'sample' is larger than the number of samples found in 'segments'", .call = FALSE)
+          stop(
+            "Input in 'sample' is larger than the number of samples found in 'segments'",
+            .call = FALSE
+          )
         }
       }
       i <- i + 1
@@ -67,11 +72,13 @@ checkSampleID <- function(data, segments, sample) {
       if (!is.null(data)) {
         stop("no sampleIDs are common in 'data' and 'segments'", .call = FALSE)
       } else {
-        stop("no sampleIDs are common in all components of 'segments'", .call = FALSE)
+        stop(
+          "no sampleIDs are common in all components of 'segments'",
+          .call = FALSE
+        )
       }
     }
   }
-
 
   # Check input sampleID and print errors or warnings if necessary:
   sampleID <- sampleID[!is.na(sampleID)] # could be NA if 'sample' is outside the number of samples represented in data/segments

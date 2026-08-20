@@ -18,13 +18,11 @@
 ## Required by:
 ### checkAndRetrievePlotInput
 
-
 ## Requires:
 ### getUnisegFormat
 ### is.multiseg
 ### numericChrom
 ### pullOutContent
-
 
 checkSegments <- function(segments, type) {
   # Check and pull out relevant information in segments

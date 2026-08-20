@@ -1,6 +1,5 @@
 ## code to add hg38 and mm10 genome builds
 
-
 # cytoband data for various genome builds are in this file
 original_sysdata <- load("R/sysdata.rda")
 

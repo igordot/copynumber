@@ -27,7 +27,6 @@
 ### multipcf
 ### aspcf
 
-
 # what could be "segments","estimates","wins.data" or "wins.outliers"
 
 pullOutContent <- function(res, what = "segments") {

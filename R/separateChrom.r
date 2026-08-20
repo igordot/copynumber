@@ -21,7 +21,6 @@
 ## Requires:
 ### none
 
-
 separateChrom <- function(v) {
   d <- diff(v) # get difference between value (i+1) and value i in vector v
   cp <- which(d != 0) + 1 # get changepoints

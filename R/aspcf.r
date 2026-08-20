@@ -6,10 +6,8 @@
 ## Reference: Nilsen and Liest?l et al. (2012), BMC Genomics
 ####################################################################
 
-
 ## Required by:
 ### none
-
 
 ## Requires:
 ### findNN
@@ -21,14 +19,32 @@
 
 # Main function for allele-specific PCF to be called by user
 
-aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40, baf.thres = c(0.1, 0.9), skew = 3, assembly = "hg19", digits = 4, return.est = FALSE, save.res = FALSE, file.names = NULL, verbose = TRUE) {
+aspcf <- function(
+  logR,
+  BAF,
+  pos.unit = "bp",
+  arms = NULL,
+  kmin = 5,
+  gamma = 40,
+  baf.thres = c(0.1, 0.9),
+  skew = 3,
+  assembly = "hg19",
+  digits = 4,
+  return.est = FALSE,
+  save.res = FALSE,
+  file.names = NULL,
+  verbose = TRUE
+) {
   # Check pos.unit input:
   if (!pos.unit %in% c("bp", "kbp", "mbp")) {
     stop("pos.unit must be one of bp, kbp and mbp", call. = FALSE)
   }
 
   # Check assembly input:
-  if (!assembly %in% c("hg19", "hg18", "hg17", "hg16", "mm7", "mm8", "mm9", "hg38", "mm10")) {
+  if (
+    !assembly %in%
+      c("hg19", "hg18", "hg17", "hg16", "mm7", "mm8", "mm9", "hg38", "mm10")
+  ) {
     stop("assembly must be one of hg19, hg18, hg17 or hg16", call. = FALSE)
   }
 
@@ -49,7 +65,13 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
   } else {
     # logR is a datafile which contains logR-data
     f.logR <- file(logR, "r") # open file connection
-    head <- scan(f.logR, nlines = 1, what = "character", quiet = TRUE, sep = "\t") # Read header
+    head <- scan(
+      f.logR,
+      nlines = 1,
+      what = "character",
+      quiet = TRUE,
+      sep = "\t"
+    ) # Read header
     if (length(head) < 3) {
       stop("Data in logR file must have at least 3 columns", call. = FALSE)
     }
@@ -57,7 +79,13 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
     nSample <- length(sampleid)
 
     # Read just the two first columns to get chrom and pos
-    chrom.pos <- read.table(file = logR, sep = "\t", header = TRUE, colClasses = c(rep(NA, 2), rep("NULL", nSample)), as.is = TRUE) # chromosomes could be character or numeric
+    chrom.pos <- read.table(
+      file = logR,
+      sep = "\t",
+      header = TRUE,
+      colClasses = c(rep(NA, 2), rep("NULL", nSample)),
+      as.is = TRUE
+    ) # chromosomes could be character or numeric
     chrom <- chrom.pos[, 1]
     position <- chrom.pos[, 2]
   }
@@ -88,7 +116,6 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
   arm.list <- unique(num.arms)
   nArm <- length(arm.list)
 
-
   # Check BAF input:
   if (!isfile.BAF) {
     # Input could come from winsorize and thus be a list; check and possibly retrieve data frame wins.data
@@ -97,16 +124,40 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
     nrow.BAF <- nrow(BAF)
   } else {
     f.BAF <- file(BAF, "r")
-    ncol.BAF <- length(scan(f.BAF, nlines = 1, what = "character", quiet = TRUE, sep = "\t"))
-    nrow.BAF <- nrow(read.table(file = BAF, sep = "\t", header = TRUE, colClasses = c(NA, rep("NULL", ncol.BAF - 1)), as.is = TRUE))
+    ncol.BAF <- length(scan(
+      f.BAF,
+      nlines = 1,
+      what = "character",
+      quiet = TRUE,
+      sep = "\t"
+    ))
+    nrow.BAF <- nrow(read.table(
+      file = BAF,
+      sep = "\t",
+      header = TRUE,
+      colClasses = c(NA, rep("NULL", ncol.BAF - 1)),
+      as.is = TRUE
+    ))
   }
   if (nrow.BAF != nProbe || ncol.BAF != nSample + 2) {
-    stop("Input in BAF does not represent the same number of probes and samples as found in input in logR", call. = FALSE)
+    stop(
+      "Input in BAF does not represent the same number of probes and samples as found in input in logR",
+      call. = FALSE
+    )
   }
 
   # Initialize
   yhat.names <- c("chrom", "pos", sampleid)
-  seg.names <- c("sampleID", "chrom", "arm", "start.pos", "end.pos", "n.probes", "logR.mean", "BAF.mean")
+  seg.names <- c(
+    "sampleID",
+    "chrom",
+    "arm",
+    "start.pos",
+    "end.pos",
+    "n.probes",
+    "logR.mean",
+    "BAF.mean"
+  )
   segments <- data.frame(matrix(nrow = 0, ncol = 8))
   colnames(segments) <- seg.names
 
@@ -120,7 +171,10 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
       if (!dir.res %in% dir()) {
         dir.create(dir.res)
       }
-      file.names <- c(paste(dir.res, "/", "logR_estimates.txt", sep = ""), paste(dir.res, "/", "segments.txt", sep = ""))
+      file.names <- c(
+        paste(dir.res, "/", "logR_estimates.txt", sep = ""),
+        paste(dir.res, "/", "segments.txt", sep = "")
+      )
     } else {
       # Check that file.names is the correct length
       if (length(file.names) < 2) {
@@ -149,13 +203,23 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
     } else {
       # Read data for this arm from file; since f is a opened connection, the reading will start on the next line which has not already been read
       # skip two first columns
-      arm.logR <- read.table(f.logR, nrows = length(probe.c), sep = "\t", colClasses = c(rep("NULL", 2), rep("numeric", nSample)))
+      arm.logR <- read.table(
+        f.logR,
+        nrows = length(probe.c),
+        sep = "\t",
+        colClasses = c(rep("NULL", 2), rep("numeric", nSample))
+      )
     }
     if (!isfile.BAF) {
       arm.BAF <- BAF[probe.c, -c(1:2), drop = FALSE]
     } else {
       # Read data for this arm from file; since f is a opened connection, the reading will start on the next line which has not already been read
-      arm.BAF <- read.table(f.BAF, nrows = length(probe.c), sep = "\t", colClasses = c(rep("NULL", 2), rep("numeric", nSample)))
+      arm.BAF <- read.table(
+        f.BAF,
+        nrows = length(probe.c),
+        sep = "\t",
+        colClasses = c(rep("NULL", 2), rep("numeric", nSample))
+      )
     }
 
     # Checking that there are no missing values in logR:
@@ -187,7 +251,8 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
 
       obs <- !is.na(filt.baf)
 
-      if (sum(obs) != 0) { # Making sure at least one BAF-value in this arm and this sample passes the threshold test!
+      if (sum(obs) != 0) {
+        # Making sure at least one BAF-value in this arm and this sample passes the threshold test!
         # Find nearest non-missing neighbour for obs. that have been filtered:
         nn <- rep(NA, length(probe.c))
         nn[obs] <- which(obs)
@@ -202,7 +267,13 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
         use.BAF <- filt.baf[obs]
 
         # Run ASPCF
-        res <- fastAspcf(logR = use.logR, allB = use.BAF, kmin = kmin, gamma = gamma, skewed.SD = skew)
+        res <- fastAspcf(
+          logR = use.logR,
+          allB = use.BAF,
+          kmin = kmin,
+          gamma = gamma,
+          skewed.SD = skew
+        )
 
         yhat1[obs] <- res$yhat1
         yhat2[obs] <- res$yhat2
@@ -213,7 +284,15 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
       } else {
         yhat1 <- rep(mean(sample.logR), length(probe.c))
         yhat2 <- rep(NA, length(probe.c))
-        message(paste("aspcf is not run for ", sampleid[i], " in chromosome arm ", unique(chrom[probe.c]), unique(arms[probe.c]), " because all of the BAF-values are outside the threshold values. Mean is returned for logR.", sep = ""))
+        message(paste(
+          "aspcf is not run for ",
+          sampleid[i],
+          " in chromosome arm ",
+          unique(chrom[probe.c]),
+          unique(arms[probe.c]),
+          " because all of the BAF-values are outside the threshold values. Mean is returned for logR.",
+          sep = ""
+        ))
       }
       # Rounding:
       yhat1 <- round(yhat1, digits = digits)
@@ -237,7 +316,17 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
       BAF.mean <- yhat2[seg.start]
 
       # Data frame:
-      seg <- data.frame(rep(sampleid[i], nSeg), seg.chrom, seg.arm, pos.start, pos.stop, n.pos, logR.mean, BAF.mean, stringsAsFactors = FALSE)
+      seg <- data.frame(
+        rep(sampleid[i], nSeg),
+        seg.chrom,
+        seg.arm,
+        pos.start,
+        pos.stop,
+        n.pos,
+        logR.mean,
+        BAF.mean,
+        stringsAsFactors = FALSE
+      )
       colnames(seg) <- seg.names
       segments.c <- rbind(segments.c, seg)
 
@@ -245,7 +334,6 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
         logR.yhat.c <- cbind(logR.yhat.c, yhat1)
       }
     } # endfor
-
 
     # Should results be written to files or returned to user:
     if (save.res) {
@@ -255,10 +343,29 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
         w2 <- file(file.names[2], "w")
       }
       # Write estimated PCF-values file for this arm:
-      write.table(data.frame(chrom[probe.c], pos.c, logR.yhat.c, stringsAsFactors = FALSE), file = w1, col.names = if (c == 1) yhat.names else FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+      write.table(
+        data.frame(
+          chrom[probe.c],
+          pos.c,
+          logR.yhat.c,
+          stringsAsFactors = FALSE
+        ),
+        file = w1,
+        col.names = if (c == 1) yhat.names else FALSE,
+        row.names = FALSE,
+        quote = FALSE,
+        sep = "\t"
+      )
 
       # Write segments to file for this arm
-      write.table(segments.c, file = w2, col.names = if (c == 1) seg.names else FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+      write.table(
+        segments.c,
+        file = w2,
+        col.names = if (c == 1) seg.names else FALSE,
+        row.names = FALSE,
+        quote = FALSE,
+        sep = "\t"
+      )
     }
 
     # Append to results for other arms:
@@ -268,7 +375,15 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
     }
 
     if (verbose) {
-      cat(paste("aspcf finished for chromosome arm ", seg.chrom[1], seg.arm[1], sep = ""), "\n")
+      cat(
+        paste(
+          "aspcf finished for chromosome arm ",
+          seg.chrom[1],
+          seg.arm[1],
+          sep = ""
+        ),
+        "\n"
+      )
     }
   } # endfor
 
@@ -290,15 +405,17 @@ aspcf <- function(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
   }
 
   if (return.est) {
-    logR_yhat <- data.frame(chrom, position, logR.yhat, stringsAsFactors = FALSE)
+    logR_yhat <- data.frame(
+      chrom,
+      position,
+      logR.yhat,
+      stringsAsFactors = FALSE
+    )
     return(list(logR_estimates = logR.yhat, segments = segments))
   } else {
     return(segments)
   }
 } # endfunction
-
-
-
 
 
 # fast ASPCF  version
@@ -314,7 +431,7 @@ fastAspcf <- function(logR, allB, kmin, gamma, skewed.SD) {
   var2 <- 0
   breakpts <- 0
   larger <- TRUE
-  repeat{
+  repeat {
     from <- max(c(1, startw))
     to <- min(c(stopw, N))
     logRpart <- logR[from:to]
@@ -329,7 +446,18 @@ fastAspcf <- function(logR, allB, kmin, gamma, skewed.SD) {
     sd.valid <- c(!is.na(sd1), !is.na(sd2), sd1 != 0, sd2 != 0)
     if (all(sd.valid)) {
       # run aspcfpart:
-      part.res <- aspcfpart(logRpart = logRpart, allBflip = allBflip, a = startw, b = stopw, d = d, sd1 = sd1, sd2 = sd2, N = N, kmin = kmin, gamma = gamma)
+      part.res <- aspcfpart(
+        logRpart = logRpart,
+        allBflip = allBflip,
+        a = startw,
+        b = stopw,
+        d = d,
+        sd1 = sd1,
+        sd2 = sd2,
+        N = N,
+        kmin = kmin,
+        gamma = gamma
+      )
       breakptspart <- part.res$breakpts
       # the 'larger' is (occasionally) necessary in the last window of the segmentation!
       larger <- breakptspart > breakpts[length(breakpts)]
@@ -360,7 +488,10 @@ fastAspcf <- function(logR, allB, kmin, gamma, skewed.SD) {
   yhat2 <- rep(NA, N)
 
   for (i in 1:nseg) {
-    yhat1[frst[i]:last[i]] <- rep(mean(logR[frst[i]:last[i]]), last[i] - frst[i] + 1)
+    yhat1[frst[i]:last[i]] <- rep(
+      mean(logR[frst[i]:last[i]]),
+      last[i] - frst[i] + 1
+    )
     yi2 <- allB[frst[i]:last[i]]
     # Center data around zero (by subtracting 0.5) and estimate mean
     if (length(yi2) == 0) {
@@ -420,7 +551,6 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma) {
   bestAver1[kmin] <- initAve1
   bestAver2[kmin] <- initAve2
 
-
   # Initialize
   Sum1 <- rep(0, N)
   Sum2 <- rep(0, N)
@@ -441,7 +571,6 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma) {
     Aver2[kminP1:k] <- Sum2[kminP1:k] / ((k - kmin):1)
     Kvad2[kminP1:k] <- Kvad2[kminP1:k] + y2[k]^2
 
-
     bestAver1[k] <- (initSum1 + Sum1[kminP1]) / k
     bestAver2[k] <- (initSum2 + Sum2[kminP1]) / k
     cost1 <- ((initKvad1 + Kvad1[kminP1]) - k * bestAver1[k]^2) / sd1^2
@@ -450,7 +579,6 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma) {
     bestCost[k] <- cost1 + cost2
   }
 
-
   for (n in (2 * kmin):N) {
     nMkminP1 <- n - kmin + 1
 
@@ -458,12 +586,16 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma) {
     Aver1[kminP1:n] <- Sum1[kminP1:n] / ((n - kmin):1)
     Kvad1[kminP1:n] <- Kvad1[kminP1:n] + (y1[n])^2
 
-    cost1 <- (Kvad1[kminP1:nMkminP1] - Sum1[kminP1:nMkminP1] * Aver1[kminP1:nMkminP1]) / sd1^2
+    cost1 <- (Kvad1[kminP1:nMkminP1] -
+      Sum1[kminP1:nMkminP1] * Aver1[kminP1:nMkminP1]) /
+      sd1^2
 
     Sum2[kminP1:n] <- Sum2[kminP1:n] + y2[n]
     Aver2[kminP1:n] <- Sum2[kminP1:n] / ((n - kmin):1)
     Kvad2[kminP1:n] <- Kvad2[kminP1:n] + (y2[n])^2
-    cost2 <- (Kvad2[kminP1:nMkminP1] - Sum2[kminP1:nMkminP1] * Aver2[kminP1:nMkminP1]) / sd2^2
+    cost2 <- (Kvad2[kminP1:nMkminP1] -
+      Sum2[kminP1:nMkminP1] * Aver2[kminP1:nMkminP1]) /
+      sd2^2
 
     Cost[kminP1:nMkminP1] <- bestCost[kmin:(n - kmin)] + cost1 + cost2
 
@@ -489,7 +621,6 @@ aspcfpart <- function(logRpart, allBflip, a, b, d, sd1, sd2, N, kmin, gamma) {
     bestAver2[n] <- aver2
     bestSplit[n] <- Pos - 1
   } # endfor
-
 
   # Trace back
   n <- N

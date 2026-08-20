@@ -23,14 +23,21 @@
 ### Required by:
 ### plotHeatmap (genomeHeat and chromosomeHeat)
 
-
-getHeatParameters <- function(type, nc, nr, nSample, upper.lim, lower.lim, chrom = NULL, ab = FALSE, ...) {
+getHeatParameters <- function(
+  type,
+  nc,
+  nr,
+  nSample,
+  upper.lim,
+  lower.lim,
+  chrom = NULL,
+  ab = FALSE,
+  ...
+) {
   # Apply a scaling factor according to number of columns and rows in plot:
   # virker som om dette funker ok:
   cr <- nc * nr
   f <- 1 - 0.013 * cr
-
-
 
   # Common defaults for genome and chromosome heatplot:
   op <- list(
@@ -73,7 +80,11 @@ getHeatParameters <- function(type, nc, nr, nSample, upper.lim, lower.lim, chrom
   if (type == "genome") {
     # Set default plot window size:
     op$plot.size[1] <- 11.8
-    op$plot.size[2] <- ifelse(nr == 1, min(nSample * 0.8, 8.2), min(8.2, 3 * nr))
+    op$plot.size[2] <- ifelse(
+      nr == 1,
+      min(nSample * 0.8, 8.2),
+      min(8.2, 3 * nr)
+    )
     op$main <- paste("Limits = [", lower.lim, ",", upper.lim, "]", sep = "")
     op$main.line <- 1.7 * f
     op$xlab <- ""
@@ -107,7 +118,11 @@ getHeatParameters <- function(type, nc, nr, nSample, upper.lim, lower.lim, chrom
 
   # margins:
   if (is.null(op$mar)) {
-    op$mar <- if (op$plot.ideo) c(0.5 * f, 2 * f, 3 * f, f) else c(2 * f, 2 * f, 3 * f, f)
+    op$mar <- if (op$plot.ideo) {
+      c(0.5 * f, 2 * f, 3 * f, f)
+    } else {
+      c(2 * f, 2 * f, 3 * f, f)
+    }
     if (op$sample.labels) {
       op$mar[2] <- op$mar[2] + 2 * op$f
     }

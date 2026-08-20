@@ -23,7 +23,6 @@
 ### addToFreqPlot
 ### plotHeatmap
 
-
 ## Requires:
 ### none
 
@@ -36,7 +35,8 @@ get.xticks <- function(min, max, unit, ideal.n) {
   } else {
     if (identical(unit, "kbp")) {
       ideal.n <- ideal.n - 1
-      by <- c(1, 2, 5, 10, 20, 40, 60, 80, 100, 200, 500, 1000, 2000, 5000) * 1000
+      by <- c(1, 2, 5, 10, 20, 40, 60, 80, 100, 200, 500, 1000, 2000, 5000) *
+        1000
     }
   }
 

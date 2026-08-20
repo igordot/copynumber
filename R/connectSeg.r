@@ -17,7 +17,6 @@
 ### lwd: segment line width
 ### lty: segment line type
 
-
 ## Required by:
 ### plotGamma
 ### plotSegments
@@ -25,14 +24,29 @@
 ## Requires:
 ## none
 
-
 connectSeg <- function(sep.arm, nSeg, use.stop, seg.mean, col, lwd, lty) {
   if (!is.null(sep.arm) && nSeg > 2) {
     # No connection across arms in the case of sample- or chromosomePlot, and across not adjecent chromosomes in the case of genomePlot
-    segments(x0 = use.stop[-c((sep.arm - 1), nSeg)], y0 = seg.mean[-c((sep.arm - 1), nSeg)], x1 = use.stop[-c((sep.arm - 1), nSeg)], y1 = seg.mean[-c(1, sep.arm)], col = col, lwd = lwd, lty = lty)
+    segments(
+      x0 = use.stop[-c((sep.arm - 1), nSeg)],
+      y0 = seg.mean[-c((sep.arm - 1), nSeg)],
+      x1 = use.stop[-c((sep.arm - 1), nSeg)],
+      y1 = seg.mean[-c(1, sep.arm)],
+      col = col,
+      lwd = lwd,
+      lty = lty
+    )
   } else {
     if (is.null(sep.arm) && nSeg > 1) {
-      segments(x0 = use.stop[1:(nSeg - 1)], y0 = seg.mean[1:(nSeg - 1)], x1 = use.stop[1:(nSeg - 1)], y1 = seg.mean[2:nSeg], col = col, lwd = lwd, lty = lty)
+      segments(
+        x0 = use.stop[1:(nSeg - 1)],
+        y0 = seg.mean[1:(nSeg - 1)],
+        x1 = use.stop[1:(nSeg - 1)],
+        y1 = seg.mean[2:nSeg],
+        col = col,
+        lwd = lwd,
+        lty = lty
+      )
     }
   }
 } # end connectSeg

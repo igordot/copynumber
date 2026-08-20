@@ -6,9 +6,7 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-
 ## Required by:
-
 
 ## Requires:
 ### findNN
@@ -17,10 +15,18 @@
 ### handleMissing
 ### pullOutContent
 
-
 ## Main function for pcf-analysis to be called by the user
 
-pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TRUE, digits = 4, return.est = FALSE, verbose = TRUE) {
+pcfPlain <- function(
+  pos.data,
+  kmin = 5,
+  gamma = 40,
+  normalize = TRUE,
+  fast = TRUE,
+  digits = 4,
+  return.est = FALSE,
+  verbose = TRUE
+) {
   # Input could come from winsorize and thus be a list; check and possibly retrieve data frame wins.data
   pos.data <- pullOutContent(pos.data, what = "wins.data")
 
@@ -39,7 +45,6 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
   sampleid <- colnames(pos.data)[-1]
   nProbe <- length(position)
 
-
   # save user's gamma
   gamma0 <- gamma
 
@@ -54,7 +59,6 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
     }
   } # endif
 
-
   # Initialize
   pcf.names <- c("pos", sampleid)
   seg.names <- c("sampleID", "start.pos", "end.pos", "n.probes", "mean")
@@ -64,7 +68,6 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
   if (return.est) {
     pcf.est <- matrix(nrow = 0, ncol = nSample)
   }
-
 
   # Run PCF separately for each sample:
   for (i in 1:nSample) {
@@ -79,8 +82,8 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
     obs <- !is.na(sample.data)
     obs.data <- sample.data[obs]
 
-
-    if (length(obs.data) > 0) { ## Make sure there are observations for this sample! If not, estimates are left NA as well
+    if (length(obs.data) > 0) {
+      ## Make sure there are observations for this sample! If not, estimates are left NA as well
 
       # If number of probes in entire data set is >= 100K, the MAD sd-estimate is calculated using obs in this arm for this sample.
       # Only required if normalize=T
@@ -97,19 +100,40 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
       # Must check that sd!=0 and sd!!=NA -> use.gamma=0/NA. If not, simply calculate mean of observations
       if (use.gamma == 0 || is.na(use.gamma)) {
         if (return.est) {
-          res <- list(Lengde = length(obs.data), sta = 1, mean = mean(obs.data), nIntervals = 1, yhat = rep(mean(obs.data)))
+          res <- list(
+            Lengde = length(obs.data),
+            sta = 1,
+            mean = mean(obs.data),
+            nIntervals = 1,
+            yhat = rep(mean(obs.data))
+          )
         } else {
-          res <- list(Lengde = length(obs.data), sta = 1, mean = mean(obs.data), nIntervals = 1)
+          res <- list(
+            Lengde = length(obs.data),
+            sta = 1,
+            mean = mean(obs.data),
+            nIntervals = 1
+          )
         }
       } else {
         # Compute piecewise constant fit
         # run fast approximate PCF if fast=TRUE and number of probes>400, or exact PCF otherwise
         if (!fast || length(obs.data) < 400) {
           # Exact PCF:
-          res <- exactPcf(y = obs.data, kmin = kmin, gamma = use.gamma, yest = return.est)
+          res <- exactPcf(
+            y = obs.data,
+            kmin = kmin,
+            gamma = use.gamma,
+            yest = return.est
+          )
         } else {
           # Run fast PCF:
-          res <- selectFastPcf(x = obs.data, kmin = kmin, gamma = use.gamma, yest = return.est)
+          res <- selectFastPcf(
+            x = obs.data,
+            kmin = kmin,
+            gamma = use.gamma,
+            yest = return.est
+          )
         } # endif
       } # endif
 
@@ -132,7 +156,14 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
         nn <- findNN(pos = position, obs = obs)
 
         # Include probes with missing values in segments where their nearest neighbour probes are located
-        new.res <- handleMissing(nn = nn, pos = position, obs = obs, pos.start = pos.start, pos.stop = pos.stop, seg.npos = seg.npos)
+        new.res <- handleMissing(
+          nn = nn,
+          pos = position,
+          obs = obs,
+          pos.start = pos.start,
+          pos.stop = pos.stop,
+          seg.npos = seg.npos
+        )
         pos.start <- new.res$pos.start
         pos.stop <- new.res$pos.stop
         seg.npos <- new.res$seg.npos
@@ -142,7 +173,16 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
         }
       }
     } else {
-      warning(paste("pcf is not run for sample ", i, " because all observations are missing. NA is returned.", sep = ""), immediate. = TRUE, call. = FALSE)
+      warning(
+        paste(
+          "pcf is not run for sample ",
+          i,
+          " because all observations are missing. NA is returned.",
+          sep = ""
+        ),
+        immediate. = TRUE,
+        call. = FALSE
+      )
       seg.start <- 1
       seg.stop <- nProbe
       pos.start <- position[seg.start]
@@ -152,12 +192,18 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
       seg.npos <- nProbe
     }
 
-
     # Round:
     seg.mean <- round(seg.mean, digits = digits)
 
     # Add results for this sample to results for other samples in data frame:
-    seg <- data.frame(rep(sampleid[i], nSeg), pos.start, pos.stop, seg.npos, seg.mean, stringsAsFactors = FALSE)
+    seg <- data.frame(
+      rep(sampleid[i], nSeg),
+      pos.start,
+      pos.stop,
+      seg.npos,
+      seg.mean,
+      stringsAsFactors = FALSE
+    )
     colnames(seg) <- seg.names
     segments <- rbind(segments, seg)
 
@@ -168,12 +214,9 @@ pcfPlain <- function(pos.data, kmin = 5, gamma = 40, normalize = TRUE, fast = TR
     }
   } # endfor
 
-
-
   if (verbose) {
     cat(paste("pcf finished for sample ", i, sep = ""), "\n")
   }
-
 
   if (return.est) {
     pcf.est <- data.frame(position, pcf.est, stringsAsFactors = FALSE)

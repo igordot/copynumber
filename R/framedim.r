@@ -24,7 +24,6 @@
 ### plotHeat
 ### plotWeightedFreq
 
-
 ## Requires:
 ### none
 

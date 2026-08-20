@@ -22,7 +22,9 @@ interpolate.pcf <- function(segments, x) {
   names(z) <- c("chr", "pos", usamp)
   for (i in 1:nsamp) {
     for (j in 1:length(chrom)) {
-      fitij <- segments[segments$sampleID == usamp[i] & segments$chrom == chrom[j], ]
+      fitij <- segments[
+        segments$sampleID == usamp[i] & segments$chrom == chrom[j],
+      ]
       v <- (c(fitij$start.pos[-1], 10^9) + fitij$end.pos) / 2
       xj <- x[x[, 1] == chrom[j], 2]
       kj <- rep(0, length(xj))

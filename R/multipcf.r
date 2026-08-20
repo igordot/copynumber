@@ -9,7 +9,6 @@
 ## Required by:
 ### none
 
-
 ## Requires:
 ### getMad
 ### getArms
@@ -19,14 +18,32 @@
 
 ## Main function for multipcf-analysis to be called by the user
 
-multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, normalize = TRUE, w = 1, fast = TRUE, assembly = "hg19", digits = 4, return.est = FALSE, save.res = FALSE, file.names = NULL, verbose = TRUE) {
+multipcf <- function(
+  data,
+  pos.unit = "bp",
+  arms = NULL,
+  Y = NULL,
+  gamma = 40,
+  normalize = TRUE,
+  w = 1,
+  fast = TRUE,
+  assembly = "hg19",
+  digits = 4,
+  return.est = FALSE,
+  save.res = FALSE,
+  file.names = NULL,
+  verbose = TRUE
+) {
   # Check pos.unit input:
   if (!pos.unit %in% c("bp", "kbp", "mbp")) {
     stop("'pos.unit' must be one of bp, kbp and mbp", call. = FALSE)
   }
 
   # Check assembly input:
-  if (!assembly %in% c("hg19", "hg18", "hg17", "hg16", "mm7", "mm8", "mm9", "hg38", "mm10")) {
+  if (
+    !assembly %in%
+      c("hg19", "hg18", "hg17", "hg16", "mm7", "mm8", "mm9", "hg38", "mm10")
+  ) {
     stop("assembly must be one of hg19, hg18, hg17 or hg16", call. = FALSE)
   }
 
@@ -54,7 +71,13 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
     nSample <- length(sampleid)
 
     # Read just the two first columns to get chrom and pos
-    chrom.pos <- read.table(file = data, sep = "\t", header = TRUE, colClasses = c(rep(NA, 2), rep("NULL", nSample)), as.is = TRUE)
+    chrom.pos <- read.table(
+      file = data,
+      sep = "\t",
+      header = TRUE,
+      colClasses = c(rep(NA, 2), rep("NULL", nSample)),
+      as.is = TRUE
+    )
     chrom <- chrom.pos[, 1]
     position <- chrom.pos[, 2]
   }
@@ -90,7 +113,10 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
   if (length(w) == 1) {
     w <- rep(w, nSample)
   } else if (length(w) != nSample) {
-    stop("'w' must be a single number or a vector of same length as the number of samples in 'data'", call. = FALSE)
+    stop(
+      "'w' must be a single number or a vector of same length as the number of samples in 'data'",
+      call. = FALSE
+    )
   }
 
   # Check Y input:
@@ -103,11 +129,26 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
       nrow.Y <- nrow(Y)
     } else {
       f.y <- file(Y, "r")
-      ncol.Y <- length(scan(f.y, nlines = 1, what = "character", quiet = TRUE, sep = "\t"))
-      nrow.Y <- nrow(read.table(file = Y, sep = "\t", header = TRUE, colClasses = c(NA, rep("NULL", ncol.Y - 1)), as.is = TRUE))
+      ncol.Y <- length(scan(
+        f.y,
+        nlines = 1,
+        what = "character",
+        quiet = TRUE,
+        sep = "\t"
+      ))
+      nrow.Y <- nrow(read.table(
+        file = Y,
+        sep = "\t",
+        header = TRUE,
+        colClasses = c(NA, rep("NULL", ncol.Y - 1)),
+        as.is = TRUE
+      ))
     }
     if (nrow.Y != nProbe || ncol.Y != nSample + 2) {
-      stop("Input Y does not represent the same number of probes and samples as found in input data", call. = FALSE)
+      stop(
+        "Input Y does not represent the same number of probes and samples as found in input data",
+        call. = FALSE
+      )
     }
   }
 
@@ -127,7 +168,10 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
       if (!dir.res %in% dir()) {
         dir.create(dir.res)
       }
-      file.names <- c(paste(dir.res, "/", "estimates.txt", sep = ""), paste(dir.res, "/", "segments.txt", sep = ""))
+      file.names <- c(
+        paste(dir.res, "/", "estimates.txt", sep = ""),
+        paste(dir.res, "/", "segments.txt", sep = "")
+      )
     } else {
       # Check that file.names is the correct length
       if (length(file.names) < 2) {
@@ -149,7 +193,12 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
         cc <- rep("NULL", nSample + 2)
         cc[j + 2] <- "numeric"
         # only read data for the j'th sample
-        sample.data <- read.table(file = data, sep = "\t", header = TRUE, colClasses = cc)[, 1]
+        sample.data <- read.table(
+          file = data,
+          sep = "\t",
+          header = TRUE,
+          colClasses = cc
+        )[, 1]
       }
       sd[j] <- getMad(sample.data[!is.na(sample.data)], k = 25) # Take out missing values before calculating mad
     }
@@ -170,17 +219,27 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
     } else {
       # Read data for this arm from file; since f is a opened connection, the reading will start on the next line which has not already been read
       # two first columns skipped
-      arm.data <- read.table(f, nrows = nProbe.c, sep = "\t", colClasses = c(rep("NULL", 2), rep("numeric", nSample)))
+      arm.data <- read.table(
+        f,
+        nrows = nProbe.c,
+        sep = "\t",
+        colClasses = c(rep("NULL", 2), rep("numeric", nSample))
+      )
     }
 
     # Check that there are no missing values:
     if (any(is.na(arm.data))) {
-      stop("multiPCF cannot be run because there are missing data values, see 'imputeMissing' for imputation of missing values")
+      stop(
+        "multiPCF cannot be run because there are missing data values, see 'imputeMissing' for imputation of missing values"
+      )
     }
 
     # Make sure data is numeric:
     if (any(!sapply(arm.data, is.numeric))) {
-      stop("input in data columns 3 and onwards (copy numbers) must be numeric", call. = FALSE)
+      stop(
+        "input in data columns 3 and onwards (copy numbers) must be numeric",
+        call. = FALSE
+      )
     }
 
     # If normalize=T and nProbe>=100K, we calculate the MAD sd-estimate for each sample using only obs in this arm
@@ -195,9 +254,20 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
       dim(m) <- c(length(m), 1)
       if (yest) {
         yhat <- sapply(m, rep, nrow(arm.data))
-        mpcf <- list(pcf = t(yhat), nIntervals = 1, start0 = 1, length = nrow(arm.data), mean = m)
+        mpcf <- list(
+          pcf = t(yhat),
+          nIntervals = 1,
+          start0 = 1,
+          length = nrow(arm.data),
+          mean = m
+        )
       } else {
-        mpcf <- list(nIntervals = 1, start0 = 1, length = nrow(arm.data), mean = m)
+        mpcf <- list(
+          nIntervals = 1,
+          start0 = 1,
+          length = nrow(arm.data),
+          mean = m
+        )
       }
     } else {
       # normalize data data (sd=1 if normalize=FALSE)
@@ -211,7 +281,12 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
         mpcf <- doMultiPCF(as.matrix(t(arm.data)), gamma = gamma, yest = yest) # requires samples in rows, probes in columns
         # note: returns samples in rows, estimates in columns.
       } else {
-        mpcf <- selectFastMultiPcf(as.matrix(arm.data), gamma = gamma, L = 15, yest = yest) # requires samples in columns, probes in rows
+        mpcf <- selectFastMultiPcf(
+          as.matrix(arm.data),
+          gamma = gamma,
+          L = 15,
+          yest = yest
+        ) # requires samples in columns, probes in rows
       }
 
       # "Unweight" estimates:
@@ -246,11 +321,19 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
       if (!isfile.Y) {
         arm.Y <- Y[probe.c, -c(1:2), drop = FALSE]
       } else {
-        arm.Y <- read.table(f.y, nrows = length(probe.c), sep = "\t", colClasses = c(rep("NULL", 2), rep("numeric", nSample)))
+        arm.Y <- read.table(
+          f.y,
+          nrows = length(probe.c),
+          sep = "\t",
+          colClasses = c(rep("NULL", 2), rep("numeric", nSample))
+        )
       }
       # Make sure Y is numeric:
       if (any(!sapply(arm.Y, is.numeric))) {
-        stop("input in Y columns 3 and onwards (copy numbers) must be numeric", call. = FALSE)
+        stop(
+          "input in Y columns 3 and onwards (copy numbers) must be numeric",
+          call. = FALSE
+        )
       }
       # Use observed data to calculate segment mean (recommended)
       seg.mean <- matrix(NA, nrow = nSeg, ncol = nSample)
@@ -267,7 +350,15 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
     seg.mean <- round(seg.mean, digits = digits)
 
     # Data frame:
-    segments.c <- data.frame(chrid, armid, posStart, posEnd, n.pos, seg.mean, stringsAsFactors = FALSE)
+    segments.c <- data.frame(
+      chrid,
+      armid,
+      posStart,
+      posEnd,
+      n.pos,
+      seg.mean,
+      stringsAsFactors = FALSE
+    )
     colnames(segments.c) <- seg.names
 
     # Should results be written to files or returned to user:
@@ -279,9 +370,23 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
       }
 
       # Write segments to file for this arm
-      write.table(segments.c, file = w2, col.names = if (c == 1) seg.names else FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+      write.table(
+        segments.c,
+        file = w2,
+        col.names = if (c == 1) seg.names else FALSE,
+        row.names = FALSE,
+        quote = FALSE,
+        sep = "\t"
+      )
       # Write estimated multiPCF-values file for this arm:
-      write.table(data.frame(chrom[probe.c], pos.c, t(yhat), stringsAsFactors = FALSE), file = w1, col.names = if (c == 1) mpcf.names else FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+      write.table(
+        data.frame(chrom[probe.c], pos.c, t(yhat), stringsAsFactors = FALSE),
+        file = w1,
+        col.names = if (c == 1) mpcf.names else FALSE,
+        row.names = FALSE,
+        quote = FALSE,
+        sep = "\t"
+      )
     }
 
     # Append results for this arm:
@@ -291,7 +396,10 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
     }
 
     if (verbose) {
-      cat(paste("multipcf finished for chromosome arm ", chr, a, sep = ""), "\n")
+      cat(
+        paste("multipcf finished for chromosome arm ", chr, a, sep = ""),
+        "\n"
+      )
     }
   } # endfor
 
@@ -306,7 +414,10 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
   }
 
   if (save.res) {
-    cat(paste("multipcf-estimates were saved in file", file.names[1]), sep = "\n")
+    cat(
+      paste("multipcf-estimates were saved in file", file.names[1]),
+      sep = "\n"
+    )
     close(w1)
     cat(paste("segments were saved in file", file.names[2]), sep = "\n")
     close(w2)
@@ -321,8 +432,6 @@ multipcf <- function(data, pos.unit = "bp", arms = NULL, Y = NULL, gamma = 40, n
     return(segments)
   }
 } # endfunction
-
-
 
 
 # Run exact multipcf algorithm, to be called by multipcf (main function)
@@ -406,9 +515,20 @@ doMultiPCF <- function(y, gamma, yest) {
     antall <- antall - 1
   }
   if (yest) {
-    return(list(pcf = yhat, length = lengde, start0 = start0, mean = verdi, nIntervals = antInt))
+    return(list(
+      pcf = yhat,
+      length = lengde,
+      start0 = start0,
+      mean = verdi,
+      nIntervals = antInt
+    ))
   } else {
-    return(list(length = lengde, start0 = start0, mean = verdi, nIntervals = antInt))
+    return(list(
+      length = lengde,
+      start0 = start0,
+      mean = verdi,
+      nIntervals = antInt
+    ))
   }
 }
 
@@ -442,13 +562,18 @@ runFastMultiPCF <- function(x, gamma, L, frac1, frac2, yest) {
   if (yest) {
     potts <- expandMulti(nrow(x), ncol(x), compPotts$Lengde, compPotts$mean)
     return(list(
-      pcf = potts, length = compPotts$Lengde, start0 = compPotts$sta,
-      mean = compPotts$mean, nIntervals = compPotts$nIntervals
+      pcf = potts,
+      length = compPotts$Lengde,
+      start0 = compPotts$sta,
+      mean = compPotts$mean,
+      nIntervals = compPotts$nIntervals
     ))
   } else {
     return(list(
-      length = compPotts$Lengde, start0 = compPotts$sta,
-      mean = compPotts$mean, nIntervals = compPotts$nIntervals
+      length = compPotts$Lengde,
+      start0 = compPotts$sta,
+      mean = compPotts$mean,
+      nIntervals = compPotts$nIntervals
     ))
   }
 }
@@ -479,13 +604,18 @@ runMultiPcfSubset <- function(x, gamma, L, frac1, frac2, yest) {
   if (yest) {
     potts <- expandMulti(nrow(x), ncol(x), compPotts$Lengde, compPotts$mean)
     return(list(
-      pcf = potts, length = compPotts$Lengde, start0 = compPotts$sta,
-      mean = compPotts$mean, nIntervals = compPotts$nIntervals
+      pcf = potts,
+      length = compPotts$Lengde,
+      start0 = compPotts$sta,
+      mean = compPotts$mean,
+      nIntervals = compPotts$nIntervals
     ))
   } else {
     return(list(
-      length = compPotts$Lengde, start0 = compPotts$sta,
-      mean = compPotts$mean, nIntervals = compPotts$nIntervals
+      length = compPotts$Lengde,
+      start0 = compPotts$sta,
+      mean = compPotts$mean,
+      nIntervals = compPotts$nIntervals
     ))
   }
 }

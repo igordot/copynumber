@@ -34,7 +34,6 @@
 ## Requires:
 ### none
 
-
 numericChrom <- function(chrom) {
   if (!is.numeric(chrom)) {
     if (is.factor(chrom)) {

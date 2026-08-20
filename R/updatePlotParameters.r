@@ -19,7 +19,6 @@
 ### sampleID: the sampleID to be plotted
 ### k: the chromosome number to be plotted
 
-
 ### Output:
 ### op: list with updated plot parameters
 
@@ -31,8 +30,16 @@
 ### get.xticks
 ### get.yticks
 
-
-updatePlotParameters <- function(seg.lim, xmax, type, xaxis, op, data.lim, sampleID, k) {
+updatePlotParameters <- function(
+  seg.lim,
+  xmax,
+  type,
+  xaxis,
+  op,
+  data.lim,
+  sampleID,
+  k
+) {
   # Set MAIN TITLE for this plot depending on type of plot:
   if (is.null(op$main)) {
     if (type %in% c("genome", "chromosome")) {
@@ -56,7 +63,6 @@ updatePlotParameters <- function(seg.lim, xmax, type, xaxis, op, data.lim, sampl
     op$xlim <- c(0, xmax)
   }
 
-
   # TICK MARKS on x and y axis:
   if (is.null(op$at.x)) {
     if (type == "genome") {
@@ -65,10 +71,20 @@ updatePlotParameters <- function(seg.lim, xmax, type, xaxis, op, data.lim, sampl
       n.ticks <- 6
     }
     if (xaxis == "pos") {
-      op$at.x <- get.xticks(op$xlim[1], op$xlim[2], unit = op$plot.unit, ideal.n = n.ticks)
+      op$at.x <- get.xticks(
+        op$xlim[1],
+        op$xlim[2],
+        unit = op$plot.unit,
+        ideal.n = n.ticks
+      )
     } else {
       # xaxis = index:
-      op$at.x <- get.xticks(op$xlim[1], op$xlim[2], unit = "mbp", ideal.n = n.ticks)
+      op$at.x <- get.xticks(
+        op$xlim[1],
+        op$xlim[2],
+        unit = "mbp",
+        ideal.n = n.ticks
+      )
     }
   }
   if (is.null(op$at.y)) {
@@ -83,7 +99,6 @@ updatePlotParameters <- function(seg.lim, xmax, type, xaxis, op, data.lim, sampl
     mgp.y <- op$mgp
   }
   op$mgp.y <- mgp.y
-
 
   # Default is no xlab, if specified by user the BOTTOM MARGIN must be increased:
   if (op$xlab != "") {

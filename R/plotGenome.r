@@ -18,7 +18,6 @@
 ### layout: the grid layout for the plot (number of columns and rows)
 ### ... : other optional plot parameters
 
-
 ## Required by:
 ### none
 
@@ -32,20 +31,35 @@
 ### plotObs
 ### plotSegments
 
-
-plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = NULL, assembly = "hg19", winsoutliers = NULL, xaxis = "pos", layout = c(1, 1), ...) {
+plotGenome <- function(
+  data = NULL,
+  segments = NULL,
+  pos.unit = "bp",
+  sample = NULL,
+  assembly = "hg19",
+  winsoutliers = NULL,
+  xaxis = "pos",
+  layout = c(1, 1),
+  ...
+) {
   # Check, modify and retrieve plot input:
-  input <- checkAndRetrievePlotInput(data = data, segments = segments, winsoutliers = winsoutliers, type = "genome", xaxis = xaxis, pos.unit = pos.unit, sample = sample)
+  input <- checkAndRetrievePlotInput(
+    data = data,
+    segments = segments,
+    winsoutliers = winsoutliers,
+    type = "genome",
+    xaxis = xaxis,
+    pos.unit = pos.unit,
+    sample = sample
+  )
   data <- input$data
   segments <- input$segments
   sampleID <- input$sampleID
   winsoutliers <- input$winsoutliers
 
-
   nSample <- length(sampleID)
   nSeg <- length(segments) # will be 0 if segments=NULL
   sample.names <- colnames(data)[-c(1:2)] # will be NULL if data=NULL
-
 
   # Plot layout
   nr <- layout[1]
@@ -53,7 +67,16 @@ plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
   rc <- nr * nc
 
   # Set default plot parameters and change these if user has specified other choices via ... :
-  arg <- getPlotParameters(type = "genome", cr = nc * nr, nSeg = nSeg, sampleID = sampleID, plot.ideo = FALSE, xaxis = xaxis, assembly = assembly, ...)
+  arg <- getPlotParameters(
+    type = "genome",
+    cr = nc * nr,
+    nSeg = nSeg,
+    sampleID = sampleID,
+    plot.ideo = FALSE,
+    xaxis = xaxis,
+    assembly = assembly,
+    ...
+  )
 
   # Set global xlimits if not specified by user:
   if (is.null(arg$xlim) && xaxis == "pos") {
@@ -70,7 +93,13 @@ plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
   # Get data limits if equalRange -> range will be max and min across all samples
   if (!is.null(data) && arg$equalRange) {
     all.sample <- which(sample.names %in% sampleID)
-    data.lim <- quantile(data[, all.sample + 2], probs = c(arg$q / 2, (1 - arg$q / 2)), names = FALSE, type = 4, na.rm = TRUE)
+    data.lim <- quantile(
+      data[, all.sample + 2],
+      probs = c(arg$q / 2, (1 - arg$q / 2)),
+      names = FALSE,
+      type = 4,
+      na.rm = TRUE
+    )
   }
 
   # Check if there should be more than one file/window with plot(s), and get file.name accordingly
@@ -83,11 +112,22 @@ plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
   for (j in 1:length(file.name)) {
     # Either print to file, or plot on screen
     if (!is.null(arg$dir.print)) {
-      pdf(file = paste(arg$dir.print, "/", file.name[j], ".pdf", sep = ""), width = arg$plot.size[1], height = arg$plot.size[2], onefile = TRUE, paper = "a4") # a4-paper
+      pdf(
+        file = paste(arg$dir.print, "/", file.name[j], ".pdf", sep = ""),
+        width = arg$plot.size[1],
+        height = arg$plot.size[2],
+        onefile = TRUE,
+        paper = "a4"
+      ) # a4-paper
     } else {
       # windows(width=arg$plot.size[1],height=arg$plot.size[2],record=TRUE)
-      if (dev.cur() <= j) { # to make Sweave work
-        dev.new(width = arg$plot.size[1], height = arg$plot.size[2], record = TRUE)
+      if (dev.cur() <= j) {
+        # to make Sweave work
+        dev.new(
+          width = arg$plot.size[1],
+          height = arg$plot.size[2],
+          record = TRUE
+        )
       }
     }
 
@@ -107,15 +147,23 @@ plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
       use.sampleID <- sampleID
     }
 
-
     # Separate plots for each sample
-
 
     for (i in 1:length(use.sampleID)) {
       # Frame dimensions for plot i:
-      fig.c <- c(frames$left[clm], frames$right[clm], frames$bot[row], frames$top[row])
+      fig.c <- c(
+        frames$left[clm],
+        frames$right[clm],
+        frames$bot[row],
+        frames$top[row]
+      )
       par(fig = fig.c, new = new, oma = c(0, 0, 0.5, 0), mar = arg$mar)
-      frame.c <- list(left = frames$left[clm], right = frames$right[clm], bot = frames$bot[row], top = frames$top[row])
+      frame.c <- list(
+        left = frames$left[clm],
+        right = frames$right[clm],
+        bot = frames$bot[row],
+        top = frames$top[row]
+      )
 
       # Which sample is this:
       id <- use.sampleID[i]
@@ -123,24 +171,45 @@ plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
 
       # Get min and max values in segments to make sure all are shown in plot
       if (!is.null(segments)) {
-        seg.lim <- sapply(segments, get.seglim, equalRange = arg$equalRange, sampleID = id) # matrix with limits for each segment, min in row 1, max in row2
+        seg.lim <- sapply(
+          segments,
+          get.seglim,
+          equalRange = arg$equalRange,
+          sampleID = id
+        ) # matrix with limits for each segment, min in row 1, max in row2
         seg.lim <- c(min(seg.lim[1, ]), max(seg.lim[2, ])) # Get overall min and max over all segments
       } else {
         seg.lim <- NULL
       }
-
 
       # PLOT DATA POINTS:
       add <- FALSE
       if (!is.null(data)) {
         if (!arg$equalRange) {
           # Get data limits for just this sample
-          data.lim <- quantile(data[, ind.sample + 2], probs = c(arg$q / 2, (1 - arg$q / 2)), names = FALSE, type = 4, na.rm = TRUE)
+          data.lim <- quantile(
+            data[, ind.sample + 2],
+            probs = c(arg$q / 2, (1 - arg$q / 2)),
+            names = FALSE,
+            type = 4,
+            na.rm = TRUE
+          )
         }
 
         plotObs(
-          y = data[, ind.sample + 2], pos = data[, 2], unit = pos.unit, winsoutliers = winsoutliers[, ind.sample + 2], type = "genome", xaxis = xaxis, sampleID = id,
-          chromosomes = data[, 1], frame = frame.c, new = new, op = arg, data.lim = data.lim, seg.lim = seg.lim
+          y = data[, ind.sample + 2],
+          pos = data[, 2],
+          unit = pos.unit,
+          winsoutliers = winsoutliers[, ind.sample + 2],
+          type = "genome",
+          xaxis = xaxis,
+          sampleID = id,
+          chromosomes = data[, 1],
+          frame = frame.c,
+          new = new,
+          op = arg,
+          data.lim = data.lim,
+          seg.lim = seg.lim
         )
 
         add <- TRUE ## segment plot will be added on top of data plot
@@ -150,15 +219,31 @@ plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
 
       # PLOT SEGMENTS:
       if (!is.null(segments)) {
-        sample.segments <- lapply(segments, function(seg, id) {
-          seg[seg[, 1] == id, ]
-        }, id = id)
+        sample.segments <- lapply(
+          segments,
+          function(seg, id) {
+            seg[seg[, 1] == id, ]
+          },
+          id = id
+        )
         # Plot all segments in list:
         for (s in 1:nSeg) {
           use.segments <- sample.segments[[s]]
-          plotSegments(use.segments,
-            type = "genome", xaxis = xaxis, add = add, col = arg$seg.col[s], sampleID = id,
-            lty = arg$seg.lty[s], lwd = arg$seg.lwd[s], frame = frame.c, new = new, unit = pos.unit, seg.lim = seg.lim, data.lim = data.lim, op = arg
+          plotSegments(
+            use.segments,
+            type = "genome",
+            xaxis = xaxis,
+            add = add,
+            col = arg$seg.col[s],
+            sampleID = id,
+            lty = arg$seg.lty[s],
+            lwd = arg$seg.lwd[s],
+            frame = frame.c,
+            new = new,
+            unit = pos.unit,
+            seg.lim = seg.lim,
+            data.lim = data.lim,
+            op = arg
           )
 
           add <- TRUE
@@ -166,7 +251,13 @@ plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
 
         # Add segmentation legends:
         if (!is.null(arg$legend)) {
-          legend("topright", legend = arg$legend, col = arg$seg.col, lty = arg$seg.lty, cex = arg$cex.axis)
+          legend(
+            "topright",
+            legend = arg$legend,
+            col = arg$seg.col,
+            lty = arg$seg.lty,
+            cex = arg$cex.axis
+          )
         }
       }
 
@@ -200,7 +291,11 @@ plotGenome <- function(data = NULL, segments = NULL, pos.unit = "bp", sample = N
 
     # Close graphics
     if (!is.null(arg$dir.print)) {
-      cat("Plot was saved in ", paste(arg$dir.print, "/", file.name[j], ".pdf", sep = ""), "\n")
+      cat(
+        "Plot was saved in ",
+        paste(arg$dir.print, "/", file.name[j], ".pdf", sep = ""),
+        "\n"
+      )
       graphics.off()
     }
 

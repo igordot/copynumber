@@ -20,10 +20,8 @@
 ### pcf
 ### aspcf
 
-
 ## Requires:
 ### medianFilter
-
 
 getMad <- function(x, k = 25) {
   # Remove observations that are equal to zero; are likely to be imputed, should not contribute to sd:

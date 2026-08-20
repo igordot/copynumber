@@ -20,10 +20,8 @@
 ### pcf
 ### aspcf
 
-
 ## Requires:
 ### none
-
 
 findNN <- function(pos, obs) {
   ind.obs <- which(obs)

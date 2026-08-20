@@ -6,7 +6,6 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-
 # Function to calculate running median for a given a window size
 
 ## Input:
@@ -19,7 +18,6 @@
 ## Required by:
 ### getMad
 ### medianFilter
-
 
 ## Requires:
 ### none
