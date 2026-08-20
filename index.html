@@ -51,24 +51,32 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>This is an updated version of the <a href="http://bioconductor.org/packages/3.17/bioc/html/copynumber.html" class="external-link">copynumber</a> R package. It has been modified to support the human hg38 and mouse mm10 genome builds.</p>
+<p>This is an updated version of the <a href="https://bioconductor.org/packages/3.17/bioc/html/copynumber.html" class="external-link">copynumber</a> R package. It has been modified to support the human hg38 and mouse mm10 genome builds.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>You can install the package from <a href="https://igordot.r-universe.dev/copynumber" class="external-link">R-universe</a> (pre-compiled binary):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"copynumber"</span>, repos <span class="op">=</span> <span class="st">"https://igordot.r-universe.dev"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively, you can install from source:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"igordot/copynumber"</span><span class="op">)</span></span></code></pre></div>
-<p>This fork adds the following improvements to the original Bioconductor package:</p>
+</div>
+<div class="section level2">
+<h2 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
+</h2>
+<p>This fork of copynumber adds the following improvements to the original Bioconductor package:</p>
 <ul>
 <li>Support for more recent genome builds, used by the <code>assembly</code> parameter in <code><a href="reference/aspcf.html">aspcf()</a></code>, <code><a href="reference/multipcf.html">multipcf()</a></code>, <code><a href="reference/pcf.html">pcf()</a></code>, and <code><a href="reference/winsorize.html">winsorize()</a></code>
 </li>
-<li>A <a href="https://igordot.github.io/copynumber/">documentation website</a>
-</li>
+<li>A <a href="https://igordot.github.io/copynumber/">documentation website</a> (via roxygen2 and pkgdown)</li>
+<li>A clean, browsable <a href="https://igordot.github.io/copynumber/articles/copynumber.html">HTML vignette</a> (via knitr and R Markdown)</li>
 <li>Automated tests to help ensure that the package continues to function</li>
 </ul>
 <p>This modification builds upon the previous work of <a href="https://github.com/aroneklund/copynumber" class="external-link">aroneklund</a> and <a href="https://github.com/ShixiangWang/copynumber" class="external-link">ShixiangWang</a>. There is an additional fork by <a href="https://github.com/Irrationone/copynumber" class="external-link">Irrationone</a> that provides a species-agnostic approach, but the enhanced functionality adds a new parameter that makes it not backward compatible. Any packages that depend on <code>copynumber</code> (such as <code>sequenza</code>, <code>PureCN</code>, or <code>scarHRD</code>) would need to be modified as well to take advantage of the new feature.</p>
 <p>This fork is based on copynumber 1.29.0. The package was removed in Bioconductor 3.18 (released October 2023). There have been no changes to the code besides Bioconductor-mandated version bumps since 2013.</p>
 <p>Please use <a href="https://github.com/igordot/copynumber/issues" class="external-link">GitHub issues</a> to report any problems or request new features.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
