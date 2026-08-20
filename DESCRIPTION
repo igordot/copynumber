@@ -1,22 +1,22 @@
 Package: copynumber
 Title: Segmentation of single- and multi-track copy number data by
-        penalized least squares regression (with hg38 and mm10).
+    penalized least squares regression (with hg38 and mm10).
 Version: 1.29.0.9000
-Author: Gro Nilsen, Knut Liestoel and Ole Christian Lingjaerde.
-Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
+Authors@R: c(
+    person("Gro", "Nilsen", , "gronilse@ifi.uio.no", role = c("aut", "cre")),
+    person("Knut", "Liestol", role = "aut"),
+    person("Ole Christian", "Lingjaerde", role = "aut"),
+    person("Igor", "Dolgalev", , "igor.dolgalev@nyumc.org", role = "aut",
+           comment = c(ORCID = "0000-0003-4451-126X"))
+  )
 Description: Penalized least squares regression is applied to fit
-        piecewise constant curves to copy number data to locate genomic
-        regions of constant copy number. Procedures are available for
-        individual segmentation of each sample, joint segmentation of
-        several samples and joint segmentation of the two data tracks
-        from SNP-arrays. Several plotting functions are available for
-        visualization of the data and the segmentation results.
+    piecewise constant curves to copy number data to locate genomic
+    regions of constant copy number. Procedures are available for
+    individual segmentation of each sample, joint segmentation of several
+    samples and joint segmentation of the two data tracks from SNP-arrays.
+    Several plotting functions are available for visualization of the data
+    and the segmentation results.
 License: Artistic-2.0
-LazyData: yes
-BuildResaveData: best
-Depends: R (>= 2.10), BiocGenerics
-Imports: S4Vectors, IRanges, GenomicRanges
-biocViews: aCGH, SNP, CopyNumberVariation, Genetics, Visualization
 URL: https://github.com/igordot/copynumber
 Depends:
     BiocGenerics,
@@ -28,3 +28,7 @@ Imports:
 Suggests: 
     testthat (>= 3.0.0)
 biocViews: aCGH, SNP, CopyNumberVariation, Genetics, Visualization
+BuildResaveData: best
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: yes
