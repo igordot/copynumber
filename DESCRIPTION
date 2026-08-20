@@ -1,7 +1,7 @@
 Package: copynumber
 Title: Segmentation of single- and multi-track copy number data by
     penalized least squares regression (with hg38 and mm10).
-Version: 1.29.0.9000
+Version: 2.0.0
 Authors@R: c(
     person("Gro", "Nilsen", , "gronilse@ifi.uio.no", role = c("aut", "cre")),
     person("Knut", "Liestol", role = "aut"),
@@ -32,7 +32,6 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
-biocViews: aCGH, SNP, CopyNumberVariation, Genetics, Visualization
 BuildResaveData: best
 Config/roxygen2/version: 8.1.0
 Config/testthat/edition: 3
