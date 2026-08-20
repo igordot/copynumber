@@ -18,3 +18,13 @@ Depends: R (>= 2.10), BiocGenerics
 Imports: S4Vectors, IRanges, GenomicRanges
 biocViews: aCGH, SNP, CopyNumberVariation, Genetics, Visualization
 URL: https://github.com/igordot/copynumber
+Depends:
+    BiocGenerics,
+    R (>= 4.2)
+Imports: 
+    GenomicRanges,
+    IRanges,
+    S4Vectors
+Suggests: 
+    testthat (>= 3.0.0)
+biocViews: aCGH, SNP, CopyNumberVariation, Genetics, Visualization
