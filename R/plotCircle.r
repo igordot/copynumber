@@ -222,7 +222,7 @@ plotCircle <- function(
     if (gridpts[i] <= (chr.stop.pos[grid.chr] - delta)) {
       band <- which(cyto.end >= gridpts[i])[1]
       c0[i] <- switch(
-        cyto.stain[band],
+        as.character(cyto.stain[band]),
         "gneg" = "white",
         "gpos100" = "black",
         "gpos75" = "gray25",
