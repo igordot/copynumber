@@ -1,0 +1,12 @@
+url: https://igordot.github.io/copynumber/
+
+template:
+  bootstrap: 5
+  bootswatch: zephyr
+  includes:
+    after_body: >
+      <script data-goatcounter="https://igordot.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+navbar:
+  # zephyr navbar is blue by default
+  bg: light
