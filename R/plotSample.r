@@ -161,26 +161,29 @@
 #' #Use multipcf to find segments as well:
 #' multi.segments <- multipcf(data=wins.data,gamma=12)
 #' 
+#' # plotSample() opens a new graphics device on its first call (needed for
+#' # its multi-page/multi-window output modes), which is not safe to run
+#' # under automated example checks (e.g. pkgdown's example capture).
+#' \dontrun{
 #' #Plot data and pcf-segments for one sample separately for each chromosome:
 #' plotSample(data=sub.lymphoma,segments=uni.segments,sample=1,layout=c(5,5))
-#' #Add cytoband text to ideogram (one page per chromosome to ensure sufficient 
+#' #Add cytoband text to ideogram (one page per chromosome to ensure sufficient
 #' #space)
 #' plotSample(data=sub.lymphoma,segments=uni.segments,sample=1,layout=c(1,1),
 #'     cyto.text=TRUE)
 #' #Add multipcf-segmentation results, drop legend
 #' plotSample(data=sub.lymphoma,segments=list(uni.segments,multi.segments),sample=1,
 #'     layout=c(5,5),seg.col=c("red","blue"),seg.lwd=c(3,2),legend=FALSE)
-#' #Plot by chromosome for two samples, but only chromosome 1-9. One window per 
+#' #Plot by chromosome for two samples, but only chromosome 1-9. One window per
 #' #sample:
 #' plotSample(data=sub.lymphoma,segments=list(uni.segments,multi.segments),sample=
 #'     c(2,3),chrom=c(1:9),layout=c(3,3),seg.col=c("red","blue"),
 #'     seg.lwd=c(3,2),onefile=FALSE)
-#' 
-#' #Zoom in on a particular region by setting xlim:    
+#' #Zoom in on a particular region by setting xlim:
 #' plotSample(data=sub.lymphoma,segments=uni.segments,sample=1,chrom=1,plot.ideo=
 #'     FALSE,xlim=c(140,170))
-#'     
-#' 
+#' }
+#'
 #' @export
 plotSample <- function(
   data = NULL,
