@@ -18,6 +18,40 @@
 ### is.multiseg
 ### pullOutContent
 
+
+
+#' Call aberrations in segmented data
+#' 
+#' Segments, obtained by \code{pcf} or \code{multipcf}, are classified as
+#' "gain", "normal" or "loss" given the specified thresholds.
+#' 
+#' Each region found in \code{segments} is classified as "gain", "normal" or
+#' "loss". Regions with gain or loss will be those segments where the segment
+#' value is above or below the value given in \code{thres.gain} or
+#' \code{thres.loss}, respectively.
+#' 
+#' @param segments a data frame containing the segmentation results found by
+#' either \code{\link{pcf}} or \code{\link{multipcf}}.
+#' @param thres.gain a numeric value giving the threshold to be applied for
+#' calling gains.
+#' @param thres.loss a numeric value giving the threshold to be applied for
+#' calling losses. Default is to use the negative value of \code{thres.gain}.
+#' @return A new segment data frame where the segment values have been replaced
+#' by the classification "gain", "normal" or "loss".
+#' @author Gro Nilsen
+#' @examples
+#' 
+#' #load lymphoma data
+#' data(lymphoma)
+#' #Run pcf
+#' seg <- pcf(data=lymphoma,gamma=12)
+#' 
+#' #Call gains as segments whose value is > 0.2, and losses as segments whose
+#' # value < -0.1
+#' ab.seg <- callAberrations(seg,thres.gain=0.2,thres.loss=-0.1)
+#' 
+#' 
+#' @export
 callAberrations <- function(segments, thres.gain, thres.loss = -thres.gain) {
   # Make sure segments is a data frame
   segments <- pullOutContent(res = segments, what = "segments")
