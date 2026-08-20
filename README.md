@@ -5,8 +5,10 @@
 [![Codecov test coverage](https://codecov.io/gh/igordot/copynumber/graph/badge.svg)](https://app.codecov.io/gh/igordot/copynumber)
 <!-- badges: end -->
 
-This is an updated version of the [copynumber](http://bioconductor.org/packages/3.17/bioc/html/copynumber.html) R package.
+This is an updated version of the [copynumber](https://bioconductor.org/packages/3.17/bioc/html/copynumber.html) R package.
 It has been modified to support the human hg38 and mouse mm10 genome builds.
+
+## Installation
 
 You can install the package from [R-universe](https://igordot.r-universe.dev/copynumber) (pre-compiled binary):
 
@@ -20,10 +22,13 @@ Alternatively, you can install from source:
 BiocManager::install("igordot/copynumber")
 ```
 
-This fork adds the following improvements to the original Bioconductor package:
+## About
+
+This fork of copynumber adds the following improvements to the original Bioconductor package:
 
 - Support for more recent genome builds, used by the `assembly` parameter in `aspcf()`, `multipcf()`, `pcf()`, and `winsorize()`
-- A [documentation website](https://igordot.github.io/copynumber/)
+- A [documentation website](https://igordot.github.io/copynumber/) (via roxygen2 and pkgdown)
+- A clean, browsable [HTML vignette](https://igordot.github.io/copynumber/articles/copynumber.html) (via knitr and R Markdown)
 - Automated tests to help ensure that the package continues to function
 
 This modification builds upon the previous work of [aroneklund](https://github.com/aroneklund/copynumber) and [ShixiangWang](https://github.com/ShixiangWang/copynumber).
