@@ -17,13 +17,13 @@ Source:
 
 Gro Nilsen, Knut Liestol and Ole Christian Lingjaerde (). copynumber:
 Segmentation of single- and multi-track copy number data by penalized
-least squares regression. R package version 1.29.0.9000.
+least squares regression. R package version 2.0.0.
 
     @Manual{,
       title = {copynumber: Segmentation of single- and multi-track copy number data by
             penalized least squares regression},
       author = {Gro Nilsen and Knut Liestol and Ole Christian Lingjaerde},
-      note = {R package version 1.29.0.9000},
+      note = {R package version 2.0.0},
     }
 
 Nilsen, G. & Liestol, K. et al. (2012) Copynumber: Efficient algorithms
