@@ -16,6 +16,11 @@ discontinuity in the curve. Segmentation may be done on a single sample,
 simultaneously on several samples or simultaneously on different data
 tracks.
 
+This is a fork of the archived Bioconductor package, adding support for
+more recent genome builds. See the [GitHub
+repository](https://github.com/igordot/copynumber) for source and
+issues.
+
 ## Overview
 
 The diagram below gives an overview of the `copynumber` package and
