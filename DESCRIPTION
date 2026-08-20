@@ -17,7 +17,7 @@ Description: Penalized least squares regression is applied to fit
     Several plotting functions are available for visualization of the data
     and the segmentation results.
 License: Artistic-2.0
-URL: https://github.com/igordot/copynumber
+URL: https://github.com/igordot/copynumber, https://igordot.github.io/copynumber/
 Depends:
     BiocGenerics,
     R (>= 4.2)
@@ -36,3 +36,4 @@ Config/roxygen2/version: 8.1.0
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: yes
+BugReports: https://github.com/igordot/copynumber/issues
