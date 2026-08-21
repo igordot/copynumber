@@ -13,10 +13,10 @@ It has been modified to support the human hg38 and mouse mm10 genome builds.
 You can install the package from [R-universe](https://igordot.r-universe.dev/copynumber) (pre-compiled binary):
 
 ```r
-install.packages("copynumber", repos = "https://igordot.r-universe.dev")
+BiocManager::install("copynumber", site_repository = "https://igordot.r-universe.dev")
 ```
 
-Alternatively, you can install from source:
+Alternatively, you can install from source (slower):
 
 ```r
 BiocManager::install("igordot/copynumber")
