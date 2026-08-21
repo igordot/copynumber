@@ -22,7 +22,7 @@
 ## Requires:
 ### none
 
-get.yticks <- function(min, max) {
+getYticks <- function(min, max) {
   ideal.n <- 5
   by <- c(
     0.05,

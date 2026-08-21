@@ -9,7 +9,7 @@
 ## Required by:
 
 ## Requires:
-### findNN
+### findNonMissingNeighbor
 ### getMad
 ### pcf(not the main function, but the rest of the help functions found in the same document)
 ### handleMissing
@@ -217,7 +217,7 @@ pcfPlain <- function(
       # Handle missing values:
       if (any(!obs)) {
         # first find nearest non-missing neighbour for missing probes:
-        nn <- findNN(pos = position, obs = obs)
+        nn <- findNonMissingNeighbor(pos = position, obs = obs)
 
         # Include probes with missing values in segments where their nearest neighbour probes are located
         new.res <- handleMissing(

@@ -20,9 +20,9 @@
 ### adjustSeg
 ### plotGamma
 ### chromMax
-### getx
+### getPlotX
 ### plotIdeogram
-### getGlobal.xlim
+### getGlobalXlim
 
 ## Requires:
 # none

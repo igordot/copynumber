@@ -10,7 +10,7 @@
 ### none
 
 ## Requires:
-### findNN
+### findNonMissingNeighbor
 ### getArms
 ### getMad
 ### numericArms
@@ -355,7 +355,7 @@ aspcf <- function(
         nn <- rep(NA, length(probe.c))
         nn[obs] <- which(obs)
         if (any(!obs)) {
-          nn[!obs] <- findNN(pos = pos.c, obs = obs)
+          nn[!obs] <- findNonMissingNeighbor(pos = pos.c, obs = obs)
           # aggregate logR values for probes with the same NN:
           use.logR <- aggregate(sample.logR, by = list(nn), FUN = mean)$x
         } else {

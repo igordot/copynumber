@@ -175,7 +175,7 @@ plotAberration <- function(
 
 ## Requires:
 ### getHeatParameters
-### getGlobal.xlim
+### getGlobalXlim
 ### adjustSegPos
 ### framedim
 ### colorSetup
@@ -212,7 +212,7 @@ genomeAberration <- function(
 
   # Set global xlimits if not specified by user:
   if (is.null(op$xlim)) {
-    op$xlim <- getGlobal.xlim(
+    op$xlim <- getGlobalXlim(
       op = op,
       pos.unit = pos.unit,
       chrom = unique(segments[, 2])
@@ -381,7 +381,7 @@ genomeAberration <- function(
 ### framedim
 ### plotIdeogram
 ### chromMax
-### get.xticks
+### getXticks
 
 chromosomeAberration <- function(
   segments,
@@ -577,7 +577,7 @@ chromosomeAberration <- function(
 
       if (!op$plot.ideo) {
         # Add xaxis:
-        at.x <- get.xticks(xlim[1], xlim[2], unit = op$plot.unit, ideal.n = 6)
+        at.x <- getXticks(xlim[1], xlim[2], unit = op$plot.unit, ideal.n = 6)
         axis(
           side = 1,
           tcl = -0.2,

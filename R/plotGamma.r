@@ -31,8 +31,8 @@
 ### adjustSeg
 ### connectSeg
 ### convert.unit
-### get.xticks
-### get.yticks
+### getXticks
+### getYticks
 ### pcf
 ### subsetData
 ### winsorize
@@ -155,8 +155,8 @@ plotGamma <- function(
   )
 
   # tickmarks:
-  at.x <- get.xticks(xlim[1], xlim[2], unit = "mbp", ideal.n = 6)
-  at.y <- get.yticks(data.ylim[1], data.ylim[2])
+  at.x <- getXticks(xlim[1], xlim[2], unit = "mbp", ideal.n = 6)
+  at.y <- getYticks(data.ylim[1], data.ylim[2])
 
   # f <- 1-0.013*12
   mgp.x <- c(1.5, 0.1, 0)

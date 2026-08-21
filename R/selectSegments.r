@@ -137,9 +137,9 @@ selectSegments <- function(
 
   sel.res <- switch(
     what,
-    variance = subset.var(segments, nseg, thres, large),
-    length = subset.length(segments, nseg, thres, large),
-    aberration = subset.abe(segments, nseg, thres, p, large)
+    variance = subsetVar(segments, nseg, thres, large),
+    length = subsetLength(segments, nseg, thres, large),
+    aberration = subsetAbe(segments, nseg, thres, p, large)
   )
 
   # Sort sel.seg according to chromosome numbers:
@@ -148,7 +148,7 @@ selectSegments <- function(
   return(sel.res)
 }
 
-subset.var <- function(segments, nseg, thres, large) {
+subsetVar <- function(segments, nseg, thres, large) {
   # calculate variance across samples for each segment:
   seg.var <- apply(segments[, -c(1:5)], 1, var)
 
@@ -193,7 +193,7 @@ subset.var <- function(segments, nseg, thres, large) {
   return(list(sel.seg = sel.seg, seg.var = seg.var))
 }
 
-subset.length <- function(segments, nseg, thres, large) {
+subsetLength <- function(segments, nseg, thres, large) {
   # Find length of each segment:
   L <- segments[, 4] - segments[, 3] + 1
   if (!is.null(thres)) {
@@ -237,7 +237,7 @@ subset.length <- function(segments, nseg, thres, large) {
   return(list(sel.seg = sel.seg, seg.length = L))
 }
 
-subset.abe <- function(segments, nseg, thres, p, large) {
+subsetAbe <- function(segments, nseg, thres, p, large) {
   if (!is.null(thres)) {
     if (large) {
       prop.ab <- rowMeans(segments[, -c(1:5)] > thres)

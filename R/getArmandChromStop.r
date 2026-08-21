@@ -20,7 +20,7 @@
 ### getArms
 ### addChromlines
 ### getGlobPos
-### getGlobal.xlim
+### getGlobalXlim
 ### adjustSeg
 
 ## Requires : none

@@ -26,7 +26,7 @@
 ## Requires:
 ### none
 
-get.xticks <- function(min, max, unit, ideal.n) {
+getXticks <- function(min, max, unit, ideal.n) {
   if (!unit %in% c("mbp", "kbp")) {
     stop("plot.unit must be one of 'mbp' and 'kbp'", call. = FALSE)
   }

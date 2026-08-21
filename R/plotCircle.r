@@ -26,7 +26,7 @@
 ## getGlobPos
 ## numericChrom
 ## circ
-## c.lines
+## cLines
 ## pullOutContent
 ## getFreqData
 
@@ -251,12 +251,12 @@ plotCircle <- function(
   # Plot outer circle
   x <- seq(0, 1, len = 2000)
   y <- rep(outer.circ, 2000)
-  c.lines(x, y, xmax = 1)
+  cLines(x, y, xmax = 1)
 
   # Plot inner circle
   x <- seq(0, 1, len = 2000)
   y <- rep(inner.circ, 2000)
-  c.lines(x, y, xmax = 1)
+  cLines(x, y, xmax = 1)
 
   # Plot the white area between each chromosome:
   segments(
@@ -330,7 +330,7 @@ plotCircle <- function(
   # Plot x-axis (x-circle)
   x <- seq(0, 1, len = 2000)
   y <- rep(freq.circ, 2000)
-  c.lines(x, y, xmax = 1)
+  cLines(x, y, xmax = 1)
 
   # Plot arcs if specified
   if (!is.null(arcs)) {
@@ -369,7 +369,7 @@ circ <- function(x, y, xmax) {
 }
 
 
-c.lines <- function(x, y, xmax, ...) {
+cLines <- function(x, y, xmax, ...) {
   tmp <- circ(x, y, xmax)
   lines(tmp$x, tmp$y, ...)
 }

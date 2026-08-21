@@ -37,7 +37,7 @@
 ### addChromlines
 ### addToPlot
 ### getPlotSymbols
-### getx
+### getPlotX
 ### updatePlotParameters
 
 plotObs <- function(
@@ -60,7 +60,7 @@ plotObs <- function(
   data.lim = NULL
 ) {
   # Pick out what should be plotted on x-axis (position or index). If type=genome positions are converted to global positions
-  x <- getx(xaxis, type, chromosomes, pos, unit, op)
+  x <- getPlotX(xaxis, type, chromosomes, pos, unit, op)
   if (is.null(xmax)) {
     xmax <- max(x)
   }

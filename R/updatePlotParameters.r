@@ -27,8 +27,8 @@
 ### plotSegments
 
 ### Requires:
-### get.xticks
-### get.yticks
+### getXticks
+### getYticks
 
 updatePlotParameters <- function(
   seg.lim,
@@ -71,7 +71,7 @@ updatePlotParameters <- function(
       n.ticks <- 6
     }
     if (xaxis == "pos") {
-      op$at.x <- get.xticks(
+      op$at.x <- getXticks(
         op$xlim[1],
         op$xlim[2],
         unit = op$plot.unit,
@@ -79,7 +79,7 @@ updatePlotParameters <- function(
       )
     } else {
       # xaxis = index:
-      op$at.x <- get.xticks(
+      op$at.x <- getXticks(
         op$xlim[1],
         op$xlim[2],
         unit = "mbp",
@@ -88,7 +88,7 @@ updatePlotParameters <- function(
     }
   }
   if (is.null(op$at.y)) {
-    op$at.y <- get.yticks(op$ylim[1], op$ylim[2])
+    op$at.y <- getYticks(op$ylim[1], op$ylim[2])
   }
 
   # MGP; placement of labels and axis annotation:

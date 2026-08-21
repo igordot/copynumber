@@ -29,7 +29,7 @@
 ### getGlobPos
 ### convert.unit
 
-getx <- function(xaxis, type, chromosomes, pos, unit, op) {
+getPlotX <- function(xaxis, type, chromosomes, pos, unit, op) {
   if (xaxis == "pos") {
     x <- pos
     if (type == "genome") {
@@ -52,4 +52,4 @@ getx <- function(xaxis, type, chromosomes, pos, unit, op) {
   } # endif
 
   return(x)
-} # endgetx
+} # endgetPlotX

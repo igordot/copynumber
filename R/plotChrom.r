@@ -26,7 +26,7 @@
 ### checkAndRetrievePlotInput
 ### chromMax
 ### framedim
-### get.seglim
+### getSeglim
 ### getPlotParameters
 ### getFilename
 ### plotIdeogram
@@ -301,7 +301,7 @@ plotChrom <- function(
         # Get min and max values in segments to make sure all are shown in plot
         seg.lim <- sapply(
           chrom.segments,
-          get.seglim,
+          getSeglim,
           equalRange = arg$equalRange,
           sampleID = sampleID
         ) # matrix with limits for each segmentation for this chromosome, min in row 1, max in row2

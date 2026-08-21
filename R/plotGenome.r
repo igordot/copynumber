@@ -24,9 +24,9 @@
 ## Requires:
 ### checkAndRetrievePlotInput
 ### framedim
-### get.seglim
+### getSeglim
 ### getFilename
-### getGlobal.xlim
+### getGlobalXlim
 ### getPlotParameters
 ### plotObs
 ### plotSegments
@@ -179,7 +179,7 @@ plotGenome <- function(
         unique(seg[, 2])
       })))
     }
-    arg$xlim <- getGlobal.xlim(op = arg, pos.unit = pos.unit, chrom = chr)
+    arg$xlim <- getGlobalXlim(op = arg, pos.unit = pos.unit, chrom = chr)
   }
 
   # Get data limits if equalRange -> range will be max and min across all samples
@@ -265,7 +265,7 @@ plotGenome <- function(
       if (!is.null(segments)) {
         seg.lim <- sapply(
           segments,
-          get.seglim,
+          getSeglim,
           equalRange = arg$equalRange,
           sampleID = id
         ) # matrix with limits for each segment, min in row 1, max in row2

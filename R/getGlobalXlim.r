@@ -26,7 +26,7 @@
 ### getArmandChromStop
 ### convert.unit
 
-getGlobal.xlim <- function(op, pos.unit, chrom) {
+getGlobalXlim <- function(op, pos.unit, chrom) {
   # Set xlim using chromosome information in cytoband; must transform to global information
   chromstop <- getArmandChromStop(op$assembly, pos.unit)$chromstop
   glob.chromstop <- cumsum(chromstop) # Global stopping position for each chromosome

@@ -20,7 +20,7 @@
 
 ## Required by:
 ### adjustSeg
-### getx
+### getPlotX
 ### plotCircle
 
 ## Requires:

@@ -24,14 +24,14 @@
 ### plotWeightedFreq (weightedGenomeFreq and weightedChromosomeFreq)
 
 ## Requires:
-### getx
+### getPlotX
 ### getArms
 ### numericArms
 
 adjustPos <- function(position, chromosomes, pos.unit, type, op) {
   if (type == "chromosome") {
     # Only need to scale positions first
-    pos <- getx(
+    pos <- getPlotX(
       xaxis = "pos",
       type = type,
       chromosomes = NULL,
@@ -41,7 +41,7 @@ adjustPos <- function(position, chromosomes, pos.unit, type, op) {
     )
   } else if (type == "genome") {
     # Need to scale and convert to global pos:
-    pos <- getx(
+    pos <- getPlotX(
       xaxis = "pos",
       type = type,
       chromosomes = chromosomes,

@@ -12,7 +12,7 @@
 ### winsorize (needs exactPcf function)
 
 ## Requires:
-### findNN
+### findNonMissingNeighbor
 ### getArms
 ### getMad
 ### numericArms
@@ -448,7 +448,7 @@ pcf <- function(
         # Handle missing values:
         if (any(!obs)) {
           # first find nearest non-missing neighbour for missing probes:
-          nn <- findNN(pos = pos.c, obs = obs)
+          nn <- findNonMissingNeighbor(pos = pos.c, obs = obs)
 
           # Include probes with missing values in segments where their nearest neighbour probes are located
           new.res <- handleMissing(

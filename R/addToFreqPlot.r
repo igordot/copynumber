@@ -15,7 +15,7 @@
 ### plotWeightedFreq (weightedGenomeFreq and weightedChromosomeFreq)
 
 ## Requires:
-### get.xticks
+### getXticks
 
 ## Function that adds percentagelines, yaxis, xaxis and labels to frequency plots
 addToFreqPlot <- function(op, type) {
@@ -53,7 +53,7 @@ addToFreqPlot <- function(op, type) {
     axis(side = 1, labels = FALSE, tcl = 0)
   } else {
     if (is.null(op$at.x)) {
-      op$at.x <- get.xticks(0, op$xlim[2], unit = op$plot.unit, ideal.n = 6)
+      op$at.x <- getXticks(0, op$xlim[2], unit = op$plot.unit, ideal.n = 6)
     }
     axis(
       side = 1,

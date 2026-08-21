@@ -27,7 +27,7 @@
 ## Requires:
 ### none
 
-get.seglim <- function(
+getSeglim <- function(
   segments,
   equalRange,
   sampleID = NULL,
@@ -59,4 +59,4 @@ get.seglim <- function(
   }
 
   return(seg.lim)
-} # end get.seglim
+} # end getSeglim

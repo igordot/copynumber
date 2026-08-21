@@ -23,7 +23,7 @@
 ## Requires:
 ### none
 
-findNN <- function(pos, obs) {
+findNonMissingNeighbor <- function(pos, obs) {
   ind.obs <- which(obs)
   pos.obs <- pos[obs]
   pos.na <- pos[!obs]

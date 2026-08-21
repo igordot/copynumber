@@ -158,7 +158,7 @@ plotFreq <- function(
 
 ## Requires:
 ### getFreqPlotParameters
-### getGlobal.xlim
+### getGlobalXlim
 ### adjustPos
 ### framedim
 ### updateFreqParameters
@@ -187,7 +187,7 @@ genomeFreq <- function(data, thres.gain, thres.loss, pos.unit, layout, ...) {
 
   # Set global xlimits if not specified by user:
   if (is.null(op$xlim)) {
-    op$xlim <- getGlobal.xlim(
+    op$xlim <- getGlobalXlim(
       op = op,
       pos.unit = pos.unit,
       chrom = unique(data[, 1])

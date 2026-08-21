@@ -26,7 +26,7 @@
 ### checkAndRetrievePlotInput
 ### chromMax
 ### framedim
-### get.seglim
+### getSeglim
 ### getFilename
 ### getPlotParameters
 ### plotIdeogram
@@ -349,7 +349,7 @@ plotSample <- function(
         # Get min and max values in segments to make sure all are shown in plot
         seg.lim <- sapply(
           sample.segments,
-          get.seglim,
+          getSeglim,
           equalRange = arg$equalRange,
           k = k
         ) # matrix with limits for each segmentation for this sample, min in row 1, max in row2

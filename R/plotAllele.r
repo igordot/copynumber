@@ -28,7 +28,7 @@
 ### checkAndRetrievePlotInput
 ### chromMax
 ### framedim
-### get.seglim
+### getSeglim
 ### getFilename
 ### getPlotParameters
 ### plotIdeogram
@@ -324,7 +324,7 @@ plotAllele <- function(
         # Get min and max values in logR-segments and BAF-segments to make sure all are shown in plot
         seg.lim1 <- sapply(
           sample.segments,
-          get.seglim,
+          getSeglim,
           equalRange = arg$equalRange,
           k = k
         ) # matrix with limits for each logR segmentation for this sample, min in row 1, max in row2
@@ -336,7 +336,7 @@ plotAllele <- function(
         # BAF-segments limits:
         seg.lim2 <- sapply(
           sample.segments,
-          get.seglim,
+          getSeglim,
           equalRange = arg$equalRange,
           k = k,
           baf = TRUE

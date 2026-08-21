@@ -17,12 +17,12 @@ test_that("plotChrom() rejects missing data/segments", {
   expect_error(plotChrom())
 })
 
-test_that("get.seglim() rejects equalRange = FALSE with no k or sampleID", {
+test_that("getSeglim() rejects equalRange = FALSE with no k or sampleID", {
   # Internal helper; every current caller always supplies k or sampleID, so tested directly.
   data(lymphoma)
   sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
   lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
   single.seg <- pcf(data = lymph.wins, gamma = 12, verbose = FALSE)
 
-  expect_error(get.seglim(single.seg, equalRange = FALSE))
+  expect_error(getSeglim(single.seg, equalRange = FALSE))
 })
