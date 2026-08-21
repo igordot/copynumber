@@ -142,11 +142,12 @@ winsorize <- function(
   stopifnot(method %in% c("mad", "pcf"))
 
   # Check assembly input:
-  if (
-    !assembly %in%
-      c("hg19", "hg18", "hg17", "hg16", "mm7", "mm8", "mm9", "hg38", "mm10")
-  ) {
-    stop("assembly must be one of hg19, hg18, hg17 or hg16", call. = FALSE)
+  valid.assemblies <- validAssemblies()
+  if (!assembly %in% valid.assemblies) {
+    stop(
+      paste0("assembly must be one of ", paste(valid.assemblies, collapse = ", ")),
+      call. = FALSE
+    )
   }
 
   # Check data input: can either be a matrix/data frame or a filename

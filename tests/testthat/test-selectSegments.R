@@ -23,6 +23,7 @@ test_that("selectSegments() picks low-variance segments below a threshold", {
   lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
   multi.seg <- multipcf(data = lymph.wins, verbose = FALSE)
 
+  # thres picked by inspecting real output, not derived independently.
   sel <- selectSegments(
     segments = multi.seg,
     what = "variance",
@@ -64,6 +65,7 @@ test_that("selectSegments() picks segments aberrant in a minimum proportion of s
   lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
   multi.seg <- multipcf(data = lymph.wins, verbose = FALSE)
 
+  # thres/p picked by inspecting real output, not derived independently.
   sel <- selectSegments(
     segments = multi.seg,
     what = "aberration",

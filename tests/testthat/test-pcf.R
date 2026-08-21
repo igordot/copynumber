@@ -1,3 +1,22 @@
+test_that("pcf()'s documented example produces stable output", {
+  # Values pinned from an R 4.6.1 run, not derived independently.
+  data(lymphoma)
+  sub.lymphoma <- subsetData(lymphoma, sample = 1:3)
+  wins.lymph <- winsorize(sub.lymphoma, verbose = FALSE)
+
+  pcf.segments <- pcf(
+    data = wins.lymph,
+    gamma = 12,
+    Y = sub.lymphoma,
+    verbose = FALSE
+  )
+
+  expect_equal(nrow(pcf.segments), 175)
+  expect_equal(sum(pcf.segments$n.probes), 9273)
+  expect_equal(mean(pcf.segments$mean), 0.004773714, tolerance = 1e-6)
+  expect_equal(pcf.segments$mean[1], -0.0439)
+})
+
 test_that("pcf() segments a single sample into the expected columns", {
   data(lymphoma)
   cols <- c("Chrom", "Median.bp", "X01.B1")
@@ -26,6 +45,14 @@ test_that("pcf() accepts matrix input, not just data frames", {
 
   # row.names differ (matrix dimnames carry through); values must not.
   expect_equal(res_mat, res_df, ignore_attr = "row.names")
+})
+
+test_that("pcf() rejects an invalid assembly and names every valid build", {
+  data(lymphoma)
+  err <- expect_error(pcf(lymphoma, assembly = "bogus", verbose = FALSE))
+  for (build in validAssemblies()) {
+    expect_true(grepl(build, conditionMessage(err), fixed = TRUE))
+  }
 })
 
 test_that("pcf() reproduces the vignette's lymphoma workflow", {

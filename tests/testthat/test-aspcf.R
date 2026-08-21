@@ -1,3 +1,26 @@
+test_that("aspcf()'s documented example produces stable output", {
+  # Values pinned from an R 4.6.1 run, not derived independently.
+  data(logR)
+  data(BAF)
+  wins.logR <- winsorize(logR, verbose = FALSE)
+
+  aspcf.segments <- aspcf(wins.logR, BAF, verbose = FALSE)
+
+  expect_equal(nrow(aspcf.segments), 218)
+  expect_equal(sum(aspcf.segments$n.probes), 20000)
+  expect_equal(aspcf.segments$logR.mean[1], -0.2323)
+  expect_equal(aspcf.segments$BAF.mean[1], 0.6916)
+})
+
+test_that("aspcf() rejects an invalid assembly and names every valid build", {
+  data(logR)
+  data(BAF)
+  err <- expect_error(aspcf(logR, BAF, assembly = "bogus", verbose = FALSE))
+  for (build in validAssemblies()) {
+    expect_true(grepl(build, conditionMessage(err), fixed = TRUE))
+  }
+})
+
 test_that("aspcf() reproduces the vignette's SNP-array workflow", {
   data(logR)
   data(BAF)
