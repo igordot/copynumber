@@ -47,8 +47,10 @@ importFrom(graphics,
   xspline
 )
 importFrom(stats,
+  aggregate,
   quantile,
-  runmed
+  runmed,
+  var
 )
 importFrom(utils,
   modifyList,
