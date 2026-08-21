@@ -6,7 +6,7 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-# Function that adjusts segment start and stop positions according to plot type, plot unit, xaxis etc
+# Adjusts segment start/stop positions for plotting. Supports both a position and a probe-index xaxis, and connects segments across chromosomes for genome plots.
 
 ## Input:
 ### chrom: vector with segments chromosome numbers

@@ -6,7 +6,7 @@
 ## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
 ####################################################################
 
-# Function that adjusts segment start and stop positions according to plot type, plot unit, xaxis etc
+# Adjusts segment start/stop positions for plotting. Simpler variant of adjustSeg: position-based only, no cross-chromosome connect.
 
 ## Input:
 ### chrom: vector with segments chromosome numbers
@@ -22,7 +22,8 @@
 ### use.stop:  adjusted segement stop to be used in plot
 
 ## Required by:
-### plotHeat
+### plotHeatmap
+### plotAberration
 
 ## Requires:
 ### convert.unit
