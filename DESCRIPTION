@@ -20,9 +20,9 @@ License: Artistic-2.0
 URL: https://igordot.github.io/copynumber/
 BugReports: https://github.com/igordot/copynumber/issues
 Depends:
-    BiocGenerics,
     R (>= 4.2)
-Imports: 
+Imports:
+    BiocGenerics,
     GenomicRanges,
     IRanges,
     S4Vectors
