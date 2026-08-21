@@ -30,8 +30,8 @@
 # what could be "segments","estimates","wins.data" or "wins.outliers"
 
 pullOutContent <- function(res, what = "segments") {
-  # check if input is data frame or list
-  if (!is.data.frame(res)) {
+  # check if input is data frame, matrix, or list
+  if (!is.data.frame(res) && !is.matrix(res)) {
     # res could either be a list containing the two segmentation elements segments and estimates, a list containing the two winsorize elements wins.data and wins.outliers, a list containing several segments as data frames, or a list containing several lists with segmentation results
     if ("segments" %in% names(res)) {
       # can assume that the list contains the output from one of the segmentation algorithms and has names segments and estimates

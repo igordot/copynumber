@@ -15,6 +15,19 @@ test_that("pcf() segments a single sample into the expected columns", {
   expect_equal(sum(res$n.probes), nrow(sub))
 })
 
+test_that("pcf() accepts matrix input, not just data frames", {
+  data(lymphoma)
+  cols <- c("Chrom", "Median.bp", "X01.B1")
+  sub <- lymphoma[lymphoma$Chrom == 1, cols][1:200, ]
+  colnames(sub) <- c("chrom", "pos", "S1")
+
+  res_df <- pcf(sub, gamma = 40, verbose = FALSE)
+  res_mat <- pcf(as.matrix(sub), gamma = 40, verbose = FALSE)
+
+  # row.names differ (matrix dimnames carry through); values must not.
+  expect_equal(res_mat, res_df, ignore_attr = "row.names")
+})
+
 test_that("pcf() reproduces the vignette's lymphoma workflow", {
   data(lymphoma)
   sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)

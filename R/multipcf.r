@@ -154,7 +154,7 @@ multipcf <- function(
   }
 
   # Is data a file:
-  isfile.data <- class(data) == "character"
+  isfile.data <- is.character(data) && is.vector(data)
 
   # Check data input:
   if (!isfile.data) {
@@ -227,8 +227,8 @@ multipcf <- function(
 
   # Check Y input:
   if (!is.null(Y)) {
-    stopifnot(class(Y) %in% c("matrix", "data.frame", "character"))
-    isfile.Y <- class(Y) == "character"
+    stopifnot(is.matrix(Y) || is.data.frame(Y) || is.character(Y))
+    isfile.Y <- is.character(Y) && is.vector(Y)
 
     if (!isfile.Y) {
       ncol.Y <- ncol(Y)

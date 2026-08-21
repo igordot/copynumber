@@ -68,7 +68,7 @@ subsetSegments <- function(
   ...
 ) {
   # Check if segments is a file:
-  isfile <- class(segments) == "character"
+  isfile <- is.character(segments) && is.vector(segments)
 
   # get header and chrom from data
   if (isfile) {
@@ -145,5 +145,5 @@ subsetSegments <- function(
     }
   }
 
-  return(sel.segments)
+  return(as.data.frame(sel.segments))
 }

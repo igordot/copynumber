@@ -150,10 +150,10 @@ winsorize <- function(
   }
 
   # Check data input: can either be a matrix/data frame or a filename
-  stopifnot(class(data) %in% c("matrix", "data.frame", "character"))
+  stopifnot(is.matrix(data) || is.data.frame(data) || is.character(data))
 
   # Is data a file:
-  isfile <- class(data) == "character"
+  isfile <- is.character(data) && is.vector(data)
 
   if (!isfile) {
     # data is matrix/data.frame:

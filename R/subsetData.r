@@ -62,7 +62,7 @@
 #' @export
 subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
   # Check if data is a file:
-  isfile <- class(data) == "character"
+  isfile <- is.character(data) && is.vector(data)
 
   # get header and chrom from data
   if (isfile) {
@@ -169,5 +169,5 @@ subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
   }
   colnames(sel.data) <- c(head[c(1:2)], data.sampleid[keepsample])
 
-  return(sel.data)
+  return(as.data.frame(sel.data))
 }

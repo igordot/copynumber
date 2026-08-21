@@ -146,8 +146,8 @@ aspcf <- function(
   }
 
   # Check if logR and BAF are files:
-  isfile.logR <- class(logR) == "character"
-  isfile.BAF <- class(BAF) == "character"
+  isfile.logR <- is.character(logR) && is.vector(logR)
+  isfile.BAF <- is.character(BAF) && is.vector(BAF)
 
   # Check and extract logR-data input:
   if (!isfile.logR) {
