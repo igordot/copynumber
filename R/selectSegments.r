@@ -133,20 +133,19 @@ selectSegments <- function(
       "'nseg' is larger than number of rows in 'segments'. Returning all segments.",
       call. = FALSE
     )
-    return(segments)
-  } else {
-    sel.res <- switch(
-      what,
-      variance = subset.var(segments, nseg, thres, large),
-      length = subset.length(segments, nseg, thres, large),
-      aberration = subset.abe(segments, nseg, thres, p, large)
-    )
-
-    # Sort sel.seg according to chromosome numbers:
-    sel.res$sel.seg <- sel.res$sel.seg[order(sel.res$sel.seg[, 1]), ]
-
-    return(sel.res)
   }
+
+  sel.res <- switch(
+    what,
+    variance = subset.var(segments, nseg, thres, large),
+    length = subset.length(segments, nseg, thres, large),
+    aberration = subset.abe(segments, nseg, thres, p, large)
+  )
+
+  # Sort sel.seg according to chromosome numbers:
+  sel.res$sel.seg <- sel.res$sel.seg[order(sel.res$sel.seg[, 1]), ]
+
+  return(sel.res)
 }
 
 subset.var <- function(segments, nseg, thres, large) {
@@ -185,9 +184,9 @@ subset.var <- function(segments, nseg, thres, large) {
   } else {
     # Find the nseg segments with the highest variance
     if (large) {
-      sel.seg <- segments[order(seg.var, decreasing = TRUE)[1:nseg], ]
+      sel.seg <- segments[order(seg.var, decreasing = TRUE)[seq_len(nseg)], ]
     } else {
-      sel.seg <- segments[order(seg.var, decreasing = FALSE)[1:nseg], ]
+      sel.seg <- segments[order(seg.var, decreasing = FALSE)[seq_len(nseg)], ]
     }
   }
 
@@ -229,9 +228,9 @@ subset.length <- function(segments, nseg, thres, large) {
     }
   } else {
     if (large) {
-      sel.seg <- segments[order(L, decreasing = TRUE)[1:nseg], ]
+      sel.seg <- segments[order(L, decreasing = TRUE)[seq_len(nseg)], ]
     } else {
-      sel.seg <- segments[order(L, decreasing = FALSE)[1:nseg], ]
+      sel.seg <- segments[order(L, decreasing = FALSE)[seq_len(nseg)], ]
     }
   }
 
@@ -283,7 +282,7 @@ subset.abe <- function(segments, nseg, thres, p, large) {
       q <- apply(segments[, -c(1:5)], 1, quantile, probs = p, type = 1)
       q.ord <- order(q, decreasing = FALSE)
     }
-    sel.seg <- segments[q.ord[1:nseg], ]
+    sel.seg <- segments[q.ord[seq_len(nseg)], ]
 
     return(list(sel.seg = sel.seg, seg.quantile = q))
   }
