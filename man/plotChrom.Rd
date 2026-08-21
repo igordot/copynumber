@@ -107,10 +107,10 @@ plotChrom(data=sub.lymphoma,segments=list(uni.segments,multi.segments),chrom=1,
 #Data was winsorized earlier. Mark winsorized values by different color
 #and symbol: 
 plotChrom(data=wins.res,chrom=1,winsoutliers=wins.res,layout=c(3,2))
-#Save plots in working directory:
+#Save plots to a directory:
 \donttest{plotChrom(data=sub.lymphoma,segments=uni.segments,chrom=c(1,2),
-    layout=c(3,2),dir.print=getwd(),file.name=c("chromosome1","chromosome2"),
-    onefile=FALSE)}  
+    layout=c(3,2),dir.print=tempdir(),file.name=c("chromosome1","chromosome2"),
+    onefile=FALSE)}
 
 }
 \seealso{
