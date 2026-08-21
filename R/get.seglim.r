@@ -41,11 +41,11 @@ get.seglim <- function(
     # Use only segments indicated by index or k to calculate limits:
     if (!is.null(k)) {
       use.segments <- segments[segments[, 2] == k, ]
+    } else if (!is.null(sampleID)) {
+      keep <- which(segments[, 1] == sampleID)
+      use.segments <- segments[keep, ]
     } else {
-      if (!is.null(sampleID)) {
-        keep <- which(segments[, 1] == sampleID)
-        use.segments <- segments[keep, ]
-      }
+      stop("either 'k' or 'sampleID' must be given when equalRange is FALSE", call. = FALSE)
     }
   }
   seg.lim <- rep(NA, 2)
