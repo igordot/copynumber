@@ -205,32 +205,11 @@ data for 2 samples.</li>
 <code>copynumber</code> package. First, load the package in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igordot.github.io/copynumber/">copynumber</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Loading required package: BiocGenerics</span></span></code></pre>
-<pre><code><span><span class="co">## Loading required package: generics</span></span></code></pre>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Attaching package: 'generics'</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:base':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     as.difftime, as.factor, as.ordered, intersect, is.element, setdiff,</span></span>
-<span><span class="co">##     setequal, union</span></span></code></pre>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Attaching package: 'BiocGenerics'</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     IQR, mad, sd, var, xtabs</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:base':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     anyDuplicated, aperm, append, as.data.frame, basename, cbind,</span></span>
-<span><span class="co">##     colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,</span></span>
-<span><span class="co">##     get, grep, grepl, is.unsorted, lapply, Map, mapply, match, mget,</span></span>
-<span><span class="co">##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,</span></span>
-<span><span class="co">##     rbind, Reduce, rownames, sapply, saveRDS, table, tapply, unique,</span></span>
-<span><span class="co">##     unsplit, which.max, which.min</span></span></code></pre>
 <div class="section level3">
 <h3 id="single-sample-segmentation">Single-sample segmentation<a class="anchor" aria-label="anchor" href="#single-sample-segmentation"></a>
 </h3>
 <p>In this example we will use the <code>lymphoma</code> data:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">lymphoma</span><span class="op">)</span></span></code></pre></div>
 <p>The data set has chromosomes and probe positions in the two first
 columns, and the copy number measurements for 21 samples in the
@@ -238,7 +217,7 @@ subsequent columns. In this example we will only use a subset containing
 the first 3 samples, which corresponds to three biopsies from one
 patient taken at different time points. We can use the function
 <code>subsetData</code> to retrieve the desired data subset:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sub.lymphoma</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsetData.html">subsetData</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lymphoma</span>, sample <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">sub.lymphoma</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##    Chrom Median.bp  X01.B1  X01.B2  X01.B3</span></span>
@@ -254,7 +233,7 @@ patient taken at different time points. We can use the function
 <span><span class="co">## 10     1  11562778 -0.0780 -0.0742 -0.0531</span></span></code></pre>
 <p>Next we identify and modify outliers by the function
 <code>winsorize</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lymph.wins</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/winsorize.html">winsorize</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sub.lymphoma</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>The parameter <code>verbose = FALSE</code> just keeps the function
 from printing a progress message each time the analysis is finished for
@@ -262,7 +241,7 @@ a new chromosome arm. The primary output from <code>winsorize</code> is
 then a new data frame (<code>lymph.wins</code>) on the same format as
 the input data where the sample columns now contain the Winsorized data
 values:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lymph.wins</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##    chrom      pos  X01.B1  X01.B2  X01.B3</span></span>
 <span><span class="co">## 1      1  1082138  0.0284 -0.0144  0.0255</span></span>
@@ -278,7 +257,7 @@ values:</p>
 <p>In addition, if the parameter <code>return.outliers</code> is set to
 <code>TRUE</code>, the method also returns a data frame which shows
 which observations have been classified as outliers:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wins.res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/winsorize.html">winsorize</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sub.lymphoma</span>, return.outliers <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">wins.res</span><span class="op">$</span><span class="va">wins.outliers</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##    chrom      pos X01.B1 X01.B2 X01.B3</span></span>
@@ -306,13 +285,13 @@ data, one may in addition give the original data as input via the
 parameter <code>Y = sub.lymphoma</code>). The penalty parameter
 <code>gamma</code> is in this case set to 12 to achieve high sensitivity
 on these low-resolution data.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single.seg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcf.html">pcf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lymph.wins</span>, gamma <span class="op">=</span> <span class="fl">12</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>The default output of <code>pcf</code> is a data frame with 7 columns
 giving information about each segment found in the data. SampleIDs are
 given in the first column. Below we see the first six segments found in
 the subset of lymphoma samples:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">single.seg</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   sampleID chrom arm start.pos   end.pos n.probes    mean</span></span>
 <span><span class="co">## 1   X01.B1     1   p   1082138  64194749       70 -0.0455</span></span>
@@ -326,7 +305,7 @@ segmentation results to see how well the segmentation fits the data. To
 plot the copy number data and the segmentation results over the entire
 genome we apply the function <code>plotGenome</code>, as illustrated
 below for one of the samples.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotGenome.html">plotGenome</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sub.lymphoma</span>, segments <span class="op">=</span> <span class="va">single.seg</span>, sample <span class="op">=</span> <span class="fl">1</span>, cex <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="copynumber_files/figure-html/plotGenome-1.png" class="r-plt" alt="Genome plot for the sample X01.B1. Segmentation done by pcf." width="864"><p class="caption">
@@ -337,7 +316,7 @@ Genome plot for the sample X01.B1. Segmentation done by pcf.
 and segmentation results are shown for one sample with chromosomes in
 different panels. This is shown for the first sample below. Chromosome
 ideograms are by default added to the bottom of the plots.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSample.html">plotSample</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sub.lymphoma</span>, segments <span class="op">=</span> <span class="va">single.seg</span>, layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, sample <span class="op">=</span> <span class="fl">1</span>, cex <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="copynumber_files/figure-html/plotSample-1.png" class="r-plt" alt="Sample X01.B1 plotted across the 23 chromosomes. Segmentation done by pcf." width="864"><p class="caption">
@@ -355,7 +334,7 @@ sample X01. Input parameters and the output is similar to that of
 <code>pcf</code>, but the data frame holding the segmentation results
 now have common rows for all samples since they all have common segment
 boundaries:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multi.seg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multipcf.html">multipcf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lymph.wins</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">multi.seg</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   chrom arm start.pos   end.pos n.probes  X01.B1  X01.B2  X01.B3</span></span>
@@ -369,7 +348,7 @@ boundaries:</p>
 function <code>plotChrom</code>. Here data and segments are plotted for
 one chromosome with samples in different panels, as illustrated
 below.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotChrom.html">plotChrom</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lymph.wins</span>, segments <span class="op">=</span> <span class="va">multi.seg</span>, layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span>, chrom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="copynumber_files/figure-html/plotChrom-1.png" class="r-plt" alt="Chromosome 1 plotted for the 3 biopsies taken at different time points for sample X01. Segmentation done by multipcf." width="460.8"><p class="caption">
@@ -383,16 +362,16 @@ for sample X01. Segmentation done by multipcf.
 </h3>
 <p>To illustrate allele-specific segmentation, we apply the artificial
 SNP-array data set containing both LogR data and BAF data:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">logR</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">BAF</span><span class="op">)</span></span></code></pre></div>
 <p>We start by Winsorizing the LogR data:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">logR.wins</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/winsorize.html">winsorize</a></span><span class="op">(</span><span class="va">logR</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>The function <code>aspcf</code> will perform the allele-specific
 segmentation, taking both (Winsorized) LogR data and BAF data as
 input:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">allele.seg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aspcf.html">aspcf</a></span><span class="op">(</span><span class="va">logR.wins</span>, <span class="va">BAF</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">allele.seg</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   sampleID chrom arm start.pos   end.pos n.probes logR.mean BAF.mean</span></span>
@@ -408,7 +387,7 @@ for an extra 8’th column giving the segment BAF-values.</p>
 the segmentation results. For a given sample the results are shown for
 both the LogR- and BAF-track with chromosomes in different panels, as
 illustrated below for the first sample on chromosomes 1-4.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotAllele.html">plotAllele</a></span><span class="op">(</span><span class="va">logR</span>, <span class="va">BAF</span>, <span class="va">allele.seg</span>, sample <span class="op">=</span> <span class="fl">1</span>, chrom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>, layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="copynumber_files/figure-html/plotAllele-1.png" class="r-plt" alt="Allele-specific plot for one sample on chromosomes 1-4. Segmentation done by aspcf." width="768"><p class="caption">
@@ -427,12 +406,12 @@ done by aspcf.
 frequency of samples in the data set with a gain or a loss at a genomic
 position. In this example we use <code>pcf</code> to obtain copy number
 estimates for the entire lymphoma data set:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lymphoma.res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcf.html">pcf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lymphoma</span>, gamma <span class="op">=</span> <span class="fl">12</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Gains and losses will be regions where the copy number estimate is
 above or below some defined thresholds specified by the parameters
 <code>thres.gain</code> and <code>thres.loss</code>, respectively.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotFreq.html">plotFreq</a></span><span class="op">(</span>segments <span class="op">=</span> <span class="va">lymphoma.res</span>, thres.gain <span class="op">=</span> <span class="fl">0.2</span>, thres.loss <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="copynumber_files/figure-html/plotFreq-1.png" class="r-plt" alt="Frequencyplot for lymphoma data" width="768"><p class="caption">
@@ -479,18 +458,18 @@ segment in the first two columns, and the chromsome number and position
 of the associated segment in the next two columns. The fifth column
 identifies positive correlations and negative correlations as class 1
 and 2, respectively:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chr.from</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">12</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">pos.from</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">168754669</span>, <span class="fl">847879349</span>, <span class="fl">121809306</span><span class="op">)</span></span>
 <span><span class="va">chr.to</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">14</span>, <span class="fl">21</span>, <span class="fl">17</span><span class="op">)</span></span>
 <span><span class="va">pos.to</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6147539</span>, <span class="fl">301955563</span>, <span class="fl">12364465</span><span class="op">)</span></span>
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">arcs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">chr.from</span>, <span class="va">pos.from</span>, <span class="va">chr.to</span>, <span class="va">pos.to</span>, <span class="va">cl</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">arcs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">chr.from</span>, <span class="va">pos.from</span>, <span class="va">chr.to</span>, <span class="va">pos.to</span>, <span class="va">cl</span><span class="op">)</span></span></code></pre></div>
 <p>The plot below shows a circle plot. The gain frequencies are shown in
 red, while loss frequencies are shown in green. In addition, the orange
 and blue arcs connect the segments which were found to have high
 positive and negative correlations, respectively.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotCircle.html">plotCircle</a></span><span class="op">(</span>segments <span class="op">=</span> <span class="va">lymphoma.res</span>, thres.gain <span class="op">=</span> <span class="fl">0.15</span>, arcs <span class="op">=</span> <span class="va">arcs</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="copynumber_files/figure-html/plotCircle-1.png" class="r-plt" alt="Circle plot for lymphoma data." width="70%"><p class="caption">
@@ -513,7 +492,7 @@ while the color blue indicates that it is below the lower limit of
 Darker nuances of red and blue indicate that the value is below and
 above the upper and lower limit, respectively, and the darker the
 nuance, the closer the value is to zero.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotHeatmap.html">plotHeatmap</a></span><span class="op">(</span>segments <span class="op">=</span> <span class="va">lymphoma.res</span>, upper.lim <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="copynumber_files/figure-html/plotHeatmap-1.png" class="r-plt" alt="Heatmap for lymphoma data." width="768"><p class="caption">
@@ -528,7 +507,7 @@ Heatmap for lymphoma data.
 locating recurrent aberrations. An example is given below where each row
 represents a sample and the colors red and blue indicate gains and
 losses, respectively.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotAberration.html">plotAberration</a></span><span class="op">(</span>segments <span class="op">=</span> <span class="va">lymphoma.res</span>, thres.gain <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="copynumber_files/figure-html/plotAberration-1.png" class="r-plt" alt="Aberration plot for the lymphoma data." width="768"><p class="caption">
@@ -548,7 +527,7 @@ segmentation result is then plotted along with the data in a multigrid
 plot, and the number of segments found for each value of
 <code>gamma</code> is shown in the last panel. The plot below gives an
 example using the first sample in the <code>micma</code> data.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">micma</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plotGamma.html">plotGamma</a></span><span class="op">(</span><span class="va">micma</span>, chrom <span class="op">=</span> <span class="fl">17</span>, cex <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
