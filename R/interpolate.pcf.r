@@ -60,7 +60,7 @@ interpolate.pcf <- function(segments, x) {
   usamp <- unique(segments$sampleID)
   nsamp <- length(usamp)
   chrom <- unique(x[, 1])
-  z <- data.frame(cbind(x[, c(1:2)], matrix(0, nrow(x), nsamp)))
+  z <- data.frame(cbind(x[, c(1:2), drop = FALSE], matrix(0, nrow(x), nsamp)))
   # z = data.frame(x[,c(1,2)], matrix(0, nrow(x), nsamp))
   names(z) <- c("chr", "pos", usamp)
   for (i in 1:nsamp) {
@@ -68,8 +68,13 @@ interpolate.pcf <- function(segments, x) {
       fitij <- segments[
         segments$sampleID == usamp[i] & segments$chrom == chrom[j],
       ]
-      v <- (c(fitij$start.pos[-1], 10^9) + fitij$end.pos) / 2
       xj <- x[x[, 1] == chrom[j], 2]
+      if (nrow(fitij) == 0) {
+        # No segments for this sample and chromosome: leave the estimate unknown.
+        z[z$chr == chrom[j], 2 + i] <- NA
+        next
+      }
+      v <- (c(fitij$start.pos[-1], 10^9) + fitij$end.pos) / 2
       kj <- rep(0, length(xj))
       for (k in rev(1:length(v))) {
         kj[xj <= v[k]] <- k
