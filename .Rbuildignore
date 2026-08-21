@@ -7,3 +7,5 @@
 ^pkgdown$
 ^[.]?air[.]toml$
 ^\.vscode$
+^\.remember$
+^CLAUDE\.md$
