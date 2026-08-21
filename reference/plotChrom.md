@@ -271,10 +271,10 @@ plotChrom(data=sub.lymphoma,segments=list(uni.segments,multi.segments),chrom=1,
 #and symbol: 
 plotChrom(data=wins.res,chrom=1,winsoutliers=wins.res,layout=c(3,2))
 
-#Save plots in working directory:
+#Save plots to a directory:
 plotChrom(data=sub.lymphoma,segments=uni.segments,chrom=c(1,2),
-    layout=c(3,2),dir.print=getwd(),file.name=c("chromosome1","chromosome2"),
-    onefile=FALSE)  
-#> Plot was saved in  /home/runner/work/copynumber/copynumber/docs/reference/chromosome1.pdf 
-#> Plot was saved in  /home/runner/work/copynumber/copynumber/docs/reference/chromosome2.pdf 
+    layout=c(3,2),dir.print=tempdir(),file.name=c("chromosome1","chromosome2"),
+    onefile=FALSE)
+#> Plot was saved in  /tmp/Rtmp14YBii/chromosome1.pdf 
+#> Plot was saved in  /tmp/Rtmp14YBii/chromosome2.pdf 
 ```

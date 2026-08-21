@@ -1,4 +1,4 @@
-# copynumber: Segmentation of single- and multi-track copy number data by penalized least squares regression (with hg38 and mm10).
+# copynumber: Segmentation of Single- and Multi-Track Copy Number Data by Penalized Least Squares Regression (with hg38 and mm10)
 
 Penalized least squares regression is applied to fit piecewise constant
 curves to copy number data to locate genomic regions of constant copy
