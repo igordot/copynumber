@@ -13,29 +13,17 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/igordot/copynumber/blob/main/inst/CITATION)
+[`DESCRIPTION`](https://github.com/igordot/copynumber/blob/main/DESCRIPTION)
 
-Gro Nilsen, Knut Liestol and Ole Christian Lingjaerde (). copynumber:
+Nilsen G, Liestol K, Lingjaerde O, Dolgalev I (2026). *copynumber:
 Segmentation of single- and multi-track copy number data by penalized
-least squares regression. R package version 2.0.0.
+least squares regression (with hg38 and mm10).*. R package version
+2.0.0, <https://igordot.github.io/copynumber/>.
 
     @Manual{,
-      title = {copynumber: Segmentation of single- and multi-track copy number data by
-            penalized least squares regression},
-      author = {Gro Nilsen and Knut Liestol and Ole Christian Lingjaerde},
+      title = {copynumber: Segmentation of single- and multi-track copy number data by penalized least squares regression (with hg38 and mm10).},
+      author = {Gro Nilsen and Knut Liestol and Ole Christian Lingjaerde and Igor Dolgalev},
+      year = {2026},
       note = {R package version 2.0.0},
-    }
-
-Nilsen, G. & Liestol, K. et al. (2012) Copynumber: Efficient algorithms
-for single- and multi-track copy number segmentation. BMC Genomics
-13(1):591
-
-    @Article{,
-      title = {Copynumber: Efficient algorithms for single- and multi-track copy number segmentation.},
-      author = {G. Nilsen and K. Liestol and P. {Van Loo} and H.K.M. Vollan and M.B. Eide and O. Rueda and S.F. Chin and R. Russell and L.O. Baumbusch and C. Caldas and A.L. Borresen-Dale and O.C. Lingjaerde},
-      journal = {BMC Genomics},
-      volume = {13},
-      number = {1},
-      year = {2012},
-      pages = {591},
+      url = {https://igordot.github.io/copynumber/},
     }
