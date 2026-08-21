@@ -21,9 +21,37 @@ export(selectSegments)
 export(subsetData)
 export(subsetSegments)
 export(winsorize)
-import(S4Vectors)
+import(grDevices)
+importFrom(BiocGenerics,mad)
 importFrom(GenomicRanges,
   "mcols<-",
   GRanges
 )
 importFrom(IRanges,IRanges)
+importFrom(S4Vectors,DataFrame)
+importFrom(graphics,
+  abline,
+  axis,
+  barplot,
+  box,
+  legend,
+  lines,
+  mtext,
+  par,
+  points,
+  polygon,
+  rect,
+  segments,
+  text,
+  title,
+  xspline
+)
+importFrom(stats,
+  quantile,
+  runmed
+)
+importFrom(utils,
+  modifyList,
+  read.table,
+  write.table
+)

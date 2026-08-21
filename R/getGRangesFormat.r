@@ -20,7 +20,7 @@
 #' #Obtain the GRanges format
 #' gr <- getGRangesFormat(seg)
 #' 
-#' @import S4Vectors
+#' @importFrom S4Vectors DataFrame
 #' @importFrom IRanges IRanges
 #' @importFrom GenomicRanges GRanges
 #' @importFrom GenomicRanges mcols<-
