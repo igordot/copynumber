@@ -13,10 +13,10 @@ binary):
 
 ``` r
 
-install.packages("copynumber", repos = "https://igordot.r-universe.dev")
+BiocManager::install("copynumber", site_repository = "https://igordot.r-universe.dev")
 ```
 
-Alternatively, you can install from source:
+Alternatively, you can install from source (slower):
 
 ``` r
 
