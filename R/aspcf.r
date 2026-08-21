@@ -502,12 +502,13 @@ aspcf <- function(
   }
 
   if (return.est) {
-    logR_yhat <- data.frame(
+    logR.yhat <- data.frame(
       chrom,
       position,
       logR.yhat,
       stringsAsFactors = FALSE
     )
+    colnames(logR.yhat) <- yhat.names
     return(list(logR_estimates = logR.yhat, segments = segments))
   } else {
     return(segments)

@@ -26,3 +26,15 @@ test_that("aspcf() reproduces the vignette's SNP-array workflow", {
     expect_equal(n, nrow(logR.wins))
   }
 })
+
+test_that("aspcf() with return.est=TRUE returns logR estimates alongside segments", {
+  data(logR)
+  data(BAF)
+  logR.wins <- winsorize(logR, verbose = FALSE)
+
+  res <- aspcf(logR.wins, BAF, verbose = FALSE, return.est = TRUE)
+
+  expect_named(res, c("logR_estimates", "segments"))
+  expect_named(res$logR_estimates, c("chrom", "pos", colnames(logR.wins)[-c(1, 2)]))
+  expect_equal(nrow(res$logR_estimates), nrow(logR.wins))
+})
