@@ -127,7 +127,7 @@ subsetSegments <- function(
     if (any(is.na(sampleID))) {
       stop(
         "Input in 'sample' is outside the number of samples represented in segments",
-        .call = FALSE
+        call. = FALSE
       )
     }
 

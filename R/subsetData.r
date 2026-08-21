@@ -98,7 +98,7 @@ subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
     if (any(is.na(keepsample))) {
       stop(
         "Input in 'sample' is outside the number of samples represented in data",
-        .call = FALSE
+        call. = FALSE
       )
     }
   }

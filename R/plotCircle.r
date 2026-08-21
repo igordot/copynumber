@@ -340,7 +340,7 @@ plotCircle <- function(
       arc.colors <- rep(arc.colors, length(u.cl))
       warning(
         "Number of colors in 'arc.colors' is fewer than number of unique classes in 'arcs'. Colors are reused.",
-        call.s = FALSE
+        call. = FALSE
       )
     }
     chr0 <- arcs[, 1]

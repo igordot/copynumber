@@ -33,7 +33,7 @@ checkSampleID <- function(data, segments, sample) {
       if (length(sampleID) == 0) {
         stop(
           "Input in 'sample' is larger than the number of samples found in 'data'",
-          .call = FALSE
+          call. = FALSE
         )
       }
     } else {
@@ -57,7 +57,7 @@ checkSampleID <- function(data, segments, sample) {
         if (length(sampleID) == 0) {
           stop(
             "Input in 'sample' is larger than the number of samples found in 'segments'",
-            .call = FALSE
+            call. = FALSE
           )
         }
       }
@@ -70,11 +70,11 @@ checkSampleID <- function(data, segments, sample) {
     }
     if (length(sampleID) == 0) {
       if (!is.null(data)) {
-        stop("no sampleIDs are common in 'data' and 'segments'", .call = FALSE)
+        stop("no sampleIDs are common in 'data' and 'segments'", call. = FALSE)
       } else {
         stop(
           "no sampleIDs are common in all components of 'segments'",
-          .call = FALSE
+          call. = FALSE
         )
       }
     }
