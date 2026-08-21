@@ -76,8 +76,8 @@ addChromlines <- function(chromosomes, xaxis, unit, ind = NULL, cex, op) {
     (chrom.mark[2:(nChrom + 1)] - chrom.mark[1:nChrom]) / 2
   chrom.names <- unique(chromosomes)
   # Plot half at bottom, half at top:
-  bot <- seq(1, length(chrom.mark), 2)
-  top <- seq(2, length(chrom.mark), 2)
+  bot <- seq(1, nChrom, 2)
+  top <- seq(2, nChrom, 2)
   mtext(
     chrom.names[bot],
     side = 1,
