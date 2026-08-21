@@ -9,6 +9,10 @@
   Allele-specific copy number segmentation.
 - [`callAberrations()`](https://igordot.github.io/copynumber/reference/callAberrations.md)
   : Call aberrations in segmented data
+- [`copynumber`](https://igordot.github.io/copynumber/reference/copynumber-package.md)
+  [`copynumber-package`](https://igordot.github.io/copynumber/reference/copynumber-package.md)
+  : copynumber: Segmentation of single- and multi-track copy number data
+  by penalized least squares regression (with hg38 and mm10).
 - [`getGRangesFormat()`](https://igordot.github.io/copynumber/reference/getGRangesFormat.md)
   : Get segments on the GRanges format
 - [`imputeMissing()`](https://igordot.github.io/copynumber/reference/imputeMissing.md)
