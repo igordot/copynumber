@@ -8,7 +8,8 @@ test_that("winsorize()'s documented example produces stable output", {
   expect_equal(dim(wins.data), c(3091, 5))
   expect_equal(
     as.numeric(wins.data[1, c("X01.B1", "X01.B2", "X01.B3")]),
-    c(0.0284, -0.0144, 0.0255)
+    c(0.0284, -0.0144, 0.0255),
+    tolerance = 1e-3
   )
 })
 

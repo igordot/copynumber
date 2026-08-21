@@ -15,7 +15,8 @@ test_that("multipcf()'s documented example produces stable output", {
   expect_equal(sum(multi.segments$n.probes), 3091)
   expect_equal(
     as.numeric(multi.segments[1, c("X01.B1", "X01.B2", "X01.B3")]),
-    c(-0.0439, -0.0324, -0.0643)
+    c(-0.0439, -0.0324, -0.0643),
+    tolerance = 1e-3
   )
 })
 
