@@ -13,7 +13,7 @@
 ### unit: the unit used to represent positions in data to be plotted (bp,kbp,mbp)
 
 ## Output:
-### pstop: a vector giving the stopping positions for each p-arm (adjusted to match unit)
+### pstop: stopping position for each p-arm (adjusted to match unit)
 ### chromstop: a vector giving the stopping position for each chromosome (adjusted to match unit)
 
 ## Required by:
@@ -36,6 +36,7 @@ getArmandChromStop <- function(cyto.data, unit) {
   # Order such that chromosomes are in increasing order from 1:24:
   ord.chrom <- order(num.chrom)
   cyto.data <- cyto.data[ord.chrom, , drop = FALSE]
+  num.chrom <- num.chrom[ord.chrom]
 
   # Get chromosome stopping positions:
   chrom <- cyto.data[, 1]
@@ -50,7 +51,11 @@ getArmandChromStop <- function(cyto.data, unit) {
   p.stop <- arm.stop[-which(arm.stop %in% chrom.stop)] # Remove qstops
 
   pos.chromstop <- cyto.data[chrom.stop, 3] # Local stopping position for each chromosome
-  pos.pstop <- cyto.data[p.stop, 3] # Local stopping position for each p-arm
+
+  # Index p-arm stops by chromosome number
+  # A chromosome with no p-arm never picks up another chromosome stop position
+  pos.pstop <- rep(NA_real_, max(num.chrom))
+  pos.pstop[num.chrom[p.stop]] <- cyto.data[p.stop, 3]
 
   # Factor used to convert positions into desired unit
   f <- switch(unit, bp = 1, kbp = 10^(-3), mbp = 10^(-6))

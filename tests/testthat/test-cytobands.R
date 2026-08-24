@@ -36,6 +36,38 @@ test_that("bundled cytoband data is structurally sound for every genome build", 
   }
 })
 
+test_that("getArms() never assigns a p-arm boundary from a different chromosome", {
+  for (build in validAssemblies()) {
+    cyto <- get(build)
+    label <- paste("build:", build)
+
+    chrom <- as.character(cyto[[1]])
+    end <- as.numeric(as.character(cyto[[3]]))
+    armChar <- substring(as.character(cyto[[4]]), 1, 1)
+
+    for (thisChrom in unique(chrom)) {
+      idx <- chrom == thisChrom
+      chromNum <- numericChrom(sub("^chr", "", thisChrom))
+      chromLabel <- paste(label, "chrom:", thisChrom)
+      hasP <- any(armChar[idx] == "p")
+      chromEnd <- max(end[idx])
+
+      # a position at the telomere must be "q"
+      startArm <- getArms(chromNum, 1, pos.unit = "bp", cyto.data = cyto)
+      expect_equal(startArm, if (hasP) "p" else "q", info = chromLabel)
+
+      # a position at the far end of the chromosome must always be "q"
+      endArm <- getArms(
+        chromNum,
+        chromEnd - 1,
+        pos.unit = "bp",
+        cyto.data = cyto
+      )
+      expect_equal(endArm, "q", info = chromLabel)
+    }
+  }
+})
+
 test_that("getArmandChromStop() reproduces hg19's known p-arm/chromosome stops", {
   l <- getArmandChromStop(hg19, "bp")
 
