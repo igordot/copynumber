@@ -156,11 +156,11 @@ chromosome arm.
 ## Note
 
 It is usually advisable to Winsorize data before running pcf, see
-[`winsorize`](https://igordot.github.io/copynumber/reference/winsorize.md)
+[`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md)
 on this.
 
 The input data must be complete, see
-[`imputeMissing`](https://igordot.github.io/copynumber/reference/imputeMissing.md)
+[`imputeMissing()`](https://igordot.github.io/copynumber/reference/imputeMissing.md)
 for imputation of missing copy number values.
 
 ## References
@@ -171,8 +171,8 @@ single- and multi-track copy number segmentation", BMC Genomics 13:591
 
 ## See also
 
-[`imputeMissing`](https://igordot.github.io/copynumber/reference/imputeMissing.md),
-[`pcf`](https://igordot.github.io/copynumber/reference/pcf.md)
+[`imputeMissing()`](https://igordot.github.io/copynumber/reference/imputeMissing.md),
+[`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md)
 
 ## Author
 

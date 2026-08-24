@@ -87,11 +87,11 @@ returned.
 A piecewise constant segmentation curve is fitted to the copy number
 observations as described in the PCF algorithm in Nilsen and Liestoel et
 al. (2012). Unlike the regular
-[`pcf`](https://igordot.github.io/copynumber/reference/pcf.md) function,
-`pcfPlain` does not make independent segmentations for each chromosome
-arm (i.e. breakpoints are not automatically inserted at the beginning
-and end of chromosome arms). The segmentation can thus be performed
-independently of assembly.
+[`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md)
+function, `pcfPlain` does not make independent segmentations for each
+chromosome arm (i.e. breakpoints are not automatically inserted at the
+beginning and end of chromosome arms). The segmentation can thus be
+performed independently of assembly.
 
 ## Note
 
@@ -106,7 +106,7 @@ single- and multi-track copy number segmentation", BMC Genomics 13:591
 
 ## See also
 
-[`pcf`](https://igordot.github.io/copynumber/reference/pcf.md)
+[`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md)
 
 ## Author
 

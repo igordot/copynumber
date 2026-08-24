@@ -28,8 +28,8 @@ plotCircle(
 - segments:
 
   a data frame containing the segmentation results found by either
-  [`pcf`](https://igordot.github.io/copynumber/reference/pcf.md) or
-  [`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md).
+  [`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md) or
+  [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md).
 
 - thres.gain:
 
@@ -215,7 +215,7 @@ cl <- c()
 thresh = 0.7
 for (i in 1:(nseg-1)) {
   for (j in (i+1):nseg) {
-    #Check if segment-correlation is larger than threshold and that the two 
+    #Check if segment-correlation is larger than threshold and that the two
     #segments are located on different chromosomes
     if (abs(cormat[i,j]) > thresh && multiseg$chrom[i] != multiseg$chrom[j]) {
       chr.from = c(chr.from,multiseg$chrom[i])
@@ -226,12 +226,12 @@ for (i in 1:(nseg-1)) {
         cl <- c(cl,1)           #class 1 for those with positive correlation
       }else{
         cl <- c(cl,2)           #class 2 for those with negative correlation
-      }    
+      }
     }
   }
 }
-  
-arcs <- cbind(chr.from,pos.from,chr.to,pos.to,cl)  
+
+arcs <- cbind(chr.from,pos.from,chr.to,pos.to,cl)
 
 #Plot arcs between segment with high correlations; positive correlation in
 #orange, negative correlation in blue:
@@ -239,6 +239,6 @@ plotCircle(segments=pcf.res,thres.gain=0.15,arcs=arcs,d=0)
 
 
 
-  
+
 
 ```

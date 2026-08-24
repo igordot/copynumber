@@ -22,8 +22,8 @@ plotAberration(
 - segments:
 
   a data frame containing the segmentation results found by either
-  [`pcf`](https://igordot.github.io/copynumber/reference/pcf.md) or
-  [`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md).
+  [`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md) or
+  [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md).
 
 - thres.gain:
 
@@ -57,10 +57,10 @@ plotAberration(
 
   other optional graphical parameters. These include the plot arguments
   `xlab`, `ylab`, `main`, `cex.main`, `mgp`, `cex.lab`, `cex.axis`,
-  `mar` and `title` (see [`par`](https://rdrr.io/r/graphics/par.html) on
-  these), as well as `plot.size`, `plot.unit`, `plot.ideo`, `ideo.frac`,
-  `cyto.text`, `assembly` and `cex.cytotext` (see
-  [`plotSample`](https://igordot.github.io/copynumber/reference/plotSample.md)
+  `mar` and `title` (see [`par()`](https://rdrr.io/r/graphics/par.html)
+  on these), as well as `plot.size`, `plot.unit`, `plot.ideo`,
+  `ideo.frac`, `cyto.text`, `assembly` and `cex.cytotext` (see
+  [`plotSample()`](https://igordot.github.io/copynumber/reference/plotSample.md)
   on these). In addition, a range of graphical arguments specific for
   this plot function may be specified:
 

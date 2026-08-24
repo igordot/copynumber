@@ -14,9 +14,10 @@ getGRangesFormat(segments)
 - segments:
 
   a data frame containing segmentation results found by e.g.
-  [`pcf`](https://igordot.github.io/copynumber/reference/pcf.md),
-  [`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md)
-  or [`aspcf`](https://igordot.github.io/copynumber/reference/aspcf.md).
+  [`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md),
+  [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md)
+  or
+  [`aspcf()`](https://igordot.github.io/copynumber/reference/aspcf.md).
 
 ## Value
 

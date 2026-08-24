@@ -15,9 +15,10 @@ subsetSegments(segments, chrom = NULL, sample = NULL, sep = "\t", ...)
 
   either a data frame or the name of a tab-separated file from which
   segmentation results can be read. Segmentation results may come from
-  [`pcf`](https://igordot.github.io/copynumber/reference/pcf.md),
-  [`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md)
-  or [`aspcf`](https://igordot.github.io/copynumber/reference/aspcf.md).
+  [`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md),
+  [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md)
+  or
+  [`aspcf()`](https://igordot.github.io/copynumber/reference/aspcf.md).
 
 - chrom:
 

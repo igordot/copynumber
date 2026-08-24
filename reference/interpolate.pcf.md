@@ -6,8 +6,7 @@ positions.
 ## Usage
 
 ``` r
-# S3 method for class 'pcf'
-interpolate(segments, x)
+interpolate.pcf(segments, x)
 ```
 
 ## Arguments
@@ -15,7 +14,7 @@ interpolate(segments, x)
 - segments:
 
   a data frame containing the segmentation results from
-  [`pcf`](https://igordot.github.io/copynumber/reference/pcf.md).
+  [`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md).
 
 - x:
 
@@ -40,7 +39,7 @@ or mbp).
 
 ## See also
 
-[`pcf`](https://igordot.github.io/copynumber/reference/pcf.md)
+[`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md)
 
 ## Author
 
@@ -100,7 +99,7 @@ seg <- pcf(data=sub.lymphoma,gamma=12)
 #> pcf finished for chromosome arm 23p 
 #> pcf finished for chromosome arm 23q 
 
-#Make a matrix with two positions and chromosomes for which we want to 
+#Make a matrix with two positions and chromosomes for which we want to
 #interpolate the pcf-estimate:
 pos <-  c(2000000,50000000)
 chr <- c(1,2)

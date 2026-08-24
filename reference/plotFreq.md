@@ -24,8 +24,8 @@ plotFreq(
 - segments:
 
   a data frame containing the segmentation results found by either
-  [`pcf`](https://igordot.github.io/copynumber/reference/pcf.md) or
-  [`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md).
+  [`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md) or
+  [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md).
 
 - thres.gain:
 
@@ -61,10 +61,10 @@ plotFreq(
   other graphical parameters. These include the common plot arguments
   `xlab`, `ylab`, `title`, `main`, `cex.main`, `mgp`, `cex.lab`,
   `cex.axis`, `ylim`, `xlim`, and `las` (see
-  [`par`](https://rdrr.io/r/graphics/par.html) on these), as well as
+  [`par()`](https://rdrr.io/r/graphics/par.html) on these), as well as
   `plot.size`, `plot.unit`, `plot.ideo`, `ideo.frac`, `cyto.text`,
   `assembly` and `cex.cytotext` (see
-  [`plotSample`](https://igordot.github.io/copynumber/reference/plotSample.md)
+  [`plotSample()`](https://igordot.github.io/copynumber/reference/plotSample.md)
   on these). In addition, some other graphical arguments specific for
   this plot function may be specified:
 
@@ -166,6 +166,6 @@ plotFreq(segments=seg,thres.gain=c(0.1,0.2), thres.loss=c(-0.05,-0.1), chrom=c(1
 layout=c(5,5))
 
 
-  
+
 
 ```

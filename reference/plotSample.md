@@ -34,8 +34,8 @@ plotSample(
 
   a data frame or a list of data frames containing the segmentation
   results found by either
-  [`pcf`](https://igordot.github.io/copynumber/reference/pcf.md) or
-  [`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md).
+  [`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md) or
+  [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md).
 
 - pos.unit:
 
@@ -65,7 +65,7 @@ plotSample(
 
   an optional data frame of the same size as `data` identifying
   observations classified as outliers by
-  [`winsorize`](https://igordot.github.io/copynumber/reference/winsorize.md).
+  [`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md).
   If specified, outliers will be marked by a different color and symbol
   than the other observations (see `wins.col` and `wins.pch`).
 
@@ -91,10 +91,10 @@ plotSample(
   `xlab`, `ylab`, `main`, `xlim`, `ylim`, `col` (default is "grey"),
   `pch` (default is 46, equivalent to "."), `cex`, `cex.lab`,
   `cex.main`, `cex.axis`, `las`, `tcl`, `mar` and `mgp` (see
-  [`par`](https://rdrr.io/r/graphics/par.html) on these). In addition, a
-  range of graphical arguments specific for `plotSample` (as well as the
-  similar functions `plotChrom`, `plotGenome` and `plotAllele`) may be
-  specified:
+  [`par()`](https://rdrr.io/r/graphics/par.html) on these). In addition,
+  a range of graphical arguments specific for `plotSample` (as well as
+  the similar functions `plotChrom`, `plotGenome` and `plotAllele`) may
+  be specified:
 
 ## Details
 
@@ -203,7 +203,7 @@ other setups for arranging multiple plots in one device such as
   color(s) used to plot the segmentation result(s). The default colors
   are found using the function `rainbow(n)`, where `n` is the number of
   segmentation results found in `segments` (see
-  [`rainbow`](https://rdrr.io/r/grDevices/palettes.html) for details).
+  [`rainbow()`](https://rdrr.io/r/grDevices/palettes.html) for details).
 
 - `seg.lty`::
 
@@ -240,8 +240,8 @@ other setups for arranging multiple plots in one device such as
 
 ## See also
 
-[`plotChrom`](https://igordot.github.io/copynumber/reference/plotChrom.md),
-[`plotGenome`](https://igordot.github.io/copynumber/reference/plotGenome.md)
+[`plotChrom()`](https://igordot.github.io/copynumber/reference/plotChrom.md),
+[`plotGenome()`](https://igordot.github.io/copynumber/reference/plotGenome.md)
 
 ## Author
 
@@ -300,7 +300,7 @@ wins.data <- winsorize(data=sub.lymphoma)
 #> winsorize finished for chromosome arm 23p 
 #> winsorize finished for chromosome arm 23q 
 
-#Use pcf to find segments:        
+#Use pcf to find segments:
 uni.segments <- pcf(data=wins.data,gamma=12)
 #> pcf finished for chromosome arm 1p 
 #> pcf finished for chromosome arm 1q 

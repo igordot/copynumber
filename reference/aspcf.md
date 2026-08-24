@@ -153,7 +153,7 @@ chromosome arm in each sample.
 
 It will usually be advisable to Winsorize the logR data before running
 `aspcf`, see
-[`winsorize`](https://igordot.github.io/copynumber/reference/winsorize.md)
+[`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md)
 on this. Missing values are not allowed in `logR`, see `imputeMissing`
 for imputation of missing copy number values.
 
@@ -165,8 +165,8 @@ single- and multi-track copy number segmentation", BMC Genomics 13:591
 
 ## See also
 
-[`plotAllele`](https://igordot.github.io/copynumber/reference/plotAllele.md),
-[`winsorize`](https://igordot.github.io/copynumber/reference/winsorize.md)
+[`plotAllele()`](https://igordot.github.io/copynumber/reference/plotAllele.md),
+[`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md)
 
 ## Author
 

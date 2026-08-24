@@ -17,7 +17,7 @@
   : Get segments on the GRanges format
 - [`imputeMissing()`](https://igordot.github.io/copynumber/reference/imputeMissing.md)
   : Impute missing copy number values
-- [`interpolate(`*`<pcf>`*`)`](https://igordot.github.io/copynumber/reference/interpolate.pcf.md)
+- [`interpolate.pcf()`](https://igordot.github.io/copynumber/reference/interpolate.pcf.md)
   : Interpolation of pcf-estimates.
 - [`lymphoma`](https://igordot.github.io/copynumber/reference/lymphoma.md)
   : 3K aCGH data

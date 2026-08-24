@@ -146,7 +146,7 @@ each sample.
 ## Note
 
 It is usually advisable to Winsorize data before running pcf, see
-[`winsorize`](https://igordot.github.io/copynumber/reference/winsorize.md)
+[`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md)
 on this.
 
 Missing copy number values are allowed. These are kept out of the pcf
@@ -161,7 +161,7 @@ single- and multi-track copy number segmentation", BMC Genomics 13:591
 
 ## See also
 
-[`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md)
+[`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md)
 
 ## Author
 

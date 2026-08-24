@@ -20,7 +20,7 @@ selectSegments(
 - segments:
 
   a data frame containing segments found by
-  [`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md).
+  [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md).
 
 - what:
 
@@ -112,7 +112,7 @@ lowest p-quantile (if `large=FALSE`) is returned.
 
 ## See also
 
-[`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md)
+[`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md)
 
 ## Author
 

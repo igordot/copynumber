@@ -14,8 +14,8 @@ callAberrations(segments, thres.gain, thres.loss = -thres.gain)
 - segments:
 
   a data frame containing the segmentation results found by either
-  [`pcf`](https://igordot.github.io/copynumber/reference/pcf.md) or
-  [`multipcf`](https://igordot.github.io/copynumber/reference/multipcf.md).
+  [`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md) or
+  [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md).
 
 - thres.gain:
 

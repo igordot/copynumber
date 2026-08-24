@@ -134,7 +134,7 @@ other setups for arranging multiple plots in one device such as
 
 ## See also
 
-[`pcf`](https://igordot.github.io/copynumber/reference/pcf.md),[`winsorize`](https://igordot.github.io/copynumber/reference/winsorize.md)
+[`pcf()`](https://igordot.github.io/copynumber/reference/pcf.md),[`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md)
 
 ## Author
 

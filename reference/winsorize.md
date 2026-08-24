@@ -205,5 +205,5 @@ wins.data <- winsorize(data=sub.lymphoma)
 #> winsorize finished for chromosome arm 22q 
 #> winsorize finished for chromosome arm 23p 
 #> winsorize finished for chromosome arm 23q 
-         
+
 ```

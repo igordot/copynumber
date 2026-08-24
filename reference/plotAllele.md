@@ -42,7 +42,7 @@ plotAllele(
 
   a data frame or a list of data frames containing the segmentation
   results found by
-  [`aspcf`](https://igordot.github.io/copynumber/reference/aspcf.md).
+  [`aspcf()`](https://igordot.github.io/copynumber/reference/aspcf.md).
 
 - pos.unit:
 
@@ -78,7 +78,7 @@ plotAllele(
 
   an optional data frame of the same size as `logR` identifying
   observations classified as outliers by
-  [`winsorize`](https://igordot.github.io/copynumber/reference/winsorize.md).
+  [`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md).
   If specified, outliers will be marked by a different color and symbol
   than the other observations (see `wins.col` and `wins.pch`).
 
@@ -104,10 +104,10 @@ plotAllele(
   `xlab`, `ylab`, `main`, `xlim`, `ylim`, `col` (default is "grey"),
   `pch` (default is 46, equivalent to "."), `cex`, `cex.lab`,
   `cex.main`, `cex.axis`, `las`, `tcl`, `mar` and `mgp` (see
-  [`par`](https://rdrr.io/r/graphics/par.html) on these). In addition, a
-  range of graphical arguments specific for copy number plots may be
+  [`par()`](https://rdrr.io/r/graphics/par.html) on these). In addition,
+  a range of graphical arguments specific for copy number plots may be
   specified, see
-  [`plotSample`](https://igordot.github.io/copynumber/reference/plotSample.md)
+  [`plotSample()`](https://igordot.github.io/copynumber/reference/plotSample.md)
   on these.
 
 ## Details
