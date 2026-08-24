@@ -1,4 +1,4 @@
-# copynumber with hg38, mm10, and mm39
+# copynumber with hg38/mm10/mm39
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/igordot/copynumber/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/igordot/copynumber/actions/workflows/R-CMD-check.yaml)
