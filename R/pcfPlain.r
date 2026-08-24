@@ -17,20 +17,18 @@
 
 ## Main function for pcf-analysis to be called by the user
 
-
-
 #' Plain single-sample copy number segmentation.
-#' 
+#'
 #' A basic single-sample pcf segmentation which does not take chromosome
 #' borders into account
-#' 
+#'
 #' A piecewise constant segmentation curve is fitted to the copy number
 #' observations as described in the PCF algorithm in Nilsen and Liestoel et al.
 #' (2012). Unlike the regular \code{\link{pcf}} function, \code{pcfPlain} does
 #' not make independent segmentations for each chromosome arm (i.e. breakpoints
 #' are not automatically inserted at the beginning and end of chromosome arms).
 #' The segmentation can thus be performed independently of assembly.
-#' 
+#'
 #' @param pos.data a data frame where the rows represent the probes, column 1
 #' holds probe positions, and subsequent column(s) give the numeric copy number
 #' measurements for one or more samples. The header of copy number columns
@@ -57,7 +55,7 @@
 #' segment found in the data. Each row represents a segment, while columns give
 #' the sampleID, start position, end position, number of probes in the segment
 #' and mean value, respectively.}
-#' 
+#'
 #' If \code{return.est = FALSE}, only the data frame containing the segments is
 #' returned.
 #' @note If probe positions are not available, the first column in \code{data}
@@ -68,18 +66,18 @@
 #' for single- and multi-track copy number segmentation", BMC Genomics 13:591
 #' (2012), doi:10.1186/1471-2164-13-59
 #' @examples
-#' 
+#'
 #' #Load the lymphoma data set:
 #' data(lymphoma)
-#' 
+#'
 #' #Take out a smaller subset of 3 samples (using subsetData):
 #' sub.lymphoma <- subsetData(lymphoma,sample=1:3)
-#' 
+#'
 #' #Run pcfPlain (remove first column of chromosome numbers):
 #' plain.segments <- pcfPlain(pos.data=sub.lymphoma[,-1],gamma=12)
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' @export
 pcfPlain <- function(
   pos.data,

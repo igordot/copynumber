@@ -37,19 +37,17 @@
 ### subsetData
 ### winsorize
 
-
-
 #' Plot segmentation results for several values of gamma
-#' 
+#'
 #' Data for one sample on one chromosome is segmented by \code{pcf} for 10
 #' values of gamma, and results are visualized in a multi-grid plot.
-#' 
+#'
 #' Data for one sample and one chromosome is selected, and \code{pcf} is run on
 #' this data subset while applying 10 different gamma-values (within the given
 #' range). The output is a multi-grid plot with the data shown in the first
 #' panel, the segmentation results for the various gammas in the subsequent 10
 #' panels, and the number of segments found for each gamma in the last panel.
-#' 
+#'
 #' If \code{cv = TRUE} a K-fold cross-validation is also performed. For each
 #' fold, a random (100/K) per cent of the data are set to be missing, and
 #' \code{pcf} is run using the different values of \code{gamma}. The missing
@@ -63,7 +61,7 @@
 #' that such cross-validation tends to favor small values of gamma, and the
 #' suitability of the so-called optimal gamma from this procedure should be
 #' critically assessed.
-#' 
+#'
 #' @param data either a data frame or the name of a tab-separated file from
 #' which copy number data can be read. The rows of the data frame or file
 #' should represent the probes. Column 1 must hold numeric or character
@@ -102,12 +100,12 @@
 #' @author Gro Nilsen, Knut Liestoel, Ole Christian Lingjaerde
 #' @seealso \code{\link{pcf}},\code{\link{winsorize}}
 #' @examples
-#' 
+#'
 #' #Micma data
 #' data(micma)
-#' 
+#'
 #' plotGamma(micma,chrom=17)
-#' 
+#'
 #' @export
 plotGamma <- function(
   data,

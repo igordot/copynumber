@@ -37,17 +37,15 @@
 ### pcf (exactPcf)
 ### medianFilter
 
-
-
 #' Winsorization of copy number data
-#' 
+#'
 #' Outliers in copy number data are detected and modified using MAD or PCF
 #' Winsorization.
-#' 
+#'
 #' The copy number data are either MAD Winsorized or PCF Winsorized as
 #' described in Nilsen and Liestoel et al. (2012). Winsorization is done
 #' separately on each chromosome arm in each sample.
-#' 
+#'
 #' @param data either a data frame or the name of a tab-separated file from
 #' which copy number data can be read. The rows of the data frame or file
 #' should represent the probes. Column 1 must hold numeric or character
@@ -93,7 +91,7 @@
 #' The values +/- 1 indicate that the observation is an outlier, whereas the
 #' value 0 indicates that it is not.} If \code{return.outliers = FALSE} only
 #' the data frame containing the winsorized data is returned.
-#' 
+#'
 #' If \code{save.res=TRUE} the results are saved in text files with names as
 #' specified in \code{file.names}. If \code{file.names=NULL}, a folder named
 #' "Wins_res" is created in the working directory and Winsorized data and
@@ -108,16 +106,16 @@
 #' for single- and multi-track copy number segmentation", BMC Genomics 13:591
 #' (2012), doi:10.1186/1471-2164-13-59
 #' @examples
-#' 
+#'
 #' #Lymphoma data
 #' data(lymphoma)
 #' #Take out a smaller subset of 3 samples (using subsetData):
 #' sub.lymphoma <- subsetData(lymphoma,sample=1:3)
-#' 
+#'
 #' #Do MAD Winsorization:
 #' wins.data <- winsorize(data=sub.lymphoma)
-#'          
-#' 
+#'
+#'
 #' @export
 winsorize <- function(
   data,
@@ -145,7 +143,10 @@ winsorize <- function(
   valid.assemblies <- validAssemblies()
   if (!assembly %in% valid.assemblies) {
     stop(
-      paste0("assembly must be one of ", paste(valid.assemblies, collapse = ", ")),
+      paste0(
+        "assembly must be one of ",
+        paste(valid.assemblies, collapse = ", ")
+      ),
       call. = FALSE
     )
   }

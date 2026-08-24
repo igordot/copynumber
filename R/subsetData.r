@@ -25,14 +25,12 @@
 ### numericChrom
 ### pullOutContent
 
-
-
 #' Retrieve a data subset
-#' 
+#'
 #' This function returns a subset of copy number data according to the input
 #' and the specified chromosomes and/or samples.
-#' 
-#' 
+#'
+#'
 #' @param data either a data frame or the name of a tab-separated file from
 #' which copy number data can be read. The rows of the data frame or file
 #' should represent the probes. Column 1 must hold numeric or character
@@ -51,14 +49,14 @@
 #' @return A data frame containing the desired subset of data.
 #' @author Gro Nilsen
 #' @examples
-#' 
+#'
 #' #Load lymphoma data
 #' data(lymphoma)
-#' 
+#'
 #' #Select data only for samples 1 and 6 and chromosomes 1:9:
 #' sub.data <- subsetData(data=lymphoma,chrom=c(1:9),sample=c(1,6))
-#' 
-#' 
+#'
+#'
 #' @export
 subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
   # Check if data is a file:

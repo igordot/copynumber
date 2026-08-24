@@ -31,16 +31,14 @@
 ### plotObs
 ### plotSegments
 
-
-
 #' Plot copy number data and/or segmentation results
-#' 
+#'
 #' Plot copy number data and/or segmentation results for the whole genome.
-#' 
+#'
 #' Several plots may be produced on the same page with the \code{layout}
 #' option. If the number of plots exceeds the desired page layout, the user is
 #' prompted before advancing to the next page of output.
-#' 
+#'
 #' @param data a data frame with numeric or character chromosome numbers in the
 #' first column, numeric local probe positions in the second, and numeric copy
 #' number data for one or more samples in subsequent columns. The header of the
@@ -81,47 +79,47 @@
 #' @author Gro Nilsen
 #' @seealso \code{\link{plotSample}}, \code{\link{plotChrom}}
 #' @examples
-#' 
+#'
 #' #Lymphoma data
 #' data(lymphoma)
 #' #Take out a smaller subset of 6 samples (using subsetData):
 #' sub.lymphoma <- subsetData(lymphoma,sample=1:6)
-#' 
+#'
 #' #Winsorize data:
 #' wins.data <- winsorize(data=sub.lymphoma,return.outliers=TRUE)
-#' 
-#' #Use pcf to find segments:        
+#'
+#' #Use pcf to find segments:
 #' uni.segments <- pcf(data=wins.data,gamma=12)
-#' 
+#'
 #' #Use multipcf to find segments as well:
 #' multi.segments <- multipcf(data=wins.data,gamma=12)
-#' 
+#'
 #' #Plot data and pcf-segments over entire genome for all six samples (one page
 #' #for each sample):
 #' plotGenome(data=sub.lymphoma,segments=uni.segments)
-#' 
+#'
 #' #Let each sample define its own range, and adjust range to fit all observations:
 #' plotGenome(data=sub.lymphoma,segments=uni.segments,equalRange=FALSE,q=0)
-#' 
-#' #Add results from multipcf on top for four of the samples and let all plots 
+#'
+#' #Add results from multipcf on top for four of the samples and let all plots
 #' #show on one page:
 #' plotGenome(data=sub.lymphoma,segments=list(uni.segments,multi.segments),
 #'     layout=c(2,2),sample=c(1:4))
-#'     
+#'
 #' #Change segment-colors, line widths, and legend:
 #' plotGenome(data=sub.lymphoma,segments=list(uni.segments,multi.segments),layout=c(2,2),
 #'     seg.col=c("red","blue"),seg.lwd=c(3,2),legend=c("uni","multi")
 #'     ,sample=c(1:4))
-#'     
-#' #Aberration calling may be done by defining thresholds that determines the cuf-off 
-#' #for what should be considered biologically significant aberrations. In this 
+#'
+#' #Aberration calling may be done by defining thresholds that determines the cuf-off
+#' #for what should be considered biologically significant aberrations. In this
 #' #example segments which are above 0.2 or below -0.2 are considered aberrated
-#' #regions:     
+#' #regions:
 #' plotGenome(segments=uni.segments,sample=5,connect=FALSE)
 #' abline(h=0.2,col="blue",lty=5)
 #' abline(h=-0.2,col="blue",lty=5)
-#' 
-#' 
+#'
+#'
 #' @export
 plotGenome <- function(
   data = NULL,

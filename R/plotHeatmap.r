@@ -29,14 +29,13 @@
 
 # Main function for heatmap plotting:
 
-
 #' Plot copy number heatmap
-#' 
+#'
 #' Heatmap reflecting the magnitude of estimated copy numbers relative to some
 #' pre-defined limits. Estimates may be obtained using \code{pcf} or
 #' \code{multipcf}, and results may be visualized over the entire genome or by
 #' chromosomes.
-#' 
+#'
 #' For each sample, the segments are represented by a rectangle plotted in a
 #' color corresponding to the difference between the segment copy number value
 #' and the limits. If the value is below \code{lower.lim}, the color of the
@@ -50,10 +49,10 @@
 #' \code{upper.lim}, but above zero, the color will be a nuance between the
 #' input in \code{colors[2]} and \code{colors[3]}. Again, the closer the value
 #' is to zero, the closer the nuance will be to \code{colors[2]}.
-#' 
+#'
 #' Each row in the heatmap represents a sample, while probe positions are
 #' reflected along the x-axis.
-#' 
+#'
 #' @param segments a data frame containing the segmentation results found by
 #' either \code{\link{pcf}} or \code{\link{multipcf}}.
 #' @param upper.lim a positive numeric vector giving the upper limits(s) to be
@@ -93,20 +92,20 @@
 #' \code{par(mfrow,mfcol)}.
 #' @author Gro Nilsen
 #' @examples
-#' 
+#'
 #' #Load lymphoma data
 #' data(lymphoma)
-#' 
+#'
 #' #Run pcf to obtain estimated copy number values
 #' seg <- pcf(data=lymphoma,gamma=12)
-#' 
+#'
 #' #Heatmap for entire genome, two limit values:
 #' plotHeatmap(segments=seg,upper.lim=c(0.1,0.5),layout=c(2,1))
-#' 
+#'
 #' #Heatmap for the first 4 chromosomes:
 #' plotHeatmap(segments=seg,upper.lim=0.1,chrom=c(1:4),layout=c(2,2))
-#' 
-#' 
+#'
+#'
 #' @export
 plotHeatmap <- function(
   segments,

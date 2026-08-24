@@ -19,19 +19,17 @@
 
 # Main function for allele-specific PCF to be called by user
 
-
-
 #' Allele-specific copy number segmentation.
-#' 
+#'
 #' Joint segmentation of SNP array data resulting in piecewise constant curves
 #' with common break points for copy number data and B-allelle frequency data.
-#' 
+#'
 #' Piecewise constant curves are simultaneously fitted to the LogR and BAF data
 #' as described in Nilsen and Liestoel et al.(2012). This implies that break
 #' points will be the same for the LogR and BAF segmentation curves, while
 #' segment values differ. Segmentation is done separately on each chromosome
 #' arm in each sample.
-#' 
+#'
 #' @param logR either a data frame or the name of a tab-separated file from
 #' which copy number data can be read. The rows of the data frame or file
 #' should represent the probes. Column 1 must hold numeric or character
@@ -84,10 +82,10 @@
 #' represents a segment, and columns give the sample IDs, chromosome numbers,
 #' arms, local start positions, local end positions, number of probes in the
 #' segments, mean LogR values and mean BAF values, respectively.}
-#' 
+#'
 #' If \code{return.est = FALSE}, only the data frame containing the segments is
 #' returned.
-#' 
+#'
 #' If \code{save.res = TRUE} the results are also saved in text files with
 #' names as specified in \code{file.names}. If \code{file.names=NULL}, a folder
 #' named "aspcf_results" is created in the working directory, and the LogR
@@ -103,18 +101,18 @@
 #' for single- and multi-track copy number segmentation", BMC Genomics 13:591
 #' (2012), doi:10.1186/1471-2164-13-59
 #' @examples
-#' 
+#'
 #' #Load LogR and BAF data:
 #' data(logR)
 #' data(BAF)
-#' 
+#'
 #' #First winsorize logR to handle outliers:
 #' wins.logR <- winsorize(logR)
-#' 
+#'
 #' #Run aspcf:
 #' aspcf.segments <- aspcf(wins.logR,BAF)
-#' 
-#' 
+#'
+#'
 #' @export
 aspcf <- function(
   logR,
@@ -141,7 +139,10 @@ aspcf <- function(
   valid.assemblies <- validAssemblies()
   if (!assembly %in% valid.assemblies) {
     stop(
-      paste0("assembly must be one of ", paste(valid.assemblies, collapse = ", ")),
+      paste0(
+        "assembly must be one of ",
+        paste(valid.assemblies, collapse = ", ")
+      ),
       call. = FALSE
     )
   }

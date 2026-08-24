@@ -26,20 +26,18 @@
 ### pullOutContent
 ### getFreqData
 
-
-
 #' Plot percentage of samples with an aberration at a genomic position
-#' 
+#'
 #' Plot the percentage of samples that have an amplification or deletion at a
 #' genomic position. Amplifications/deletions correspond to copy number values
 #' that are above/below a pre-defined threshold. Frequencies may be plotted
 #' over the entire genome or separately for each chromosome.
-#' 
+#'
 #' The percentage of samples with an aberration is calculated and plotted for
 #' all genomic positions. Regions with gain or loss will be those where copy
 #' number values are above or below the values given in \code{thres.gain} and
 #' \code{thres.loss}, respectively.
-#' 
+#'
 #' @param segments a data frame containing the segmentation results found by
 #' either \code{\link{pcf}} or \code{\link{multipcf}}.
 #' @param thres.gain a numeric vector giving the threshold value(s) to be
@@ -79,21 +77,21 @@
 #' \code{par(mfrow,mfcol)}.
 #' @author Gro Nilsen
 #' @examples
-#' 
+#'
 #' #load lymphoma data
 #' data(lymphoma)
 #' #Run pcf
 #' seg <- pcf(data=lymphoma,gamma=12)
-#' 
+#'
 #' #Plot over entire genome, gain and loss thresholds are 0.1 and -0.1:
 #' plotFreq(segments=seg,thres.gain=0.1)
-#' 
+#'
 #' #Plot by chromosomes, two sets of thresholds:
 #' plotFreq(segments=seg,thres.gain=c(0.1,0.2), thres.loss=c(-0.05,-0.1), chrom=c(1:23),
 #' layout=c(5,5))
-#'   
-#' 
-#' 
+#'
+#'
+#'
 #' @export
 plotFreq <- function(
   segments,

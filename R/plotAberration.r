@@ -29,19 +29,18 @@
 
 # Main function for heatmap plotting:
 
-
 #' Plot areas with copy number aberrations
-#' 
+#'
 #' Create plots reflecting the location of aberrated segments. Results may be
 #' visualized over the entire genome or by chromosomes.
-#' 
+#'
 #' For each sample, the aberrated regions are shown in the color specified in
 #' \code{colors[1]} (default dodgerblue) if the segment value is below
 #' \code{thres.loss} and the color specified in \code{colors[2]} (default red)
 #' if the segment value is above \code{thres.gain}. Non-aberrated regions are
 #' shown in white. Each row in the plot represents a sample, while probe
 #' positions are reflected along the x-axis.
-#' 
+#'
 #' @param segments a data frame containing the segmentation results found by
 #' either \code{\link{pcf}} or \code{\link{multipcf}}.
 #' @param thres.gain a numeric vector giving the threshold value(s) to be
@@ -81,20 +80,20 @@
 #' \code{par(mfrow,mfcol)}.
 #' @author Gro Nilsen
 #' @examples
-#' 
+#'
 #' #Load lymphoma data
 #' data(lymphoma)
-#' 
+#'
 #' #Run pcf to obtain estimated copy number values
 #' seg <- pcf(data=lymphoma,gamma=12)
-#' 
+#'
 #' #Plot aberrations for the entire genome
 #' plotAberration(segments=seg,thres.gain=0.15)
-#' 
+#'
 #' #Plot aberrations for the first 4 chromosomes:
 #' plotAberration(segments=seg,thres.gain=0.1,chrom=c(1:4),layout=c(2,2))
-#' 
-#' 
+#'
+#'
 #' @export
 plotAberration <- function(
   segments,

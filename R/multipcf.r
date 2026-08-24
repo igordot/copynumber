@@ -18,19 +18,17 @@
 
 ## Main function for multipcf-analysis to be called by the user
 
-
-
 #' Multi-sample copy number segmentation.
-#' 
+#'
 #' Joint segmentation resulting in piecewise constant curves with common break
 #' points for all samples.
-#' 
+#'
 #' Piecewise constant curves are simultaneously fitted to the copy number data
 #' for several samples as described in the multiPCF algorithm in Nilsen and
 #' Liestoel et al. (2012). This implies that break points will be the same for
 #' all segmentation curves, but the mean segment values will differ among
 #' samples. Segmentation is done separately on each chromosome arm.
-#' 
+#'
 #' @param data either a data frame or the name of a tab-separated file from
 #' which copy number data can be read. The rows of the data frame or file
 #' should represent the probes. Column 1 must hold numeric or character
@@ -85,10 +83,10 @@
 #' chromosome numbers, arms, local start positions, local end positions, and
 #' the number of probes in the segments, respectively. Subsequent columns give
 #' the mean segment value for each sample, with sample IDs as column headers.}
-#' 
+#'
 #' If \code{return.est = FALSE} only the data frame containing the segments is
 #' returned.
-#' 
+#'
 #' If \code{save.res = TRUE} the results are also saved in text files with
 #' names as specified in \code{file.names}. If \code{file.names=NULL}, a folder
 #' named "multipcf_results" is created in the working directory, and the
@@ -96,7 +94,7 @@
 #' files named segments.txt and estimates.txt, respectively.
 #' @note It is usually advisable to Winsorize data before running pcf, see
 #' \code{\link{winsorize}} on this.
-#' 
+#'
 #' The input data must be complete, see \code{\link{imputeMissing}} for
 #' imputation of missing copy number values.
 #' @author Gro Nilsen, Knut Liestoel
@@ -105,24 +103,24 @@
 #' for single- and multi-track copy number segmentation", BMC Genomics 13:591
 #' (2012), doi:10.1186/1471-2164-13-59
 #' @examples
-#' 
+#'
 #' #Load lymphoma data:
 #' data(lymphoma)
-#' 
+#'
 #' #Take out a subset of 3 biopsies from the first patient (using subsetData):
 #' sub.lymphoma <- subsetData(lymphoma,sample=1:3)
-#' 
+#'
 #' #Check for missing values in data:
 #' any(is.na(sub.lymphoma))
 #' #FALSE
-#' 
+#'
 #' #First winsorize data to handle outliers:
 #' wins.lymph <- winsorize(sub.lymphoma)
-#' 
+#'
 #' #Run multipcf on subset lymphoma data (using a low gamma because of low-density data)
 #' multi.segments <- multipcf(data=wins.lymph,gamma=12,Y=sub.lymphoma)
-#' 
-#' 
+#'
+#'
 #' @export
 multipcf <- function(
   data,
@@ -149,7 +147,10 @@ multipcf <- function(
   valid.assemblies <- validAssemblies()
   if (!assembly %in% valid.assemblies) {
     stop(
-      paste0("assembly must be one of ", paste(valid.assemblies, collapse = ", ")),
+      paste0(
+        "assembly must be one of ",
+        paste(valid.assemblies, collapse = ", ")
+      ),
       call. = FALSE
     )
   }

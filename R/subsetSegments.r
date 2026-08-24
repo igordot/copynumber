@@ -26,14 +26,12 @@
 ### numericChrom
 ### pullOutContent
 
-
-
 #' Retrieve a subset of segments
-#' 
+#'
 #' This function returns a subset of segments according to the input and the
 #' specified chromosomes and/or samples.
-#' 
-#' 
+#'
+#'
 #' @param segments either a data frame or the name of a tab-separated file from
 #' which segmentation results can be read. Segmentation results may come from
 #' \code{\link{pcf}}, \code{\link{multipcf}} or \code{\link{aspcf}}.
@@ -50,15 +48,15 @@
 #' @return A data frame containing the desired subset of segments.
 #' @author Gro Nilsen
 #' @examples
-#' 
+#'
 #' #Load lymphoma data
 #' data(lymphoma)
-#' 
+#'
 #' #Select segments only for samples 1 and 6 and chromosomes 1:9:
 #' segments <- pcf(lymphoma,gamma=12)
 #' sub.segments <- subsetSegments(segments=segments,chrom=c(1:9),sample=c(1,6))
-#' 
-#' 
+#'
+#'
 #' @export
 subsetSegments <- function(
   segments,

@@ -28,7 +28,9 @@ test_that("subsetSegments() accepts a character matrix, not just a data frame", 
   expect_s3_class(ss, "data.frame")
   # reparse: as.matrix() pads numbers for column alignment.
   tidy <- function(df) {
-    as.data.frame(lapply(df, \(col) type.convert(trimws(as.character(col)), as.is = TRUE)))
+    as.data.frame(lapply(df, \(col) {
+      type.convert(trimws(as.character(col)), as.is = TRUE)
+    }))
   }
   expect_equal(tidy(ss), tidy(ss_from_df))
 })

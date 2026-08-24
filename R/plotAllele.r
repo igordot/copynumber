@@ -35,17 +35,15 @@
 ### plotObs
 ### plotSegments
 
-
-
 #' Plot SNP data and/or aspcf segmentation results
-#' 
+#'
 #' Plot bivariate SNP data and/or aspcf segmentation results for each sample
 #' separately with chromosomes in different panels
-#' 
+#'
 #' Several chromosome may be displayed on the same page with the \code{layout}
 #' option. If the number of chromosomes exceeds the desired page layout, the
 #' user is prompted before advancing to the next page of output.
-#' 
+#'
 #' @param logR a data frame with numeric or character chromosome numbers in the
 #' first column, numeric local probe positions in the second, and numeric copy
 #' number data for one or more samples in subsequent columns. The header of the
@@ -94,17 +92,17 @@
 #' \code{par(mfrow,mfcol)}.
 #' @author Gro Nilsen
 #' @examples
-#' 
+#'
 #' #Load logR and BAF data:
 #' data(logR)
 #' data(BAF)
-#' 
+#'
 #' #Run aspcf::
 #' aspcf.segments <- aspcf(logR,BAF)
-#' 
+#'
 #' #Plot
 #' plotAllele(logR,BAF,aspcf.segments,layout=c(2,2))
-#' 
+#'
 #' @export
 plotAllele <- function(
   logR = NULL,

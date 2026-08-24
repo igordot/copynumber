@@ -22,18 +22,16 @@
 
 ## Main function for pcf-analysis to be called by the user
 
-
-
 #' Single-sample copy number segmentation.
-#' 
+#'
 #' Fit a individual piecewise constant segmentation curve to each sample's copy
 #' number data.
-#' 
+#'
 #' A piecewise constant segmentation curve is fitted to the copy number
 #' observations as described in the PCF algorithm in Nilsen and Liestoel et al.
 #' (2012). Segmentation is done separately on each chromosome arm in each
 #' sample.
-#' 
+#'
 #' @param data either a data frame or the name of a tab-separated file from
 #' which copy number data can be read. The rows of the data frame or file
 #' should represent the probes. Column 1 must hold numeric or character
@@ -84,10 +82,10 @@
 #' row represents a segment, while columns give the sampleID, chromosome
 #' number, arm, local start position, local end position, number of probes in
 #' the segment and mean value, respectively.}
-#' 
+#'
 #' If \code{return.est = FALSE}, only the data frame containing the segments is
 #' returned.
-#' 
+#'
 #' If \code{save.res = TRUE} the results are also saved in text files with
 #' names as specified in \code{file.names}. If \code{file.names=NULL}, a folder
 #' named "pcf_results" is created in the working directory, and the pcf
@@ -95,7 +93,7 @@
 #' named estimates.txt and segments.txt, respectively.
 #' @note It is usually advisable to Winsorize data before running pcf, see
 #' \code{\link{winsorize}} on this.
-#' 
+#'
 #' Missing copy number values are allowed. These are kept out of the pcf
 #' analysis, and copy number estimates for missing observations are later set
 #' to be the same as the estimate of the nearest observed probe.
@@ -105,21 +103,21 @@
 #' for single- and multi-track copy number segmentation", BMC Genomics 13:591
 #' (2012), doi:10.1186/1471-2164-13-59
 #' @examples
-#' 
+#'
 #' #Load the lymphoma data set:
 #' data(lymphoma)
-#' 
+#'
 #' #Take out a smaller subset of 3 samples (using subsetData):
 #' sub.lymphoma <- subsetData(lymphoma,sample=1:3)
-#' 
+#'
 #' #First winsorize data to handle outliers:
 #' wins.lymph <- winsorize(sub.lymphoma)
-#' 
+#'
 #' #Run pcf (using small gamma because of low-density data):
 #' pcf.segments <- pcf(data=wins.lymph,gamma=12,Y=sub.lymphoma)
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' @export
 pcf <- function(
   data,
@@ -146,7 +144,10 @@ pcf <- function(
   valid.assemblies <- validAssemblies()
   if (!assembly %in% valid.assemblies) {
     stop(
-      paste0("assembly must be one of ", paste(valid.assemblies, collapse = ", ")),
+      paste0(
+        "assembly must be one of ",
+        paste(valid.assemblies, collapse = ", ")
+      ),
       call. = FALSE
     )
   }

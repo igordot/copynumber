@@ -58,6 +58,9 @@ test_that("aspcf() with return.est=TRUE returns logR estimates alongside segment
   res <- aspcf(logRWins, BAF, verbose = FALSE, return.est = TRUE)
 
   expect_named(res, c("logR_estimates", "segments"))
-  expect_named(res$logR_estimates, c("chrom", "pos", colnames(logRWins)[-c(1, 2)]))
+  expect_named(
+    res$logR_estimates,
+    c("chrom", "pos", colnames(logRWins)[-c(1, 2)])
+  )
   expect_equal(nrow(res$logR_estimates), nrow(logRWins))
 })

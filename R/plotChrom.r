@@ -33,17 +33,15 @@
 ### plotObs
 ### plotSegments
 
-
-
 #' Plot copy number data and/or segmentation results by chromosome
-#' 
+#'
 #' Plot copy number data and/or segmentation results for each chromosome
 #' separately with samples in different panels.
-#' 
+#'
 #' Several plots may be produced on the same page with the \code{layout}
 #' option. If the number of plots exceeds the desired page layout, the user is
 #' prompted before advancing to the next page of output.
-#' 
+#'
 #' @param data a data frame with numeric or character chromosome numbers in the
 #' first column, numeric local probe positions in the second, and numeric copy
 #' number data for one or more samples in subsequent columns. The header of the
@@ -88,21 +86,21 @@
 #' @author Gro Nilsen
 #' @seealso \code{\link{plotSample}}, \code{\link{plotGenome}}
 #' @examples
-#' 
+#'
 #' #Lymphoma data
 #' data(lymphoma)
 #' #Take out a smaller subset of 6 samples (using subsetData):
 #' sub.lymphoma <- subsetData(lymphoma,sample=1:6)
-#' 
+#'
 #' #Winsorize data:
 #' wins.res <- winsorize(data=sub.lymphoma,return.outliers=TRUE)
-#' 
-#' #Use pcf to find segments:        
+#'
+#' #Use pcf to find segments:
 #' uni.segments <- pcf(data=wins.res,gamma=12)
-#' 
+#'
 #' #Use multipcf to find segments as well:
 #' multi.segments <- multipcf(data=wins.res,gamma=12)
-#' 
+#'
 #' #Plot data and segments for chromosome 1 separately for each sample:
 #' plotChrom(data=sub.lymphoma,segments=list(uni.segments,multi.segments),chrom=1,
 #'     layout=c(3,2))
@@ -110,13 +108,13 @@
 #' plotChrom(data=sub.lymphoma,segments=list(uni.segments,multi.segments),chrom=1,
 #'     xaxis="index",layout=c(3,2),legend=FALSE,connect=FALSE)
 #' #Data was winsorized earlier. Mark winsorized values by different color
-#' #and symbol: 
+#' #and symbol:
 #' plotChrom(data=wins.res,chrom=1,winsoutliers=wins.res,layout=c(3,2))
 #' #Save plots to a directory:
 #' \donttest{plotChrom(data=sub.lymphoma,segments=uni.segments,chrom=c(1,2),
 #'     layout=c(3,2),dir.print=tempdir(),file.name=c("chromosome1","chromosome2"),
 #'     onefile=FALSE)}
-#' 
+#'
 #' @export
 plotChrom <- function(
   data = NULL,

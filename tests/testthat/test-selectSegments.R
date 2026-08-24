@@ -89,7 +89,12 @@ test_that("selectSegments() picks segments with the highest aberration quantile"
   lymphWins <- winsorize(data = subLymphoma, verbose = FALSE)
   multiSeg <- multipcf(data = lymphWins, verbose = FALSE)
 
-  sel <- selectSegments(segments = multiSeg, what = "aberration", nseg = 20, p = 0.5)
+  sel <- selectSegments(
+    segments = multiSeg,
+    what = "aberration",
+    nseg = 20,
+    p = 0.5
+  )
 
   # Independently compute the true top-20 by (1-p)-quantile across samples.
   sample_cols <- c("X01.B1", "X01.B2", "X01.B3", "X03.B1", "X03.B2")

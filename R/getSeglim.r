@@ -45,7 +45,10 @@ getSeglim <- function(
       keep <- which(segments[, 1] == sampleID)
       use.segments <- segments[keep, ]
     } else {
-      stop("either 'k' or 'sampleID' must be given when equalRange is FALSE", call. = FALSE)
+      stop(
+        "either 'k' or 'sampleID' must be given when equalRange is FALSE",
+        call. = FALSE
+      )
     }
   }
   seg.lim <- rep(NA, 2)

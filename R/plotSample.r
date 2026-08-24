@@ -33,17 +33,15 @@
 ### plotObs
 ### plotSegments
 
-
-
 #' Plot copy number data and/or segmentation results by sample
-#' 
+#'
 #' Plot copy number data and/or segmentation results for each sample separately
 #' with chromosomes in different panels.
-#' 
+#'
 #' Several plots may be produced on the same page with the \code{layout}
 #' option. If the number of plots exceeds the desired page layout, the user is
 #' prompted before advancing to the next page of output.
-#' 
+#'
 #' @param data a data frame with numeric or character chromosome numbers in the
 #' first column, numeric local probe positions in the second, and numeric copy
 #' number data for one or more samples in subsequent columns. The header of the
@@ -146,21 +144,21 @@
 #' @author Gro Nilsen
 #' @seealso \code{\link{plotChrom}}, \code{\link{plotGenome}}
 #' @examples
-#' 
+#'
 #' #Lymphoma data
 #' data(lymphoma)
 #' #Take out a smaller subset of 6 samples (using subsetData):
 #' sub.lymphoma <- subsetData(lymphoma,sample=1:6)
-#' 
+#'
 #' #Winsorize data:
 #' wins.data <- winsorize(data=sub.lymphoma)
-#' 
-#' #Use pcf to find segments:        
+#'
+#' #Use pcf to find segments:
 #' uni.segments <- pcf(data=wins.data,gamma=12)
-#' 
+#'
 #' #Use multipcf to find segments as well:
 #' multi.segments <- multipcf(data=wins.data,gamma=12)
-#' 
+#'
 #' # plotSample() opens a new graphics device on its first call (needed for
 #' # its multi-page/multi-window output modes), which is not safe to run
 #' # under automated example checks (e.g. pkgdown's example capture).

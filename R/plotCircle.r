@@ -30,17 +30,15 @@
 ## pullOutContent
 ## getFreqData
 
-
-
 #' Plot a circular genome with aberration frequencies and connections between
 #' genomic loci added.
-#' 
+#'
 #' A circular genome is plotted and the percentage of samples that have a gain
 #' or a loss at a genomic position is added in the middle of the circle.
 #' Gains/losses correspond to copy number values that are above/below a
 #' pre-defined threshold. In addition arcs representing some connection between
 #' genomic loci may be added.
-#' 
+#'
 #' To zoom in on the observed aberration frequencies one may increase
 #' \code{alpha}. However, the user should be aware that this implies that the
 #' distance between the genome circle and the frequency zero-line does not
@@ -48,7 +46,7 @@
 #' two circles is always 1/7, the maximum plotted percentage will be
 #' 100/(alpha*7) and any percentages that are higher than this will be
 #' truncated to this value.
-#' 
+#'
 #' @param segments a data frame containing the segmentation results found by
 #' either \code{\link{pcf}} or \code{\link{multipcf}}.
 #' @param thres.gain a scalar giving the threshold value to be applied for
@@ -85,17 +83,17 @@
 #' annotations in the UCSC genome browser).
 #' @author Gro Nilsen
 #' @examples
-#' 
+#'
 #' #load lymphoma data
 #' data(lymphoma)
 #' #Run pcf
 #' pcf.res <- pcf(data=lymphoma,gamma=12)
-#' 
+#'
 #' plotCircle(segments=pcf.res,thres.gain=0.1)
-#' 
+#'
 #' #Use alpha to view the frequencies in more detail:
 #' plotCircle(segments=pcf.res,thres.gain=0.1,alpha=1/5)
-#' 
+#'
 #' #An example of how to specify arcs
 #' #Using multipcf, we compute the correlation between all segments and then
 #' #retrieve those that have absolute inter-chromosomal correlation > 0.7
@@ -107,11 +105,11 @@
 #' chr.to <- c()
 #' pos.to <- c()
 #' cl <- c()
-#' 
+#'
 #' thresh = 0.7
 #' for (i in 1:(nseg-1)) {
 #'   for (j in (i+1):nseg) {
-#'     #Check if segment-correlation is larger than threshold and that the two 
+#'     #Check if segment-correlation is larger than threshold and that the two
 #'     #segments are located on different chromosomes
 #'     if (abs(cormat[i,j]) > thresh && multiseg$chrom[i] != multiseg$chrom[j]) {
 #'       chr.from = c(chr.from,multiseg$chrom[i])
@@ -122,21 +120,21 @@
 #'         cl <- c(cl,1)           #class 1 for those with positive correlation
 #'       }else{
 #'         cl <- c(cl,2)           #class 2 for those with negative correlation
-#'       }    
+#'       }
 #'     }
 #'   }
 #' }
-#'   
-#' arcs <- cbind(chr.from,pos.from,chr.to,pos.to,cl)  
-#' 
+#'
+#' arcs <- cbind(chr.from,pos.from,chr.to,pos.to,cl)
+#'
 #' #Plot arcs between segment with high correlations; positive correlation in
 #' #orange, negative correlation in blue:
 #' plotCircle(segments=pcf.res,thres.gain=0.15,arcs=arcs,d=0)
-#' 
-#' 
-#'   
-#' 
-#' 
+#'
+#'
+#'
+#'
+#'
 #' @export
 plotCircle <- function(
   segments,
