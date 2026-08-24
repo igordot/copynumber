@@ -1,4 +1,4 @@
-# copynumber with hg38, mm10, and mm39
+# copynumber with hg38/mm10/mm39
 
 This is an updated version of the
 [copynumber](https://bioconductor.org/packages/3.17/bioc/html/copynumber.html)
