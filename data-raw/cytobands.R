@@ -29,9 +29,10 @@ for (build in c("mm7", "mm8", "mm9")) {
   assign(build, prepare_cytoband(build, mouse_chrs))
 }
 
-# add hg38 and mm10 genome builds
+# add genome builds
 hg38 <- prepare_cytoband("hg38", human_chrs)
 mm10 <- prepare_cytoband("mm10", mouse_chrs)
+mm39 <- prepare_cytoband("mm39", mouse_chrs)
 
 # save updated sysdata.rda with new genome builds
-save(list = c(original_sysdata, "hg38", "mm10"), file = "R/sysdata.rda")
+save(list = c(original_sysdata, "hg38", "mm10", "mm39"), file = "R/sysdata.rda")

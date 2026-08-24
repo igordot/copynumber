@@ -1,5 +1,9 @@
 # copynumber 2.0.0
 
+## New features
+
+* Added `mm39` genome build support.
+
 ## Bug fixes
 
 * `addChromlines()`, `get.seglim()`, and `plotCircle()` had minor bugs fixed; several error messages had incomplete or misspelled arguments.

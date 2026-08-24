@@ -1,4 +1,4 @@
-# copynumber with hg38 and mm10
+# copynumber with hg38, mm10, and mm39
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/igordot/copynumber/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/igordot/copynumber/actions/workflows/R-CMD-check.yaml)
@@ -6,7 +6,7 @@
 <!-- badges: end -->
 
 This is an updated version of the [copynumber](https://bioconductor.org/packages/3.17/bioc/html/copynumber.html) R package.
-It has been modified to support the human hg38 and mouse mm10 genome builds.
+It has been modified to support the human hg38 and mouse mm10 and mm39 genome builds.
 
 ## Installation
 
