@@ -9,7 +9,9 @@
 * `addChromlines()`, `get.seglim()`, and `plotCircle()` had minor bugs fixed; several error messages had incomplete or misspelled arguments.
 * `aspcf(..., return.est = TRUE)` now returns named logR estimates.
 * `aspcf()`, `multipcf()`, `pcf()`, `plotAberration()`, `plotHeatmap()`, `subsetData()`, `subsetSegments()`, and `winsorize()` no longer error on matrix input.
+* `getArms()` no longer splits a chromosome into p/q arms using another chromosome's boundary.
 * `interpolate.pcf()` no longer errors on a missing chromosome or single-row input.
+* `mm7`, `mm8`, and `mm9` cytoband data no longer drops chromosome 1's first band.
 * `selectSegments()` now returns a list, not a bare data frame, for large `nseg`.
 
 ## Development
