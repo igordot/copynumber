@@ -23,8 +23,12 @@
   and
   [`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md)
   no longer error on matrix input.
+- `getArms()` no longer splits a chromosome into p/q arms using another
+  chromosome’s boundary.
 - [`interpolate.pcf()`](https://igordot.github.io/copynumber/reference/interpolate.pcf.md)
   no longer errors on a missing chromosome or single-row input.
+- `mm7`, `mm8`, and `mm9` cytoband data no longer drops chromosome 1’s
+  first band.
 - [`selectSegments()`](https://igordot.github.io/copynumber/reference/selectSegments.md)
   now returns a list, not a bare data frame, for large `nseg`.
 
