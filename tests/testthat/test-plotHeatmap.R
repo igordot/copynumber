@@ -1,24 +1,24 @@
 test_that("plotHeatmap() runs without error on valid input", {
   data(lymphoma)
-  sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
-  lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
-  single.seg <- pcf(data = lymph.wins, gamma = 12, verbose = FALSE)
+  subLymphoma <- subsetData(data = lymphoma, sample = 1:3)
+  lymphWins <- winsorize(data = subLymphoma, verbose = FALSE)
+  singleSeg <- pcf(data = lymphWins, gamma = 12, verbose = FALSE)
 
   pdf(NULL)
   on.exit(dev.off())
-  expect_no_error(plotHeatmap(segments = single.seg, upper.lim = 0.3))
+  expect_no_error(plotHeatmap(segments = singleSeg, upper.lim = 0.3))
 })
 
 test_that("plotHeatmap() rejects a bad pos.unit and a non-positive upper.lim", {
   data(lymphoma)
-  sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
-  lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
-  single.seg <- pcf(data = lymph.wins, gamma = 12, verbose = FALSE)
+  subLymphoma <- subsetData(data = lymphoma, sample = 1:3)
+  lymphWins <- winsorize(data = subLymphoma, verbose = FALSE)
+  singleSeg <- pcf(data = lymphWins, gamma = 12, verbose = FALSE)
 
   pdf(NULL)
   on.exit(dev.off())
   expect_error(
-    plotHeatmap(segments = single.seg, upper.lim = 0.3, pos.unit = "bogus")
+    plotHeatmap(segments = singleSeg, upper.lim = 0.3, pos.unit = "bogus")
   )
-  expect_error(plotHeatmap(segments = single.seg, upper.lim = -1))
+  expect_error(plotHeatmap(segments = singleSeg, upper.lim = -1))
 })

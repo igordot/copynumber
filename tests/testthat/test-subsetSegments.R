@@ -1,29 +1,29 @@
 test_that("subsetSegments() filters segments by chromosome", {
   data(lymphoma)
-  sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
-  lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
-  single.seg <- pcf(data = lymph.wins, gamma = 12, verbose = FALSE)
+  subLymphoma <- subsetData(data = lymphoma, sample = 1:3)
+  lymphWins <- winsorize(data = subLymphoma, verbose = FALSE)
+  singleSeg <- pcf(data = lymphWins, gamma = 12, verbose = FALSE)
 
-  ss <- subsetSegments(segments = single.seg, chrom = 1)
+  ss <- subsetSegments(segments = singleSeg, chrom = 1)
 
   expect_s3_class(ss, "data.frame")
   expect_equal(unique(ss$chrom), 1)
-  expect_true(nrow(ss) < nrow(single.seg))
+  expect_true(nrow(ss) < nrow(singleSeg))
   expect_true(nrow(ss) > 0)
 })
 
 test_that("subsetSegments() accepts a character matrix, not just a data frame", {
   data(lymphoma)
-  sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
-  lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
-  single.seg <- pcf(data = lymph.wins, gamma = 12, verbose = FALSE)
+  subLymphoma <- subsetData(data = lymphoma, sample = 1:3)
+  lymphWins <- winsorize(data = subLymphoma, verbose = FALSE)
+  singleSeg <- pcf(data = lymphWins, gamma = 12, verbose = FALSE)
 
   # as.matrix() on pcf() output coerces it to a character matrix.
-  seg_mat <- as.matrix(single.seg)
+  seg_mat <- as.matrix(singleSeg)
   expect_true(is.character(seg_mat))
 
   ss <- subsetSegments(segments = seg_mat, chrom = 1)
-  ss_from_df <- subsetSegments(segments = single.seg, chrom = 1)
+  ss_from_df <- subsetSegments(segments = singleSeg, chrom = 1)
 
   expect_s3_class(ss, "data.frame")
   # reparse: as.matrix() pads numbers for column alignment.

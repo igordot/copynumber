@@ -1,13 +1,13 @@
 test_that("plotAllele() runs without error on valid input", {
   data(logR)
   data(BAF)
-  logR.wins <- winsorize(logR, verbose = FALSE)
-  allele.seg <- aspcf(logR.wins, BAF, verbose = FALSE)
+  logRWins <- winsorize(logR, verbose = FALSE)
+  alleleSeg <- aspcf(logRWins, BAF, verbose = FALSE)
 
   pdf(NULL)
   on.exit(dev.off())
   expect_no_error(
-    plotAllele(logR, BAF, allele.seg, sample = 1, chrom = 1)
+    plotAllele(logR, BAF, alleleSeg, sample = 1, chrom = 1)
   )
 })
 

@@ -1,7 +1,7 @@
 test_that("imputeMissing() replaces NAs with a constant", {
   data(lymphoma)
-  sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
-  d <- sub.lymphoma[1:20, ]
+  subLymphoma <- subsetData(data = lymphoma, sample = 1:3)
+  d <- subLymphoma[1:20, ]
   d[3, 3] <- NA
   d[7, 4] <- NA
 
@@ -16,7 +16,7 @@ test_that("imputeMissing() replaces NAs with a constant", {
 
 test_that("imputeMissing() rejects an unknown method", {
   data(lymphoma)
-  sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
+  subLymphoma <- subsetData(data = lymphoma, sample = 1:3)
 
-  expect_error(imputeMissing(data = sub.lymphoma, method = "bogus"))
+  expect_error(imputeMissing(data = subLymphoma, method = "bogus"))
 })

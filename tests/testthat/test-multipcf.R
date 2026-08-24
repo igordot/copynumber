@@ -1,20 +1,20 @@
 test_that("multipcf()'s documented example produces stable output", {
   # Values pinned from an R 4.6.1 run, not derived independently.
   data(lymphoma)
-  sub.lymphoma <- subsetData(lymphoma, sample = 1:3)
-  wins.lymph <- winsorize(sub.lymphoma, verbose = FALSE)
+  subLymphoma <- subsetData(lymphoma, sample = 1:3)
+  winsLymph <- winsorize(subLymphoma, verbose = FALSE)
 
-  multi.segments <- multipcf(
-    data = wins.lymph,
+  multiSegments <- multipcf(
+    data = winsLymph,
     gamma = 12,
-    Y = sub.lymphoma,
+    Y = subLymphoma,
     verbose = FALSE
   )
 
-  expect_equal(nrow(multi.segments), 54)
-  expect_equal(sum(multi.segments$n.probes), 3091)
+  expect_equal(nrow(multiSegments), 54)
+  expect_equal(sum(multiSegments$n.probes), 3091)
   expect_equal(
-    as.numeric(multi.segments[1, c("X01.B1", "X01.B2", "X01.B3")]),
+    as.numeric(multiSegments[1, c("X01.B1", "X01.B2", "X01.B3")]),
     c(-0.0439, -0.0324, -0.0643),
     tolerance = 0.01
   )
@@ -30,20 +30,20 @@ test_that("multipcf() rejects an invalid assembly and names every valid build", 
 
 test_that("multipcf() reproduces the vignette's lymphoma workflow", {
   data(lymphoma)
-  sub.lymphoma <- subsetData(data = lymphoma, sample = 1:3)
-  lymph.wins <- winsorize(data = sub.lymphoma, verbose = FALSE)
+  subLymphoma <- subsetData(data = lymphoma, sample = 1:3)
+  lymphWins <- winsorize(data = subLymphoma, verbose = FALSE)
 
-  multi.seg <- multipcf(data = lymph.wins, verbose = FALSE)
+  multiSeg <- multipcf(data = lymphWins, verbose = FALSE)
 
   # multipcf finds common breakpoints, so segments are wide: one row per
   # segment with a value column per sample, rather than pcf's long format.
   sample_cols <- c("X01.B1", "X01.B2", "X01.B3")
   expect_named(
-    multi.seg,
+    multiSeg,
     c("chrom", "arm", "start.pos", "end.pos", "n.probes", sample_cols)
   )
   # a real invariant: segments partition every probe in the input exactly
   # once (breakpoints are shared across samples, so there is one n.probes
   # column, not one per sample).
-  expect_equal(sum(multi.seg$n.probes), nrow(lymph.wins))
+  expect_equal(sum(multiSeg$n.probes), nrow(lymphWins))
 })
