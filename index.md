@@ -1,9 +1,9 @@
-# copynumber with hg38 and mm10
+# copynumber with hg38, mm10, and mm39
 
 This is an updated version of the
 [copynumber](https://bioconductor.org/packages/3.17/bioc/html/copynumber.html)
 R package. It has been modified to support the human hg38 and mouse mm10
-genome builds.
+and mm39 genome builds.
 
 ## Installation
 

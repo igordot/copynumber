@@ -2,6 +2,10 @@
 
 ## copynumber 2.0.0
 
+### New features
+
+- Added `mm39` genome build support.
+
 ### Bug fixes
 
 - `addChromlines()`, `get.seglim()`, and

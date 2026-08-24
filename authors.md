@@ -17,11 +17,11 @@ Source:
 
 Nilsen G, Liestol K, Lingjaerde O, Dolgalev I (2026). *copynumber:
 Segmentation of Single- and Multi-Track Copy Number Data by Penalized
-Least Squares Regression (with hg38 and mm10)*. R package version 2.0.0,
-<https://igordot.github.io/copynumber/>.
+Least Squares Regression (with hg38, mm10, and mm39)*. R package version
+2.0.0, <https://igordot.github.io/copynumber/>.
 
     @Manual{,
-      title = {copynumber: Segmentation of Single- and Multi-Track Copy Number Data by Penalized Least Squares Regression (with hg38 and mm10)},
+      title = {copynumber: Segmentation of Single- and Multi-Track Copy Number Data by Penalized Least Squares Regression (with hg38, mm10, and mm39)},
       author = {Gro Nilsen and Knut Liestol and Ole Christian Lingjaerde and Igor Dolgalev},
       year = {2026},
       note = {R package version 2.0.0},
