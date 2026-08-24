@@ -38,14 +38,14 @@
 #' subsequent columns the numeric copy number measurements for one or more
 #' samples.
 #' @param chrom a numeric or character vector with chromosome(s) for which data
-#' should be selected. If unspecified, all chromosomes in \code{data} will be
+#' should be selected. If unspecified, all chromosomes in `data` will be
 #' selected.
 #' @param sample a numeric vector indicating for which sample(s) data should be
 #' selected. The number(s) should correspond to the sample's place (in order of
-#' appearance) in \code{data}.
-#' @param sep the separator of the input files if \code{data}. Default is tab.
-#' @param \dots optional parameters to be passed to \code{read.table} in the
-#' case where \code{data} is to be read from file.
+#' appearance) in `data`.
+#' @param sep the separator of the input files if `data`. Default is tab.
+#' @param \dots optional parameters to be passed to `read.table` in the
+#' case where `data` is to be read from file.
 #' @return A data frame containing the desired subset of data.
 #' @author Gro Nilsen
 #' @examples

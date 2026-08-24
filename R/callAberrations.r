@@ -20,20 +20,20 @@
 
 #' Call aberrations in segmented data
 #'
-#' Segments, obtained by \code{pcf} or \code{multipcf}, are classified as
+#' Segments, obtained by `pcf` or `multipcf`, are classified as
 #' "gain", "normal" or "loss" given the specified thresholds.
 #'
-#' Each region found in \code{segments} is classified as "gain", "normal" or
+#' Each region found in `segments` is classified as "gain", "normal" or
 #' "loss". Regions with gain or loss will be those segments where the segment
-#' value is above or below the value given in \code{thres.gain} or
-#' \code{thres.loss}, respectively.
+#' value is above or below the value given in `thres.gain` or
+#' `thres.loss`, respectively.
 #'
 #' @param segments a data frame containing the segmentation results found by
-#' either \code{\link{pcf}} or \code{\link{multipcf}}.
+#' either [pcf()] or [multipcf()].
 #' @param thres.gain a numeric value giving the threshold to be applied for
 #' calling gains.
 #' @param thres.loss a numeric value giving the threshold to be applied for
-#' calling losses. Default is to use the negative value of \code{thres.gain}.
+#' calling losses. Default is to use the negative value of `thres.gain`.
 #' @return A new segment data frame where the segment values have been replaced
 #' by the classification "gain", "normal" or "loss".
 #' @author Gro Nilsen

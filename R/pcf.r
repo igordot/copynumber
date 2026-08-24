@@ -43,13 +43,13 @@
 #' pairs). By default assumed to be "bp".
 #' @param arms optional character vector containing chromosome arms (denoted
 #' 'p' and 'q') corresponding to the chromosomes and positions found in
-#' \code{data}. If not specified chromosome arms are found using the built-in
-#' genome assembly version determined by \code{assembly}.
+#' `data`. If not specified chromosome arms are found using the built-in
+#' genome assembly version determined by `assembly`.
 #' @param Y either a data frame or the name of a tab-separated file containing
-#' original copy number data in the case where \code{data} contains Winsorized
+#' original copy number data in the case where `data` contains Winsorized
 #' values. If provided, these values are used to calculate the mean of each
-#' segment, otherwise the copy number values in \code{data} are used. \code{Y}
-#' must be on the same form as \code{data}.
+#' segment, otherwise the copy number values in `data` are used. `Y`
+#' must be on the same form as `data`.
 #' @param kmin minimum number of probes in each segment, default is 5.
 #' @param gamma penalty for each discontinuity in the curve, default is 40.
 #' @param normalize logical value indicating whether the copy number
@@ -70,10 +70,10 @@
 #' text files.
 #' @param file.names optional character vector of length two giving the name of
 #' the files where the pcf estimates and segments, respectively, should be
-#' saved in case \code{save.res=TRUE}.
+#' saved in case `save.res=TRUE`.
 #' @param verbose logical value indicating whether or not to print a progress
 #' message each time pcf analysis is finished for a new chromosome arm.
-#' @return If \code{return.est = TRUE} a list with the following components:
+#' @return If `return.est = TRUE` a list with the following components:
 #' \item{estimates}{a data frame where the first two columns give the
 #' chromosome numbers and probe positions respectively, while subsequent
 #' column(s) give the copy number estimates for each sample. The estimate for a
@@ -83,22 +83,22 @@
 #' number, arm, local start position, local end position, number of probes in
 #' the segment and mean value, respectively.}
 #'
-#' If \code{return.est = FALSE}, only the data frame containing the segments is
+#' If `return.est = FALSE`, only the data frame containing the segments is
 #' returned.
 #'
-#' If \code{save.res = TRUE} the results are also saved in text files with
-#' names as specified in \code{file.names}. If \code{file.names=NULL}, a folder
+#' If `save.res = TRUE` the results are also saved in text files with
+#' names as specified in `file.names`. If `file.names=NULL`, a folder
 #' named "pcf_results" is created in the working directory, and the pcf
 #' estimates and segments are saved in this directory in tab-separated files
 #' named estimates.txt and segments.txt, respectively.
 #' @note It is usually advisable to Winsorize data before running pcf, see
-#' \code{\link{winsorize}} on this.
+#' [winsorize()] on this.
 #'
 #' Missing copy number values are allowed. These are kept out of the pcf
 #' analysis, and copy number estimates for missing observations are later set
 #' to be the same as the estimate of the nearest observed probe.
 #' @author Gro Nilsen, Knut Liestoel, Ole Christian Lingjaerde.
-#' @seealso \code{\link{multipcf}}
+#' @seealso [multipcf()]
 #' @references Nilsen and Liestoel et al., "Copynumber: Efficient algorithms
 #' for single- and multi-track copy number segmentation", BMC Genomics 13:591
 #' (2012), doi:10.1186/1471-2164-13-59

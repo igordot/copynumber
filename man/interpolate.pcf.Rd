@@ -4,11 +4,11 @@
 \alias{interpolate.pcf}
 \title{Interpolation of pcf-estimates.}
 \usage{
-\method{interpolate}{pcf}(segments, x)
+interpolate.pcf(segments, x)
 }
 \arguments{
 \item{segments}{a data frame containing the segmentation results from
-\code{\link{pcf}}.}
+\code{\link[=pcf]{pcf()}}.}
 
 \item{x}{matrix or data.frame where the first column gives chrosomomes and
 the second gives positions.}
@@ -41,7 +41,7 @@ sub.lymphoma <- subsetData(lymphoma,sample=1:3)
 #Run pcf:
 seg <- pcf(data=sub.lymphoma,gamma=12)
 
-#Make a matrix with two positions and chromosomes for which we want to 
+#Make a matrix with two positions and chromosomes for which we want to
 #interpolate the pcf-estimate:
 pos <-  c(2000000,50000000)
 chr <- c(1,2)
@@ -53,7 +53,7 @@ int.pcf <- interpolate.pcf(seg,x)
 
 }
 \seealso{
-\code{\link{pcf}}
+\code{\link[=pcf]{pcf()}}
 }
 \author{
 Gro Nilsen, Ole Christian Lingjaerde.

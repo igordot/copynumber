@@ -24,7 +24,7 @@
 #'
 #' A piecewise constant segmentation curve is fitted to the copy number
 #' observations as described in the PCF algorithm in Nilsen and Liestoel et al.
-#' (2012). Unlike the regular \code{\link{pcf}} function, \code{pcfPlain} does
+#' (2012). Unlike the regular [pcf()] function, `pcfPlain` does
 #' not make independent segmentations for each chromosome arm (i.e. breakpoints
 #' are not automatically inserted at the beginning and end of chromosome arms).
 #' The segmentation can thus be performed independently of assembly.
@@ -47,7 +47,7 @@
 #' Default is FALSE, which means that only segments are returned.
 #' @param verbose logical value indicating whether or not to print a progress
 #' message each time pcf analysis is finished for a sample.
-#' @return If \code{return.est = TRUE} a list with the following components:
+#' @return If `return.est = TRUE` a list with the following components:
 #' \item{estimates}{a data frame where the first column gives the probe
 #' positions, while subsequent column(s) give the copy number estimates for
 #' each sample. The estimate for a given probe equals the mean of the segment
@@ -56,12 +56,12 @@
 #' the sampleID, start position, end position, number of probes in the segment
 #' and mean value, respectively.}
 #'
-#' If \code{return.est = FALSE}, only the data frame containing the segments is
+#' If `return.est = FALSE`, only the data frame containing the segments is
 #' returned.
-#' @note If probe positions are not available, the first column in \code{data}
-#' may, e.g., contain the values \code{1:nrow(data)}.
+#' @note If probe positions are not available, the first column in `data`
+#' may, e.g., contain the values `1:nrow(data)`.
 #' @author Gro Nilsen, Knut Liestoel, Ole Christian Lingjaerde.
-#' @seealso \code{\link{pcf}}
+#' @seealso [pcf()]
 #' @references Nilsen and Liestoel et al., "Copynumber: Efficient algorithms
 #' for single- and multi-track copy number segmentation", BMC Genomics 13:591
 #' (2012), doi:10.1186/1471-2164-13-59

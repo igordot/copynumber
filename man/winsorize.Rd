@@ -113,7 +113,7 @@ sub.lymphoma <- subsetData(lymphoma,sample=1:3)
 
 #Do MAD Winsorization:
 wins.data <- winsorize(data=sub.lymphoma)
-         
+
 
 }
 \references{

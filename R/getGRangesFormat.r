@@ -1,14 +1,14 @@
 #' Get segments on the GRanges format
 #'
-#' The segments data frame obtained e.g. by \code{pcf}, \code{multipcf} or
-#' \code{aspcf} is converted to the GRanges format.
+#' The segments data frame obtained e.g. by `pcf`, `multipcf` or
+#' `aspcf` is converted to the GRanges format.
 #'
 #' GRanges, in the GenomicRanges package, is the standard BioConductor
 #' containers for range data. For some applications it may therefore be useful
 #' to convert segmentation results to this format.
 #'
 #' @param segments a data frame containing segmentation results found by e.g.
-#' \code{\link{pcf}}, \code{\link{multipcf}} or \code{\link{aspcf}}.
+#' [pcf()], [multipcf()] or [aspcf()].
 #' @return The segments converted to the GRanges container class.
 #' @author Gro Nilsen
 #' @examples

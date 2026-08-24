@@ -105,7 +105,7 @@ plotGamma(micma,chrom=17)
 
 }
 \seealso{
-\code{\link{pcf}},\code{\link{winsorize}}
+\code{\link[=pcf]{pcf()}},\code{\link[=winsorize]{winsorize()}}
 }
 \author{
 Gro Nilsen, Knut Liestoel, Ole Christian Lingjaerde

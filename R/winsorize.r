@@ -57,15 +57,15 @@
 #' pairs). By default assumed to be "bp".
 #' @param arms optional character vector containing chromosome arms (denoted
 #' 'p' and 'q') corresponding to the chromosomes and positions found in
-#' \code{data}. If not specified chromosome arms are found using the built-in
-#' genome assembly version determined by \code{assembly}.
+#' `data`. If not specified chromosome arms are found using the built-in
+#' genome assembly version determined by `assembly`.
 #' @param method the Winsorization method to be applied, must be one of "mad"
 #' (default) or "pcf".
 #' @param tau Winsorization threshold, default is 2.5.
 #' @param k the half window size to be applied in median filtering, default is
 #' 25.
 #' @param gamma penalty for each discontinuity in the pcf curve, default is 40.
-#' Only applicable when \code{method="pcf"}.
+#' Only applicable when `method="pcf"`.
 #' @param iter number of iterations in PCF Winsorization, default is 1.
 #' @param assembly a string specifying which genome assembly version should be
 #' applied to determine chromosome arms. Allowed options are "hg19", "hg18",
@@ -79,25 +79,25 @@
 #' text files, default is FALSE.
 #' @param file.names optional character vector of length two giving the name of
 #' the files where the Winsorized data and outlier statuses, respectively,
-#' should be saved if \code{save.res=TRUE}.
+#' should be saved if `save.res=TRUE`.
 #' @param verbose logical value indicating whether or not to print a progress
 #' message each time Winsorization is finished for a new chromosome arm.
-#' @return If \code{return.outliers = TRUE} a list with the following
+#' @return If `return.outliers = TRUE` a list with the following
 #' components: \item{wins.data}{a data frame with chromosome numbers in the
 #' first column, probe positions in the second and the Winsorized copy number
 #' values for the sample(s) in subsequent column(s).} \item{wins.outliers}{a
 #' data frame with chromosome numbers in the first column, probe positions in
 #' the second and outlier statuses for each sample in the subsequent column(s).
 #' The values +/- 1 indicate that the observation is an outlier, whereas the
-#' value 0 indicates that it is not.} If \code{return.outliers = FALSE} only
+#' value 0 indicates that it is not.} If `return.outliers = FALSE` only
 #' the data frame containing the winsorized data is returned.
 #'
-#' If \code{save.res=TRUE} the results are saved in text files with names as
-#' specified in \code{file.names}. If \code{file.names=NULL}, a folder named
+#' If `save.res=TRUE` the results are saved in text files with names as
+#' specified in `file.names`. If `file.names=NULL`, a folder named
 #' "Wins_res" is created in the working directory and Winsorized data and
 #' outlier statuses are saved in this directory in tab-separated files named
 #' wins.data.txt and wins.outliers.txt, respectively.
-#' @note Any missing values in \code{data} imply that the Winsorized value and
+#' @note Any missing values in `data` imply that the Winsorized value and
 #' outlier status for this probe will be missing as well. Also, if the number
 #' of probes within a chromosome arm is less than 2*k, Winsorization cannot be
 #' done and the data values are thus left unchanged.

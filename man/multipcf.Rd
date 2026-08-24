@@ -114,9 +114,9 @@ samples. Segmentation is done separately on each chromosome arm.
 }
 \note{
 It is usually advisable to Winsorize data before running pcf, see
-\code{\link{winsorize}} on this.
+\code{\link[=winsorize]{winsorize()}} on this.
 
-The input data must be complete, see \code{\link{imputeMissing}} for
+The input data must be complete, see \code{\link[=imputeMissing]{imputeMissing()}} for
 imputation of missing copy number values.
 }
 \examples{
@@ -145,7 +145,7 @@ for single- and multi-track copy number segmentation", BMC Genomics 13:591
 (2012), doi:10.1186/1471-2164-13-59
 }
 \seealso{
-\code{\link{imputeMissing}}, \code{\link{pcf}}
+\code{\link[=imputeMissing]{imputeMissing()}}, \code{\link[=pcf]{pcf()}}
 }
 \author{
 Gro Nilsen, Knut Liestoel

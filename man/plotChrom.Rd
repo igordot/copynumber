@@ -25,8 +25,8 @@ number data for one or more samples in subsequent columns. The header of the
 copy number columns should be the sample IDs.}
 
 \item{segments}{a data frame or a list of data frames containing the
-segmentation results found by either \code{\link{pcf}} or
-\code{\link{multipcf}}.}
+segmentation results found by either \code{\link[=pcf]{pcf()}} or
+\code{\link[=multipcf]{multipcf()}}.}
 
 \item{pos.unit}{the unit used to represent the probe positions. Allowed
 options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base
@@ -46,7 +46,7 @@ applied to define the chromosome ideogram. Allowed options are "hg19",
 annotations in the UCSC genome browser).}
 
 \item{winsoutliers}{an optional data frame of the same size as \code{data}
-identifying observations classified as outliers by \code{\link{winsorize}}.
+identifying observations classified as outliers by \code{\link[=winsorize]{winsorize()}}.
 If specified, outliers will be marked by a different color and symbol than
 the other observations (see \code{wins.col} and \code{wins.pch}).}
 
@@ -64,9 +64,9 @@ should be plotted. Only applicable when \code{xaxis="pos"}.}
 arguments \code{xlab}, \code{ylab}, \code{main}, \code{xlim}, \code{ylim},
 \code{col} (default is "grey"), \code{pch} (default is 46, equivalent to
 "."), \code{cex}, \code{cex.lab}, \code{cex.main}, \code{cex.axis},
-\code{las}, \code{tcl}, \code{mar} and \code{mgp} (see \code{\link{par}} on
+\code{las}, \code{tcl}, \code{mar} and \code{mgp} (see \code{\link[=par]{par()}} on
 these). In addition, a range of graphical arguments specific for copy number
-plots may be specified, see \code{\link{plotSample}} on these.}
+plots may be specified, see \code{\link[=plotSample]{plotSample()}} on these.}
 }
 \description{
 Plot copy number data and/or segmentation results for each chromosome
@@ -92,7 +92,7 @@ sub.lymphoma <- subsetData(lymphoma,sample=1:6)
 #Winsorize data:
 wins.res <- winsorize(data=sub.lymphoma,return.outliers=TRUE)
 
-#Use pcf to find segments:        
+#Use pcf to find segments:
 uni.segments <- pcf(data=wins.res,gamma=12)
 
 #Use multipcf to find segments as well:
@@ -105,7 +105,7 @@ plotChrom(data=sub.lymphoma,segments=list(uni.segments,multi.segments),chrom=1,
 plotChrom(data=sub.lymphoma,segments=list(uni.segments,multi.segments),chrom=1,
     xaxis="index",layout=c(3,2),legend=FALSE,connect=FALSE)
 #Data was winsorized earlier. Mark winsorized values by different color
-#and symbol: 
+#and symbol:
 plotChrom(data=wins.res,chrom=1,winsoutliers=wins.res,layout=c(3,2))
 #Save plots to a directory:
 \donttest{plotChrom(data=sub.lymphoma,segments=uni.segments,chrom=c(1,2),
@@ -114,7 +114,7 @@ plotChrom(data=wins.res,chrom=1,winsoutliers=wins.res,layout=c(3,2))
 
 }
 \seealso{
-\code{\link{plotSample}}, \code{\link{plotGenome}}
+\code{\link[=plotSample]{plotSample()}}, \code{\link[=plotGenome]{plotGenome()}}
 }
 \author{
 Gro Nilsen

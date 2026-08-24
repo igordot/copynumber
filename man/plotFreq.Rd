@@ -16,7 +16,7 @@ plotFreq(
 }
 \arguments{
 \item{segments}{a data frame containing the segmentation results found by
-either \code{\link{pcf}} or \code{\link{multipcf}}.}
+either \code{\link[=pcf]{pcf()}} or \code{\link[=multipcf]{multipcf()}}.}
 
 \item{thres.gain}{a numeric vector giving the threshold value(s) to be
 applied for calling gains.}
@@ -40,9 +40,9 @@ columns in the plot. Default is \code{c(1,1)}.}
 \item{\dots}{other graphical parameters. These include the common plot arguments
 \code{xlab}, \code{ylab}, \code{title}, \code{main}, \code{cex.main},
 \code{mgp}, \code{cex.lab}, \code{cex.axis}, \code{ylim}, \code{xlim}, and
-\code{las} (see \code{\link{par}} on these), as well as \code{plot.size},
+\code{las} (see \code{\link[=par]{par()}} on these), as well as \code{plot.size},
 \code{plot.unit}, \code{plot.ideo}, \code{ideo.frac}, \code{cyto.text},
-\code{assembly} and \code{cex.cytotext} (see \code{\link{plotSample}} on
+\code{assembly} and \code{cex.cytotext} (see \code{\link[=plotSample]{plotSample()}} on
 these). In addition, some other graphical arguments specific for this plot
 function may be specified: \describe{ \item{\code{col.gain}}{the color to
 be used for the gain frequencies, default is "red".}
@@ -86,7 +86,7 @@ plotFreq(segments=seg,thres.gain=0.1)
 #Plot by chromosomes, two sets of thresholds:
 plotFreq(segments=seg,thres.gain=c(0.1,0.2), thres.loss=c(-0.05,-0.1), chrom=c(1:23),
 layout=c(5,5))
-  
+
 
 
 }

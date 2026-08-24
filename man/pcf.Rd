@@ -109,7 +109,7 @@ sample.
 }
 \note{
 It is usually advisable to Winsorize data before running pcf, see
-\code{\link{winsorize}} on this.
+\code{\link[=winsorize]{winsorize()}} on this.
 
 Missing copy number values are allowed. These are kept out of the pcf
 analysis, and copy number estimates for missing observations are later set
@@ -138,7 +138,7 @@ for single- and multi-track copy number segmentation", BMC Genomics 13:591
 (2012), doi:10.1186/1471-2164-13-59
 }
 \seealso{
-\code{\link{multipcf}}
+\code{\link[=multipcf]{multipcf()}}
 }
 \author{
 Gro Nilsen, Knut Liestoel, Ole Christian Lingjaerde.

@@ -7,10 +7,10 @@
 \title{Artificial SNP array data}
 \format{
 Two corresponding data sets containing 10000 probes with logR
-  and BAF measurements, respectively, for 2 samples. The two first
-  columns in both data sets contain chromosome numbers and local probe
-  positions (in base pairs), while the subsequent columns contain
-  logR-values and BAF-values in the two data sets, respectively.
+and BAF measurements, respectively, for 2 samples. The two first
+columns in both data sets contain chromosome numbers and local probe
+positions (in base pairs), while the subsequent columns contain
+logR-values and BAF-values in the two data sets, respectively.
 }
 \usage{
 data(logR)

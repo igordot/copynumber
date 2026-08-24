@@ -38,7 +38,7 @@
 #' samples. The header of copy number column(s) should give sample ID(s).
 #' @param BAF either a data frame or the name of a tab-separated file from
 #' which B-allelle frequency data can be read. Must be on the same format and
-#' size as \code{logR}, with chromosomes and local probe positions in the two
+#' size as `logR`, with chromosomes and local probe positions in the two
 #' first columns, and numeric BAF-measurements for one or more samples in
 #' subsequent columns.
 #' @param pos.unit the unit used to represent the probe positions. Allowed
@@ -46,8 +46,8 @@
 #' pairs). By default assumed to be "bp".
 #' @param arms optional character vector containing chromosome arms (denoted
 #' 'p' and 'q') corresponding to the chromosomes and positions found in
-#' \code{logR} and \code{BAF}. If not specified chromosome arms are found using
-#' the built-in genome assembly version determined by \code{assembly}.
+#' `logR` and `BAF`. If not specified chromosome arms are found using
+#' the built-in genome assembly version determined by `assembly`.
 #' @param kmin minimum number of probes in each segment, default is 5.
 #' @param gamma penalty for each discontinuity in the curve, default is 40.
 #' @param baf.thres a numeric vector of length two giving the thresholds below
@@ -70,10 +70,10 @@
 #' text files, default is FALSE.
 #' @param file.names optional character vector of length two giving the name of
 #' the files where the logR estimates and segments, respectively, should be
-#' saved in case \code{save.res=TRUE}.
+#' saved in case `save.res=TRUE`.
 #' @param verbose logical value indicating whether or not to print a progress
 #' message each time aspcf analysis is finished for a new chromosome arm.
-#' @return If \code{return.est = TRUE} a list with the following components:
+#' @return If `return.est = TRUE` a list with the following components:
 #' \item{logR_estimates}{a data frame where the first two columns give the
 #' chromosome numbers and probe positions, respectively, while subsequent
 #' column(s) give the LogR estimates for each sample. The estimate for a given
@@ -83,20 +83,20 @@
 #' arms, local start positions, local end positions, number of probes in the
 #' segments, mean LogR values and mean BAF values, respectively.}
 #'
-#' If \code{return.est = FALSE}, only the data frame containing the segments is
+#' If `return.est = FALSE`, only the data frame containing the segments is
 #' returned.
 #'
-#' If \code{save.res = TRUE} the results are also saved in text files with
-#' names as specified in \code{file.names}. If \code{file.names=NULL}, a folder
+#' If `save.res = TRUE` the results are also saved in text files with
+#' names as specified in `file.names`. If `file.names=NULL`, a folder
 #' named "aspcf_results" is created in the working directory, and the LogR
 #' estimates and the segmentation results are saved in this folder as
 #' tab-separated files named logR_estimates.txt and segments.txt, respectively.
 #' @note It will usually be advisable to Winsorize the logR data before running
-#' \code{aspcf}, see \code{\link{winsorize}} on this. Missing values are not
-#' allowed in \code{logR}, see \code{imputeMissing} for imputation of missing
+#' `aspcf`, see [winsorize()] on this. Missing values are not
+#' allowed in `logR`, see `imputeMissing` for imputation of missing
 #' copy number values.
 #' @author Gro Nilsen, Knut Liestoel, Ole Christian Lingjaerde
-#' @seealso \code{\link{plotAllele}}, \code{\link{winsorize}}
+#' @seealso [plotAllele()], [winsorize()]
 #' @references Nilsen and Liestoel et al., "Copynumber: Efficient algorithms
 #' for single- and multi-track copy number segmentation", BMC Genomics 13:591
 #' (2012), doi:10.1186/1471-2164-13-59

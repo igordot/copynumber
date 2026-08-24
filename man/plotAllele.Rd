@@ -31,7 +31,7 @@ chromosomes and local probe positions in the two first columns, and numeric
 BAF-measurements for one or more samples in subsequent columns.}
 
 \item{segments}{a data frame or a list of data frames containing the
-segmentation results found by \code{\link{aspcf}}.}
+segmentation results found by \code{\link[=aspcf]{aspcf()}}.}
 
 \item{pos.unit}{the unit used to represent the probe positions. Allowed
 options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base
@@ -55,7 +55,7 @@ which BAF-values will not be plotted (use this to remove germline homozygous
 BAF probes from the plot).}
 
 \item{winsoutliers}{an optional data frame of the same size as \code{logR}
-identifying observations classified as outliers by \code{\link{winsorize}}.
+identifying observations classified as outliers by \code{\link[=winsorize]{winsorize()}}.
 If specified, outliers will be marked by a different color and symbol than
 the other observations (see \code{wins.col} and \code{wins.pch}).}
 
@@ -73,9 +73,9 @@ should be plotted. Only applicable when \code{xaxis="pos"}.}
 arguments \code{xlab}, \code{ylab}, \code{main}, \code{xlim}, \code{ylim},
 \code{col} (default is "grey"), \code{pch} (default is 46, equivalent to
 "."), \code{cex}, \code{cex.lab}, \code{cex.main}, \code{cex.axis},
-\code{las}, \code{tcl}, \code{mar} and \code{mgp} (see \code{\link{par}} on
+\code{las}, \code{tcl}, \code{mar} and \code{mgp} (see \code{\link[=par]{par()}} on
 these). In addition, a range of graphical arguments specific for copy number
-plots may be specified, see \code{\link{plotSample}} on these.}
+plots may be specified, see \code{\link[=plotSample]{plotSample()}} on these.}
 }
 \description{
 Plot bivariate SNP data and/or aspcf segmentation results for each sample

@@ -38,7 +38,7 @@
 #' Plot copy number data and/or segmentation results for each sample separately
 #' with chromosomes in different panels.
 #'
-#' Several plots may be produced on the same page with the \code{layout}
+#' Several plots may be produced on the same page with the `layout`
 #' option. If the number of plots exceeds the desired page layout, the user is
 #' prompted before advancing to the next page of output.
 #'
@@ -47,14 +47,14 @@
 #' number data for one or more samples in subsequent columns. The header of the
 #' copy number columns should be the sample IDs.
 #' @param segments a data frame or a list of data frames containing the
-#' segmentation results found by either \code{\link{pcf}} or
-#' \code{\link{multipcf}}.
+#' segmentation results found by either [pcf()] or
+#' [multipcf()].
 #' @param pos.unit the unit used to represent the probe positions. Allowed
 #' options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base
 #' pairs). By default assumed to be "bp".
 #' @param sample a numeric vector indicating which sample(s) is (are) to be
 #' plotted. The number(s) should correspond to the sample's place (in order of
-#' appearance) in \code{data}, or in \code{segments} in case \code{data} is
+#' appearance) in `data`, or in `segments` in case `data` is
 #' unspecified.
 #' @param chrom a numeric or character vector with chromosome number(s) to
 #' indicate which chromosome(s) is (are) to be plotted.
@@ -62,87 +62,87 @@
 #' applied to define the chromosome ideogram. Allowed options are "hg19",
 #' "hg18", "hg17" and "hg16" (corresponding to the four latest human genome
 #' annotations in the UCSC genome browser).
-#' @param winsoutliers an optional data frame of the same size as \code{data}
-#' identifying observations classified as outliers by \code{\link{winsorize}}.
+#' @param winsoutliers an optional data frame of the same size as `data`
+#' identifying observations classified as outliers by [winsorize()].
 #' If specified, outliers will be marked by a different color and symbol than
-#' the other observations (see \code{wins.col} and \code{wins.pch}).
+#' the other observations (see `wins.col` and `wins.pch`).
 #' @param xaxis either "pos" or "index". The former implies that the xaxis will
 #' represent the genomic positions, whereas the latter implies that the xaxis
 #' will represent the probe index. Default is "pos".
 #' @param layout an integer vector of length two giving the number of rows and
-#' columns in the plot. Default is \code{c(1,1)}.
+#' columns in the plot. Default is `c(1,1)`.
 #' @param plot.ideo a logical value indicating whether the chromosome ideogram
-#' should be plotted. Only applicable when \code{xaxis="pos"}.
+#' should be plotted. Only applicable when `xaxis="pos"`.
 #' @param \dots other graphical parameters. These include the common plot arguments
-#' \code{xlab}, \code{ylab}, \code{main}, \code{xlim}, \code{ylim}, \code{col}
-#' (default is "grey"), \code{pch} (default is 46, equivalent to "."),
-#' \code{cex}, \code{cex.lab}, \code{cex.main}, \code{cex.axis}, \code{las},
-#' \code{tcl}, \code{mar} and \code{mgp} (see \code{\link{par}} on these). In
-#' addition, a range of graphical arguments specific for \code{plotSample} (as
-#' well as the similar functions \code{plotChrom}, \code{plotGenome} and
-#' \code{plotAllele}) may be specified:
-#' @section Additional graphical parameters for \code{plotSample}:
+#' `xlab`, `ylab`, `main`, `xlim`, `ylim`, `col`
+#' (default is "grey"), `pch` (default is 46, equivalent to "."),
+#' `cex`, `cex.lab`, `cex.main`, `cex.axis`, `las`,
+#' `tcl`, `mar` and `mgp` (see [par()] on these). In
+#' addition, a range of graphical arguments specific for `plotSample` (as
+#' well as the similar functions `plotChrom`, `plotGenome` and
+#' `plotAllele`) may be specified:
+#' @section Additional graphical parameters for `plotSample`:
 #' \describe{
-#' \item{\code{dir.print}:}{an optional directory where the plot(s) is (are)
+#' \item{`dir.print`:}{an optional directory where the plot(s) is (are)
 #' to be saved as pdf file(s). Defaults to NULL which implies that the plot(s)
-#' is (are) printed to screen instead.} \item{\code{file.name}}{an optional
+#' is (are) printed to screen instead.} \item{`file.name`}{an optional
 #' character vector containing file name(s) for the pdf file(s) to be saved.}
-#' \item{\code{onefile}:}{logical value indicating whether all plots should be
+#' \item{`onefile`:}{logical value indicating whether all plots should be
 #' plotted in one device / saved in one file. Default is TRUE. If FALSE, a new
 #' window is opened or a new file is saved for each sample (each chromosome
-#' for \code{plotChrom}).} \item{\code{plot.size}:}{a numeric vector of length
+#' for `plotChrom`).} \item{`plot.size`:}{a numeric vector of length
 #' 2 giving the width and height of the plotting window. Default is
-#' \code{c(11.6,8.2)}.} \item{\code{title}:}{an overall title for all plots on
-#' one page.} \item{\code{plot.unit}:}{the desired unit to be applied for
+#' `c(11.6,8.2)`.} \item{`title`:}{an overall title for all plots on
+#' one page.} \item{`plot.unit`:}{the desired unit to be applied for
 #' probe position tick marks along the x-axis. Only "mbp" (default) and "kbp"
-#' is allowed.} \item{\code{equalRange}:}{logical value indicating whether the
+#' is allowed.} \item{`equalRange`:}{logical value indicating whether the
 #' range of the y-axis should be the same across all plots. Defaults to TRUE.}
-#' \item{\code{q}:}{a numerical value in the range 0 to 1 indicating that
-#' \code{ylim} will be set to only include observations between the (1-q/2)-
+#' \item{`q`:}{a numerical value in the range 0 to 1 indicating that
+#' `ylim` will be set to only include observations between the (1-q/2)-
 #' and the (q/2)-quantile. Observations that fall outside these quantiles are
 #' truncated to the limits of the plot, and are by default marked by a special
-#' symbol (see \code{q.pch}). Default is \code{q=0.01} when \code{data} is
-#' specified, and \code{q=0} otherwise.} \item{\code{q.col},
-#' \code{wins.col}:}{colors used to plot truncated observations and outliers.
-#' Default is "grey" and "magenta", respectively.} \item{\code{q.pch},
-#' \code{wins.pch}:}{symbols used to plot truncated observations and outliers.
+#' symbol (see `q.pch`). Default is `q=0.01` when `data` is
+#' specified, and `q=0` otherwise.} \item{`q.col`,
+#' `wins.col`:}{colors used to plot truncated observations and outliers.
+#' Default is "grey" and "magenta", respectively.} \item{`q.pch`,
+#' `wins.pch`:}{symbols used to plot truncated observations and outliers.
 #' Default is 42 (equivalent to "*") for both. Note that input must be of the
-#' same class as \code{pch} (numeric or character).} \item{\code{q.cex},
-#' \code{wins.cex}:}{magnification used for truncated observations and
-#' outliers relative to \code{cex}. Default is 0.4 for both.}
-#' \item{\code{h}:}{a numerical value indicating that a horizontal reference
-#' line should be plotted at \code{y=h}. Default is \code{h=0}. \code{h=NULL}
-#' suppresses the plotting of a reference line.} \item{\code{at.x}:}{the
+#' same class as `pch` (numeric or character).} \item{`q.cex`,
+#' `wins.cex`:}{magnification used for truncated observations and
+#' outliers relative to `cex`. Default is 0.4 for both.}
+#' \item{`h`:}{a numerical value indicating that a horizontal reference
+#' line should be plotted at `y=h`. Default is `h=0`. `h=NULL`
+#' suppresses the plotting of a reference line.} \item{`at.x`:}{the
 #' points at which tick-marks on x-axis are to be drawn.}
-#' \item{\code{at.y}:}{the points at which tick-marks on y-axis are to be
-#' drawn.} \item{\code{main.line}:}{the margin line for the main title.}
-#' \item{\code{legend}:}{either a logical value indicating whether legends
+#' \item{`at.y`:}{the points at which tick-marks on y-axis are to be
+#' drawn.} \item{`main.line`:}{the margin line for the main title.}
+#' \item{`legend`:}{either a logical value indicating whether legends
 #' should be added to the plot if there is more than one segmentation result
-#' present in \code{segments}, or a character vector giving the legend texts
+#' present in `segments`, or a character vector giving the legend texts
 #' to be used for the segmentation results. Default is TRUE, in which case the
 #' legend will be plotted in the topright corner of each plot.}
-#' \item{\code{seg.col}:}{color(s) used to plot the segmentation result(s).
-#' The default colors are found using the function \code{rainbow(n)}, where
-#' \code{n} is the number of segmentation results found in \code{segments}
-#' (see \code{\link{rainbow}} for details).} \item{\code{seg.lty}:}{the line
+#' \item{`seg.col`:}{color(s) used to plot the segmentation result(s).
+#' The default colors are found using the function `rainbow(n)`, where
+#' `n` is the number of segmentation results found in `segments`
+#' (see [rainbow()] for details).} \item{`seg.lty`:}{the line
 #' type(s) used to plot the segmentation result(s). Default is 1.}
-#' \item{\code{seg.lwd}:}{the line width(s) used to plot the segmentation
-#' result(s).} \item{\code{connect}:}{logical value indicating whether
+#' \item{`seg.lwd`:}{the line width(s) used to plot the segmentation
+#' result(s).} \item{`connect`:}{logical value indicating whether
 #' segments should be connected by vertical lines, default is TRUE.}
-#' \item{\code{ideo.frac}:}{a numerical value in the range 0 to 1 indicating
+#' \item{`ideo.frac`:}{a numerical value in the range 0 to 1 indicating
 #' the fraction of the plot to be occupied by the chromosome ideogram.}
-#' \item{\code{cyto.text}:}{a logical value indicating whether cytoband-names
+#' \item{`cyto.text`:}{a logical value indicating whether cytoband-names
 #' should be plotted along with the ideogram. Not recommended when many plots
 #' are plotted in the same grid, default is FALSE.}
-#' \item{\code{cex.cytotext}:}{the magnification used for the plotting of the
-#' cytoband-names.} \item{\code{cex.chrom}:}{the text size used to plot
-#' chromosome numbers in \code{plotGenome}.}
+#' \item{`cex.cytotext`:}{the magnification used for the plotting of the
+#' cytoband-names.} \item{`cex.chrom`:}{the text size used to plot
+#' chromosome numbers in `plotGenome`.}
 #' }
-#' @note These functions apply \code{par(fig)}, and are therefore not
+#' @note These functions apply `par(fig)`, and are therefore not
 #' compatible with other setups for arranging multiple plots in one device such
-#' as \code{par(mfrow,mfcol)}.
+#' as `par(mfrow,mfcol)`.
 #' @author Gro Nilsen
-#' @seealso \code{\link{plotChrom}}, \code{\link{plotGenome}}
+#' @seealso [plotChrom()], [plotGenome()]
 #' @examples
 #'
 #' #Lymphoma data

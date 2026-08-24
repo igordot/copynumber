@@ -8,7 +8,7 @@ getGRangesFormat(segments)
 }
 \arguments{
 \item{segments}{a data frame containing segmentation results found by e.g.
-\code{\link{pcf}}, \code{\link{multipcf}} or \code{\link{aspcf}}.}
+\code{\link[=pcf]{pcf()}}, \code{\link[=multipcf]{multipcf()}} or \code{\link[=aspcf]{aspcf()}}.}
 }
 \value{
 The segments converted to the GRanges container class.

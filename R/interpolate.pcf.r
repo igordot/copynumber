@@ -13,23 +13,23 @@
 
 #' Interpolation of pcf-estimates.
 #'
-#' Given a segmentation by \code{pcf}, interpolate pcf-estimates for specific
+#' Given a segmentation by `pcf`, interpolate pcf-estimates for specific
 #' positions.
 #'
 #' Pcf-estimates are interpolated for the chromosomes and postions specified in
-#' \code{x}.
+#' `x`.
 #'
 #' @param segments a data frame containing the segmentation results from
-#' \code{\link{pcf}}.
+#' [pcf()].
 #' @param x matrix or data.frame where the first column gives chrosomomes and
 #' the second gives positions.
 #' @return A data frame where the first two columns give the chromsomes and
-#' positions specified in the input \code{x} and the remaining columns give the
-#' interpolated pcf-estimate for each sample represented in \code{segments}.
-#' @note The positions in \code{segments} and \code{x} must be of the same unit
+#' positions specified in the input `x` and the remaining columns give the
+#' interpolated pcf-estimate for each sample represented in `segments`.
+#' @note The positions in `segments` and `x` must be of the same unit
 #' (bp, kbp, or mbp).
 #' @author Gro Nilsen, Ole Christian Lingjaerde.
-#' @seealso \code{\link{pcf}}
+#' @seealso [pcf()]
 #' @examples
 #'
 #' #Load the lymphoma data set:

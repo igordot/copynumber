@@ -32,35 +32,35 @@
 #' Plot copy number heatmap
 #'
 #' Heatmap reflecting the magnitude of estimated copy numbers relative to some
-#' pre-defined limits. Estimates may be obtained using \code{pcf} or
-#' \code{multipcf}, and results may be visualized over the entire genome or by
+#' pre-defined limits. Estimates may be obtained using `pcf` or
+#' `multipcf`, and results may be visualized over the entire genome or by
 #' chromosomes.
 #'
 #' For each sample, the segments are represented by a rectangle plotted in a
 #' color corresponding to the difference between the segment copy number value
-#' and the limits. If the value is below \code{lower.lim}, the color of the
-#' rectangle will equal the input in \code{colors[1]} (default dodgerblue). If
-#' the value is above \code{lower.lim}, but below zero, the color of the
-#' rectangle will be a nuance between the input in \code{colors[1]} and
-#' \code{colors[2]} (default black). The closer the value is to zero, the
-#' closer the nuance will be to \code{colors[2]}. Similary, if the value is
-#' above \code{upper.lim}, the color of the rectangle will equal the input in
-#' \code{colors[3]} (default red), whereas if the value is below
-#' \code{upper.lim}, but above zero, the color will be a nuance between the
-#' input in \code{colors[2]} and \code{colors[3]}. Again, the closer the value
-#' is to zero, the closer the nuance will be to \code{colors[2]}.
+#' and the limits. If the value is below `lower.lim`, the color of the
+#' rectangle will equal the input in `colors[1]` (default dodgerblue). If
+#' the value is above `lower.lim`, but below zero, the color of the
+#' rectangle will be a nuance between the input in `colors[1]` and
+#' `colors[2]` (default black). The closer the value is to zero, the
+#' closer the nuance will be to `colors[2]`. Similary, if the value is
+#' above `upper.lim`, the color of the rectangle will equal the input in
+#' `colors[3]` (default red), whereas if the value is below
+#' `upper.lim`, but above zero, the color will be a nuance between the
+#' input in `colors[2]` and `colors[3]`. Again, the closer the value
+#' is to zero, the closer the nuance will be to `colors[2]`.
 #'
 #' Each row in the heatmap represents a sample, while probe positions are
 #' reflected along the x-axis.
 #'
 #' @param segments a data frame containing the segmentation results found by
-#' either \code{\link{pcf}} or \code{\link{multipcf}}.
+#' either [pcf()] or [multipcf()].
 #' @param upper.lim a positive numeric vector giving the upper limits(s) to be
 #' applied. The colors in the heatmap will reflect the magnitude of the
 #' estimated copy numbers relative to this limit, see details.
 #' @param lower.lim a negative numeric vector of same length as
-#' \code{upper.lim} giving the lower limits(s) to be applied. Default is to use
-#' the negative value of \code{upper.lim}.
+#' `upper.lim` giving the lower limits(s) to be applied. Default is to use
+#' the negative value of `upper.lim`.
 #' @param pos.unit the unit used to represent the probe positions. Allowed
 #' options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base
 #' pairs). By default assumed to be "bp".
@@ -68,28 +68,28 @@
 #' indicate which chromosome(s) is (are) to be plotted. If unspecified the
 #' whole genome is plotted.
 #' @param layout the vector of length two giving the number of rows and columns
-#' in the plot window. Default is \code{c(1,1)}.
+#' in the plot window. Default is `c(1,1)`.
 #' @param \dots other optional graphical parameters. These include the plot arguments
-#' \code{xlab}, \code{ylab}, \code{main}, \code{cex.main}, \code{mgp},
-#' \code{cex.lab}, \code{cex.axis}, \code{mar} and \code{title} (see
-#' \code{\link{par}} on these), as well as \code{plot.size}, \code{plot.unit},
-#' \code{plot.ideo}, \code{ideo.frac}, \code{cyto.text}, \code{assembly} and
-#' \code{cex.cytotext} (see \code{\link{plotSample}} on these). In addition, a
+#' `xlab`, `ylab`, `main`, `cex.main`, `mgp`,
+#' `cex.lab`, `cex.axis`, `mar` and `title` (see
+#' [par()] on these), as well as `plot.size`, `plot.unit`,
+#' `plot.ideo`, `ideo.frac`, `cyto.text`, `assembly` and
+#' `cex.cytotext` (see [plotSample()] on these). In addition, a
 #' range of graphical arguments specific for this plot function may be
-#' specified: \describe{ \item{\code{colors}}{a character vector of length
+#' specified: \describe{ \item{`colors`}{a character vector of length
 #' three giving the colors to interpolate in the heatmap, default is
-#' c("dodgerblue","black","red").} \item{\code{n.col}}{an integer giving the
+#' c("dodgerblue","black","red").} \item{`n.col`}{an integer giving the
 #' number of color shades to be applied in the interpolation, default is 50.}
-#' \item{\code{sample.labels}}{a logical value indicating whether sample
+#' \item{`sample.labels`}{a logical value indicating whether sample
 #' labels are to be plotted along the y-axis. Default is TRUE.}
-#' \item{\code{sep.samples}}{a number in the range 0 to 0.4 used to create
+#' \item{`sep.samples`}{a number in the range 0 to 0.4 used to create
 #' some space between samples. Default is 0, which implies that there is no
-#' space.} \item{\code{sample.line}}{a numeric scalar giving the margin line
+#' space.} \item{`sample.line`}{a numeric scalar giving the margin line
 #' where the sample labels should be written, starting at 0 counting outwards.
-#' Default is 0.2.} \item{\code{sample.cex}}{the size of the sample labels.} }
-#' @note This function applies \code{par(fig)}, and is therefore not compatible
+#' Default is 0.2.} \item{`sample.cex`}{the size of the sample labels.} }
+#' @note This function applies `par(fig)`, and is therefore not compatible
 #' with other setups for arranging multiple plots in one device such as
-#' \code{par(mfrow,mfcol)}.
+#' `par(mfrow,mfcol)`.
 #' @author Gro Nilsen
 #' @examples
 #'

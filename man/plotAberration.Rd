@@ -16,7 +16,7 @@ plotAberration(
 }
 \arguments{
 \item{segments}{a data frame containing the segmentation results found by
-either \code{\link{pcf}} or \code{\link{multipcf}}.}
+either \code{\link[=pcf]{pcf()}} or \code{\link[=multipcf]{multipcf()}}.}
 
 \item{thres.gain}{a numeric vector giving the threshold value(s) to be
 applied for calling gains.}
@@ -39,9 +39,9 @@ in the plot window. Default is \code{c(1,1)}.}
 \item{\dots}{other optional graphical parameters. These include the plot arguments
 \code{xlab}, \code{ylab}, \code{main}, \code{cex.main}, \code{mgp},
 \code{cex.lab}, \code{cex.axis}, \code{mar} and \code{title} (see
-\code{\link{par}} on these), as well as \code{plot.size}, \code{plot.unit},
+\code{\link[=par]{par()}} on these), as well as \code{plot.size}, \code{plot.unit},
 \code{plot.ideo}, \code{ideo.frac}, \code{cyto.text}, \code{assembly} and
-\code{cex.cytotext} (see \code{\link{plotSample}} on these). In addition, a
+\code{cex.cytotext} (see \code{\link[=plotSample]{plotSample()}} on these). In addition, a
 range of graphical arguments specific for this plot function may be
 specified: \describe{ \item{\code{colors}}{a character vector of length two
 where the first and second element specifies the color used to represent

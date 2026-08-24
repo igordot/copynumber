@@ -9,7 +9,7 @@ subsetSegments(segments, chrom = NULL, sample = NULL, sep = "\\t", ...)
 \arguments{
 \item{segments}{either a data frame or the name of a tab-separated file from
 which segmentation results can be read. Segmentation results may come from
-\code{\link{pcf}}, \code{\link{multipcf}} or \code{\link{aspcf}}.}
+\code{\link[=pcf]{pcf()}}, \code{\link[=multipcf]{multipcf()}} or \code{\link[=aspcf]{aspcf()}}.}
 
 \item{chrom}{a numeric or character vector with chromosome(s) for which
 segments should be selected. If unspecified, all chromosomes in

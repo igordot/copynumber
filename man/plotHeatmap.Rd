@@ -16,7 +16,7 @@ plotHeatmap(
 }
 \arguments{
 \item{segments}{a data frame containing the segmentation results found by
-either \code{\link{pcf}} or \code{\link{multipcf}}.}
+either \code{\link[=pcf]{pcf()}} or \code{\link[=multipcf]{multipcf()}}.}
 
 \item{upper.lim}{a positive numeric vector giving the upper limits(s) to be
 applied. The colors in the heatmap will reflect the magnitude of the
@@ -40,9 +40,9 @@ in the plot window. Default is \code{c(1,1)}.}
 \item{\dots}{other optional graphical parameters. These include the plot arguments
 \code{xlab}, \code{ylab}, \code{main}, \code{cex.main}, \code{mgp},
 \code{cex.lab}, \code{cex.axis}, \code{mar} and \code{title} (see
-\code{\link{par}} on these), as well as \code{plot.size}, \code{plot.unit},
+\code{\link[=par]{par()}} on these), as well as \code{plot.size}, \code{plot.unit},
 \code{plot.ideo}, \code{ideo.frac}, \code{cyto.text}, \code{assembly} and
-\code{cex.cytotext} (see \code{\link{plotSample}} on these). In addition, a
+\code{cex.cytotext} (see \code{\link[=plotSample]{plotSample()}} on these). In addition, a
 range of graphical arguments specific for this plot function may be
 specified: \describe{ \item{\code{colors}}{a character vector of length
 three giving the colors to interpolate in the heatmap, default is

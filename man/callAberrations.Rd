@@ -8,7 +8,7 @@ callAberrations(segments, thres.gain, thres.loss = -thres.gain)
 }
 \arguments{
 \item{segments}{a data frame containing the segmentation results found by
-either \code{\link{pcf}} or \code{\link{multipcf}}.}
+either \code{\link[=pcf]{pcf()}} or \code{\link[=multipcf]{multipcf()}}.}
 
 \item{thres.gain}{a numeric value giving the threshold to be applied for
 calling gains.}

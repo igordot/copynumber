@@ -62,7 +62,7 @@ borders into account
 \details{
 A piecewise constant segmentation curve is fitted to the copy number
 observations as described in the PCF algorithm in Nilsen and Liestoel et al.
-(2012). Unlike the regular \code{\link{pcf}} function, \code{pcfPlain} does
+(2012). Unlike the regular \code{\link[=pcf]{pcf()}} function, \code{pcfPlain} does
 not make independent segmentations for each chromosome arm (i.e. breakpoints
 are not automatically inserted at the beginning and end of chromosome arms).
 The segmentation can thus be performed independently of assembly.
@@ -91,7 +91,7 @@ for single- and multi-track copy number segmentation", BMC Genomics 13:591
 (2012), doi:10.1186/1471-2164-13-59
 }
 \seealso{
-\code{\link{pcf}}
+\code{\link[=pcf]{pcf()}}
 }
 \author{
 Gro Nilsen, Knut Liestoel, Ole Christian Lingjaerde.

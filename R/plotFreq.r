@@ -35,16 +35,16 @@
 #'
 #' The percentage of samples with an aberration is calculated and plotted for
 #' all genomic positions. Regions with gain or loss will be those where copy
-#' number values are above or below the values given in \code{thres.gain} and
-#' \code{thres.loss}, respectively.
+#' number values are above or below the values given in `thres.gain` and
+#' `thres.loss`, respectively.
 #'
 #' @param segments a data frame containing the segmentation results found by
-#' either \code{\link{pcf}} or \code{\link{multipcf}}.
+#' either [pcf()] or [multipcf()].
 #' @param thres.gain a numeric vector giving the threshold value(s) to be
 #' applied for calling gains.
-#' @param thres.loss a numeric vector of same length as \code{thres.gain}
+#' @param thres.loss a numeric vector of same length as `thres.gain`
 #' giving the threshold value(s) to be applied for calling losses. Default is
-#' to use the negative value of \code{thres.gain}.
+#' to use the negative value of `thres.gain`.
 #' @param pos.unit the unit used to represent the probe positions. Allowed
 #' options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base
 #' pairs). By default assumed to be "bp".
@@ -53,28 +53,28 @@
 #' whole genome is plotted, otherwise each specified chromosome is plotted in a
 #' separate panel.
 #' @param layout an integer vector of length two giving the number of rows and
-#' columns in the plot. Default is \code{c(1,1)}.
+#' columns in the plot. Default is `c(1,1)`.
 #' @param \dots other graphical parameters. These include the common plot arguments
-#' \code{xlab}, \code{ylab}, \code{title}, \code{main}, \code{cex.main},
-#' \code{mgp}, \code{cex.lab}, \code{cex.axis}, \code{ylim}, \code{xlim}, and
-#' \code{las} (see \code{\link{par}} on these), as well as \code{plot.size},
-#' \code{plot.unit}, \code{plot.ideo}, \code{ideo.frac}, \code{cyto.text},
-#' \code{assembly} and \code{cex.cytotext} (see \code{\link{plotSample}} on
+#' `xlab`, `ylab`, `title`, `main`, `cex.main`,
+#' `mgp`, `cex.lab`, `cex.axis`, `ylim`, `xlim`, and
+#' `las` (see [par()] on these), as well as `plot.size`,
+#' `plot.unit`, `plot.ideo`, `ideo.frac`, `cyto.text`,
+#' `assembly` and `cex.cytotext` (see [plotSample()] on
 #' these). In addition, some other graphical arguments specific for this plot
-#' function may be specified: \describe{ \item{\code{col.gain}}{the color to
+#' function may be specified: \describe{ \item{`col.gain`}{the color to
 #' be used for the gain frequencies, default is "red".}
-#' \item{\code{col.loss}}{the color to be used for the loss frequencies,
-#' default is "blue".} \item{\code{continuous}}{a logical value indicating
+#' \item{`col.loss`}{the color to be used for the loss frequencies,
+#' default is "blue".} \item{`continuous`}{a logical value indicating
 #' whether the probe frequencies should be presented as continuous, i.e. the
 #' plotted probe frequency will start and end halfway between adjacent probes
 #' (except across arms when chromosomes are plotted and except across
 #' chromosomes when genome is plotted). Default is TRUE.}
-#' \item{\code{percentLines}}{either a logical value indicating if horizontal
+#' \item{`percentLines`}{either a logical value indicating if horizontal
 #' percentages lines should be plotted, or a numeric vector with percentages
 #' at which such lines should be plotted. Default is TRUE.} }
-#' @note This function applies \code{par(fig)}, and is therefore not compatible
+#' @note This function applies `par(fig)`, and is therefore not compatible
 #' with other setups for arranging multiple plots in one device such as
-#' \code{par(mfrow,mfcol)}.
+#' `par(mfrow,mfcol)`.
 #' @author Gro Nilsen
 #' @examples
 #'

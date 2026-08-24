@@ -15,7 +15,7 @@ selectSegments(
 }
 \arguments{
 \item{segments}{a data frame containing segments found by
-\code{\link{multipcf}}.}
+\code{\link[=multipcf]{multipcf()}}.}
 
 \item{what}{the desired characteristic to base selection on. Must be one of
 "variance" (default),"length" and "aberration". See details below.}
@@ -104,7 +104,7 @@ sel.seg5 <- selectSegments(segments,what="aberration",nseg=20,p=0.5)
 
 }
 \seealso{
-\code{\link{multipcf}}
+\code{\link[=multipcf]{multipcf()}}
 }
 \author{
 Gro Nilsen

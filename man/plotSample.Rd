@@ -25,8 +25,8 @@ number data for one or more samples in subsequent columns. The header of the
 copy number columns should be the sample IDs.}
 
 \item{segments}{a data frame or a list of data frames containing the
-segmentation results found by either \code{\link{pcf}} or
-\code{\link{multipcf}}.}
+segmentation results found by either \code{\link[=pcf]{pcf()}} or
+\code{\link[=multipcf]{multipcf()}}.}
 
 \item{pos.unit}{the unit used to represent the probe positions. Allowed
 options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base
@@ -46,7 +46,7 @@ applied to define the chromosome ideogram. Allowed options are "hg19",
 annotations in the UCSC genome browser).}
 
 \item{winsoutliers}{an optional data frame of the same size as \code{data}
-identifying observations classified as outliers by \code{\link{winsorize}}.
+identifying observations classified as outliers by \code{\link[=winsorize]{winsorize()}}.
 If specified, outliers will be marked by a different color and symbol than
 the other observations (see \code{wins.col} and \code{wins.pch}).}
 
@@ -64,7 +64,7 @@ should be plotted. Only applicable when \code{xaxis="pos"}.}
 \code{xlab}, \code{ylab}, \code{main}, \code{xlim}, \code{ylim}, \code{col}
 (default is "grey"), \code{pch} (default is 46, equivalent to "."),
 \code{cex}, \code{cex.lab}, \code{cex.main}, \code{cex.axis}, \code{las},
-\code{tcl}, \code{mar} and \code{mgp} (see \code{\link{par}} on these). In
+\code{tcl}, \code{mar} and \code{mgp} (see \code{\link[=par]{par()}} on these). In
 addition, a range of graphical arguments specific for \code{plotSample} (as
 well as the similar functions \code{plotChrom}, \code{plotGenome} and
 \code{plotAllele}) may be specified:}
@@ -127,7 +127,7 @@ legend will be plotted in the topright corner of each plot.}
 \item{\code{seg.col}:}{color(s) used to plot the segmentation result(s).
 The default colors are found using the function \code{rainbow(n)}, where
 \code{n} is the number of segmentation results found in \code{segments}
-(see \code{\link{rainbow}} for details).} \item{\code{seg.lty}:}{the line
+(see \code{\link[=rainbow]{rainbow()}} for details).} \item{\code{seg.lty}:}{the line
 type(s) used to plot the segmentation result(s). Default is 1.}
 \item{\code{seg.lwd}:}{the line width(s) used to plot the segmentation
 result(s).} \item{\code{connect}:}{logical value indicating whether
@@ -153,7 +153,7 @@ sub.lymphoma <- subsetData(lymphoma,sample=1:6)
 #Winsorize data:
 wins.data <- winsorize(data=sub.lymphoma)
 
-#Use pcf to find segments:        
+#Use pcf to find segments:
 uni.segments <- pcf(data=wins.data,gamma=12)
 
 #Use multipcf to find segments as well:
@@ -184,7 +184,7 @@ plotSample(data=sub.lymphoma,segments=uni.segments,sample=1,chrom=1,plot.ideo=
 
 }
 \seealso{
-\code{\link{plotChrom}}, \code{\link{plotGenome}}
+\code{\link[=plotChrom]{plotChrom()}}, \code{\link[=plotGenome]{plotGenome()}}
 }
 \author{
 Gro Nilsen

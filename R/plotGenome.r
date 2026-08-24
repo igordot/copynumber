@@ -35,7 +35,7 @@
 #'
 #' Plot copy number data and/or segmentation results for the whole genome.
 #'
-#' Several plots may be produced on the same page with the \code{layout}
+#' Several plots may be produced on the same page with the `layout`
 #' option. If the number of plots exceeds the desired page layout, the user is
 #' prompted before advancing to the next page of output.
 #'
@@ -44,40 +44,40 @@
 #' number data for one or more samples in subsequent columns. The header of the
 #' copy number columns should be the sample IDs.
 #' @param segments a data frame or a list of data frames containing the
-#' segmentation results found by either \code{\link{pcf}} or
-#' \code{\link{multipcf}}.
+#' segmentation results found by either [pcf()] or
+#' [multipcf()].
 #' @param pos.unit the unit used to represent the probe positions. Allowed
 #' options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base
 #' pairs). By default assumed to be "bp".
 #' @param sample a numeric vector indicating which sample(s) is (are) to be
 #' plotted. The number(s) should correspond to the sample's place (in order of
-#' appearance) in \code{data}, or in \code{segments} in case \code{data} is
+#' appearance) in `data`, or in `segments` in case `data` is
 #' unspecified.
 #' @param assembly a string specifying which genome assembly version should be
 #' applied to define the chromosome ideogram. Allowed options are "hg19",
 #' "hg18", "hg17" and "hg16" (corresponding to the four latest human genome
 #' annotations in the UCSC genome browser).
-#' @param winsoutliers an optional data frame of the same size as \code{data}
-#' identifying observations classified as outliers by \code{\link{winsorize}}.
+#' @param winsoutliers an optional data frame of the same size as `data`
+#' identifying observations classified as outliers by [winsorize()].
 #' If specified, outliers will be marked by a different color and symbol than
-#' the other observations (see \code{wins.col} and \code{wins.pch}).
+#' the other observations (see `wins.col` and `wins.pch`).
 #' @param xaxis either "pos" or "index". The former implies that the xaxis will
 #' represent the genomic positions, whereas the latter implies that the xaxis
 #' will represent the probe index. Default is "pos".
 #' @param layout an integer vector of length two giving the number of rows and
-#' columns in the plot. Default is \code{c(1,1)}.
+#' columns in the plot. Default is `c(1,1)`.
 #' @param \dots other graphical parameters. These include the common plot
-#' arguments \code{xlab}, \code{ylab}, \code{main}, \code{xlim}, \code{ylim},
-#' \code{col} (default is "grey"), \code{pch} (default is 46, equivalent to
-#' "."), \code{cex}, \code{cex.lab}, \code{cex.main}, \code{cex.axis},
-#' \code{las}, \code{tcl}, \code{mar} and \code{mgp} (see \code{\link{par}} on
+#' arguments `xlab`, `ylab`, `main`, `xlim`, `ylim`,
+#' `col` (default is "grey"), `pch` (default is 46, equivalent to
+#' "."), `cex`, `cex.lab`, `cex.main`, `cex.axis`,
+#' `las`, `tcl`, `mar` and `mgp` (see [par()] on
 #' these). In addition, a range of graphical arguments specific for copy number
-#' plots may be specified, see \code{\link{plotSample}} on these.
-#' @note This function applies \code{par(fig)}, and is therefore not compatible
+#' plots may be specified, see [plotSample()] on these.
+#' @note This function applies `par(fig)`, and is therefore not compatible
 #' with other setups for arranging multiple plots in one device such as
-#' \code{par(mfrow,mfcol)}.
+#' `par(mfrow,mfcol)`.
 #' @author Gro Nilsen
-#' @seealso \code{\link{plotSample}}, \code{\link{plotChrom}}
+#' @seealso [plotSample()], [plotChrom()]
 #' @examples
 #'
 #' #Lymphoma data

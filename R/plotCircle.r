@@ -40,19 +40,19 @@
 #' genomic loci may be added.
 #'
 #' To zoom in on the observed aberration frequencies one may increase
-#' \code{alpha}. However, the user should be aware that this implies that the
+#' `alpha`. However, the user should be aware that this implies that the
 #' distance between the genome circle and the frequency zero-line does not
-#' reflect an aberration frequency of 100 \%. Since the distance between the
+#' reflect an aberration frequency of 100 %. Since the distance between the
 #' two circles is always 1/7, the maximum plotted percentage will be
 #' 100/(alpha*7) and any percentages that are higher than this will be
 #' truncated to this value.
 #'
 #' @param segments a data frame containing the segmentation results found by
-#' either \code{\link{pcf}} or \code{\link{multipcf}}.
+#' either [pcf()] or [multipcf()].
 #' @param thres.gain a scalar giving the threshold value to be applied for
 #' calling gains.
 #' @param thres.loss a scalar giving the threshold value to be applied for
-#' calling losses. Default is to use the negative value of \code{thres.gain}.
+#' calling losses. Default is to use the negative value of `thres.gain`.
 #' @param pos.unit the unit used to represent the probe positions. Allowed
 #' options are "mbp" (mega base pairs), "kbp" (kilo base pairs) or "bp" (base
 #' pairs). By default assumed to be "bp".
@@ -62,7 +62,7 @@
 #' @param alpha a scalar in the range 0 to 1 determining the amount of scaling
 #' of the aberration frequencies. For the default value of 1/7 the distance
 #' between the genome circle and the zero-line of the frequency-circle
-#' corresponds to an aberration percentage of 100 \%. See details.
+#' corresponds to an aberration percentage of 100 %. See details.
 #' @param arcs an optional matrix or data frame with 5 columns specifying
 #' connections between genomic loci. The first two columns must give the
 #' chromosome numbers and local positions for the start points of the arcs,
@@ -72,8 +72,8 @@
 #' class of arcs will then be plotted in a different color.
 #' @param arc.colors a vector giving the colors to be used for plotting the
 #' different classes of arcs. Cannot be shorter than the number of unique
-#' classes in \code{arcs}. The first color will represent the first class in
-#' \code{arcs}, the second color the second class and so on.
+#' classes in `arcs`. The first color will represent the first class in
+#' `arcs`, the second color the second class and so on.
 #' @param d a scalar > 0 representing the distance from the genome circle to
 #' the starting points of the arcs. Set d=0 to make arcs start at the genome
 #' circle.

@@ -112,7 +112,7 @@ arm in each sample.
 }
 \note{
 It will usually be advisable to Winsorize the logR data before running
-\code{aspcf}, see \code{\link{winsorize}} on this. Missing values are not
+\code{aspcf}, see \code{\link[=winsorize]{winsorize()}} on this. Missing values are not
 allowed in \code{logR}, see \code{imputeMissing} for imputation of missing
 copy number values.
 }
@@ -136,7 +136,7 @@ for single- and multi-track copy number segmentation", BMC Genomics 13:591
 (2012), doi:10.1186/1471-2164-13-59
 }
 \seealso{
-\code{\link{plotAllele}}, \code{\link{winsorize}}
+\code{\link[=plotAllele]{plotAllele()}}, \code{\link[=winsorize]{winsorize()}}
 }
 \author{
 Gro Nilsen, Knut Liestoel, Ole Christian Lingjaerde
