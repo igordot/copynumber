@@ -356,12 +356,13 @@ multipcf <- function(
     }
 
     # Check sd; cannot normalize if sd=0 or if sd=NA:
-    if (any(sd == 0) || any(is.na(sd))) {
+    if (any(sd == 0) || any(is.na(sd)) || nrow(arm.data) == 1L) {
       # not run multipcf, return mean for each sample:
       m <- apply(arm.data, 2, mean)
       dim(m) <- c(length(m), 1)
       if (yest) {
-        yhat <- sapply(m, rep, nrow(arm.data))
+        # matrix(), not sapply(m, rep, 1), so a 1-probe arm doesn't collapse to a plain vector
+        yhat <- matrix(m, nrow = nrow(arm.data), ncol = length(m), byrow = TRUE)
         mpcf <- list(
           pcf = t(yhat),
           nIntervals = 1,

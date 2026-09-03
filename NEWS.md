@@ -12,6 +12,7 @@
 * `getArms()` no longer splits a chromosome into p/q arms using another chromosome's boundary.
 * `interpolate.pcf()` no longer errors on a missing chromosome or single-row input.
 * `mm7`, `mm8`, and `mm9` cytoband data no longer drops chromosome 1's first band.
+* `multipcf()` no longer errors on a chromosome arm with a single probe.
 * `selectSegments()` now returns a list, not a bare data frame, for large `nseg`.
 
 ## Development

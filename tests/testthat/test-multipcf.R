@@ -47,3 +47,36 @@ test_that("multipcf() reproduces the vignette's lymphoma workflow", {
   # column, not one per sample).
   expect_equal(sum(multiSeg$n.probes), nrow(lymphWins))
 })
+
+test_that("multipcf() handles a chromosome arm with a single probe", {
+  # Regression test: a 1-probe arm used to crash inside doMultiPCF().
+  data <- data.frame(
+    chrom = c(1, 1, 2),
+    pos = c(1000, 2000, 1000),
+    sample1 = c(0.1, 0.15, 0.5),
+    sample2 = c(0.2, 0.22, 0.6)
+  )
+  arms <- c("p", "p", "p")
+
+  segments <- multipcf(data = data, arms = arms, verbose = FALSE)
+
+  expect_equal(sum(segments$n.probes), nrow(data))
+  expect_true(1 %in% segments$n.probes)
+})
+
+test_that("multipcf() handles a single-probe arm when a sample has zero variance", {
+  # Regression test: a constant sample column forces the sd==0 short-circuit
+  # branch, which used to corrupt output shape for a 1-probe arm.
+  data <- data.frame(
+    chrom = c(1, 1, 2),
+    pos = c(1000, 2000, 1000),
+    sample1 = c(0.5, 0.5, 0.5),
+    sample2 = c(0.2, 0.22, 0.6)
+  )
+  arms <- c("p", "p", "p")
+
+  result <- multipcf(data = data, arms = arms, return.est = TRUE, verbose = FALSE)
+
+  expect_equal(sum(result$segments$n.probes), nrow(data))
+  expect_equal(nrow(result$estimates), nrow(data))
+})
