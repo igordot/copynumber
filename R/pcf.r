@@ -58,9 +58,7 @@
 #' @param fast a logical value indicating whether a fast (not guaranteed to be
 #' exact) version should be run on chromosome arms with > 400 probes.
 #' @param assembly a string specifying which genome assembly version should be
-#' applied to determine chromosome arms. Allowed options are "hg19", "hg18",
-#' "hg17" and "hg16" (corresponding to the four latest human genome annotations
-#' in the UCSC genome browser).
+#' applied to determine chromosome arms.
 #' @param digits the number of decimals to be applied when reporting results.
 #' Default is 4.
 #' @param return.est logical value indicating whether a data frame holding copy

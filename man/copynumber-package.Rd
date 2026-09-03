@@ -4,7 +4,7 @@
 \name{copynumber-package}
 \alias{copynumber}
 \alias{copynumber-package}
-\title{copynumber: Segmentation of Single- and Multi-Track Copy Number Data by Penalized Least Squares Regression (with hg38, mm10, and mm39)}
+\title{copynumber: Segmentation of Single- and Multi-Track Copy Number Data by Penalized Least Squares Regression (with hg38/mm10/mm39)}
 \description{
 Penalized least squares regression is applied to fit piecewise constant curves to copy number data to locate genomic regions of constant copy number. Procedures are available for individual segmentation of each sample, joint segmentation of several samples and joint segmentation of the two data tracks from SNP-arrays. Several plotting functions are available for visualization of the data and the segmentation results.
 }

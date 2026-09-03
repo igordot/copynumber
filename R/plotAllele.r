@@ -63,9 +63,7 @@
 #' @param chrom a numeric or character vector with chromosome number(s) to
 #' indicate which chromosome(s) is (are) to be plotted.
 #' @param assembly a string specifying which genome assembly version should be
-#' applied to define the chromosome ideogram. Allowed options are "hg19",
-#' "hg18", "hg17" and "hg16" (corresponding to the four latest human genome
-#' annotations in the UCSC genome browser).
+#' applied to define the chromosome ideogram.
 #' @param baf.thres a numeric vector of length 2 giving thresholds below/above
 #' which BAF-values will not be plotted (use this to remove germline homozygous
 #' BAF probes from the plot).

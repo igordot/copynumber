@@ -54,9 +54,7 @@
 #' appearance) in `data`, or in `segments` in case `data` is
 #' unspecified.
 #' @param assembly a string specifying which genome assembly version should be
-#' applied to define the chromosome ideogram. Allowed options are "hg19",
-#' "hg18", "hg17" and "hg16" (corresponding to the four latest human genome
-#' annotations in the UCSC genome browser).
+#' applied to define the chromosome ideogram.
 #' @param winsoutliers an optional data frame of the same size as `data`
 #' identifying observations classified as outliers by [winsorize()].
 #' If specified, outliers will be marked by a different color and symbol than

@@ -59,9 +59,7 @@ the starting points of the arcs. Set d=0 to make arcs start at the genome
 circle.}
 
 \item{assembly}{a string specifying which genome assembly version should be
-applied to determine chromosome ideograms. Allowed options are "hg19",
-"hg18", "hg17" and "hg16" (corresponding to the four latest human genome
-annotations in the UCSC genome browser).}
+applied to determine chromosome ideograms.}
 }
 \description{
 A circular genome is plotted and the percentage of samples that have a gain

@@ -68,9 +68,7 @@
 #' Only applicable when `method="pcf"`.
 #' @param iter number of iterations in PCF Winsorization, default is 1.
 #' @param assembly a string specifying which genome assembly version should be
-#' applied to determine chromosome arms. Allowed options are "hg19", "hg18",
-#' "hg17" and "hg16" (corresponding to the four latest human genome annotations
-#' in the UCSC genome browser).
+#' applied to determine chromosome arms.
 #' @param digits the number of decimals to be applied when reporting results.
 #' Default is 4.
 #' @param return.outliers logical value indicating whether a data frame

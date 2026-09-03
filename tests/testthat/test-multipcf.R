@@ -75,7 +75,12 @@ test_that("multipcf() handles a single-probe arm when a sample has zero variance
   )
   arms <- c("p", "p", "p")
 
-  result <- multipcf(data = data, arms = arms, return.est = TRUE, verbose = FALSE)
+  result <- multipcf(
+    data = data,
+    arms = arms,
+    return.est = TRUE,
+    verbose = FALSE
+  )
 
   expect_equal(sum(result$segments$n.probes), nrow(data))
   expect_equal(nrow(result$estimates), nrow(data))

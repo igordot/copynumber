@@ -17,7 +17,7 @@ knitr::opts_chunk$set(fig.align = "center")
 
 This document gives an overview and demonstration of the `copynumber` package, which provides tools for the segmentation and visualization of copy number data. In the analysis of such data a goal is to detect and locate areas of the genome with copy number abberations. This may help identify genes that are critical to the development and progression of cancer. To locate areas or segments of equal copy numbers, our methods make *Piecewise Constant Fits* to the data through penalized least squares minimization (Nilsen et al., 2012). That is, piecewise constant curves are fitted to the data by minimizing the distance between the curve and the observed data, while imposing a penalty for each discontinuity in the curve. Segmentation may be done on a single sample, simultaneously on several samples or simultaneously on different data tracks.
 
-This is a fork of the archived Bioconductor package, adding support for more recent genome builds. See the [GitHub repository](https://github.com/igordot/copynumber) for source and issues.
+The original Bioconductor version of the package was deprecated. This vignette is bundled with a fork of the package that adds support for more recent genome builds and includes some minor bug fixes. See the [GitHub repository](https://github.com/igordot/copynumber) for source and issues.
 
 ## Overview
 
@@ -66,6 +66,12 @@ The package includes three data sets that are used in the examples below:
 - `logR` and `BAF`: Artificial 10K SNP array data for 2 samples.
 
 ## Examples
+
+The `copynumber` package is no longer available on Bioconductor. It can be installed from [GitHub](https://github.com/igordot/copynumber):
+
+```{r install-copynumber, eval=FALSE}
+BiocManager::install("igordot/copynumber")
+```
 
 The following examples illustrate some applications of the `copynumber` package. First, load the package in R:
 
