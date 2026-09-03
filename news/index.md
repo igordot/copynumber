@@ -29,6 +29,8 @@
   no longer errors on a missing chromosome or single-row input.
 - `mm7`, `mm8`, and `mm9` cytoband data no longer drops chromosome 1’s
   first band.
+- [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md)
+  no longer errors on a chromosome arm with a single probe.
 - [`selectSegments()`](https://igordot.github.io/copynumber/reference/selectSegments.md)
   now returns a list, not a bare data frame, for large `nseg`.
 
