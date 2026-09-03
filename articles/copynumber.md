@@ -16,10 +16,11 @@ discontinuity in the curve. Segmentation may be done on a single sample,
 simultaneously on several samples or simultaneously on different data
 tracks.
 
-This is a fork of the archived Bioconductor package, adding support for
-more recent genome builds. See the [GitHub
-repository](https://github.com/igordot/copynumber) for source and
-issues.
+The original Bioconductor version of the package was deprecated. This
+vignette is bundled with a fork of the package that adds support for
+more recent genome builds and includes some minor bug fixes. See the
+[GitHub repository](https://github.com/igordot/copynumber) for source
+and issues.
 
 ## Overview
 
@@ -120,6 +121,14 @@ below:
 - `logR` and `BAF`: Artificial 10K SNP array data for 2 samples.
 
 ## Examples
+
+The `copynumber` package is no longer available on Bioconductor. It can
+be installed from [GitHub](https://github.com/igordot/copynumber):
+
+``` r
+
+BiocManager::install("igordot/copynumber")
+```
 
 The following examples illustrate some applications of the `copynumber`
 package. First, load the package in R:

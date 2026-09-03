@@ -57,9 +57,7 @@ plotChrom(
 - assembly:
 
   a string specifying which genome assembly version should be applied to
-  define the chromosome ideogram. Allowed options are "hg19", "hg18",
-  "hg17" and "hg16" (corresponding to the four latest human genome
-  annotations in the UCSC genome browser).
+  define the chromosome ideogram.
 
 - winsoutliers:
 
@@ -275,6 +273,6 @@ plotChrom(data=wins.res,chrom=1,winsoutliers=wins.res,layout=c(3,2))
 plotChrom(data=sub.lymphoma,segments=uni.segments,chrom=c(1,2),
     layout=c(3,2),dir.print=tempdir(),file.name=c("chromosome1","chromosome2"),
     onefile=FALSE)
-#> Plot was saved in  /tmp/RtmpjzTI7p/chromosome1.pdf 
-#> Plot was saved in  /tmp/RtmpjzTI7p/chromosome2.pdf 
+#> Plot was saved in  /tmp/RtmpjsWssE/chromosome1.pdf 
+#> Plot was saved in  /tmp/RtmpjsWssE/chromosome2.pdf 
 ```

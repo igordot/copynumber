@@ -74,9 +74,7 @@ winsorize(
 - assembly:
 
   a string specifying which genome assembly version should be applied to
-  determine chromosome arms. Allowed options are "hg19", "hg18", "hg17"
-  and "hg16" (corresponding to the four latest human genome annotations
-  in the UCSC genome browser).
+  determine chromosome arms.
 
 - digits:
 
