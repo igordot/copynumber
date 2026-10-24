@@ -273,6 +273,6 @@ plotChrom(data=wins.res,chrom=1,winsoutliers=wins.res,layout=c(3,2))
 plotChrom(data=sub.lymphoma,segments=uni.segments,chrom=c(1,2),
     layout=c(3,2),dir.print=tempdir(),file.name=c("chromosome1","chromosome2"),
     onefile=FALSE)
-#> Plot was saved in  /tmp/RtmpjsWssE/chromosome1.pdf 
-#> Plot was saved in  /tmp/RtmpjsWssE/chromosome2.pdf 
+#> Plot was saved in  /tmp/Rtmp5D0doR/chromosome1.pdf 
+#> Plot was saved in  /tmp/Rtmp5D0doR/chromosome2.pdf 
 ```

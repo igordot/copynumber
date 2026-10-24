@@ -1,6 +1,6 @@
 # Changelog
 
-## copynumber 2.0.0
+## copynumber 1.99.0
 
 ### New features
 
