@@ -1,7 +1,7 @@
 Package: copynumber
 Title: Segmentation of Single- and Multi-Track Copy Number Data by
     Penalized Least Squares Regression (with hg38/mm10/mm39)
-Version: 2.0.0
+Version: 1.99.0
 Authors@R: c(
     person("Gro", "Nilsen", , "gronilse@ifi.uio.no", role = c("aut", "cre")),
     person("Knut", "Liestol", role = "aut"),
