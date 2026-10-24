@@ -40,6 +40,7 @@
 - Converted the vignette from Sweave to R Markdown.
 - Added a pkgdown website.
 - Added a testthat test suite (previously no automated tests).
+- Added mouse mm10 tests.
 
 ## copynumber 1.29.0.9000
 
