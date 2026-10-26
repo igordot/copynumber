@@ -191,10 +191,7 @@ plotCircle <- function(
     cytoband,
     delta = delta
   )
-  cyto.end[chr.end[1]:length(cyto.end)] <- cyto.end[
-    chr.end[1]:length(cyto.end)
-  ] +
-    delta # need to add delta between first and second chromosome
+  cyto.end <- cyto.end + delta # leave a gap after each chromosome
 
   cyto.stain <- cytoband[, 5]
   xmin <- cyto.start[1]
