@@ -162,6 +162,11 @@ subsetData <- function(data, chrom = NULL, sample = NULL, sep = "\t", ...) {
         )
       )
     }
+    # Restore the requested sample order after reading columns in file order.
+    sel.data <- sel.data[,
+      match(c(1:2, keepsample + 2), which(is.na(cc))),
+      drop = FALSE
+    ]
   } else {
     sel.data <- data[keepchrom, c(1:2, keepsample + 2)]
   }

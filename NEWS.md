@@ -16,6 +16,7 @@
 * `mm7`, `mm8`, and `mm9` cytoband data no longer drops chromosome 1's first band.
 * `multipcf()` no longer errors on a chromosome arm with a single probe.
 * `selectSegments()` now returns a list, not a bare data frame, for large `nseg`.
+* `subsetData()` now keeps sample values and names in the requested order when reading from a file.
 
 ## Development
 
