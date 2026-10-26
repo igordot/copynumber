@@ -29,6 +29,9 @@
   now returns `NA` calls for missing segment values.
 - `getArms()` no longer splits a chromosome into p/q arms using another
   chromosome’s boundary.
+- [`imputeMissing()`](https://igordot.github.io/copynumber/reference/imputeMissing.md)
+  now returns complete data unchanged when `method = "pcf"` and no
+  estimates are supplied.
 - [`interpolate.pcf()`](https://igordot.github.io/copynumber/reference/interpolate.pcf.md)
   no longer errors on a missing chromosome or single-row input.
 - `mm7`, `mm8`, and `mm9` cytoband data no longer drops chromosome 1’s
@@ -37,6 +40,9 @@
   no longer errors on a chromosome arm with a single probe.
 - [`selectSegments()`](https://igordot.github.io/copynumber/reference/selectSegments.md)
   now returns a list, not a bare data frame, for large `nseg`.
+- [`subsetData()`](https://igordot.github.io/copynumber/reference/subsetData.md)
+  now keeps sample values and names in the requested order when reading
+  from a file.
 
 ### Development
 

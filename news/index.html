@@ -54,6 +54,8 @@
 <li>
 <code>getArms()</code> no longer splits a chromosome into p/q arms using another chromosome’s boundary.</li>
 <li>
+<code><a href="../reference/imputeMissing.html">imputeMissing()</a></code> now returns complete data unchanged when <code>method = "pcf"</code> and no estimates are supplied.</li>
+<li>
 <code><a href="../reference/interpolate.pcf.html">interpolate.pcf()</a></code> no longer errors on a missing chromosome or single-row input.</li>
 <li>
 <code>mm7</code>, <code>mm8</code>, and <code>mm9</code> cytoband data no longer drops chromosome 1’s first band.</li>
@@ -61,6 +63,8 @@
 <code><a href="../reference/multipcf.html">multipcf()</a></code> no longer errors on a chromosome arm with a single probe.</li>
 <li>
 <code><a href="../reference/selectSegments.html">selectSegments()</a></code> now returns a list, not a bare data frame, for large <code>nseg</code>.</li>
+<li>
+<code><a href="../reference/subsetData.html">subsetData()</a></code> now keeps sample values and names in the requested order when reading from a file.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="development-1-99-0">Development<a class="anchor" aria-label="anchor" href="#development-1-99-0"></a></h3>
