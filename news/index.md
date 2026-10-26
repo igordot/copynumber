@@ -25,6 +25,8 @@
   no longer error on matrix input.
 - [`aspcf()`](https://igordot.github.io/copynumber/reference/aspcf.md)
   now keeps segment boundaries where only the BAF value changes.
+- [`callAberrations()`](https://igordot.github.io/copynumber/reference/callAberrations.md)
+  now returns `NA` calls for missing segment values.
 - `getArms()` no longer splits a chromosome into p/q arms using another
   chromosome’s boundary.
 - [`interpolate.pcf()`](https://igordot.github.io/copynumber/reference/interpolate.pcf.md)

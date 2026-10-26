@@ -29,7 +29,8 @@ callAberrations(segments, thres.gain, thres.loss = -thres.gain)
 ## Value
 
 A new segment data frame where the segment values have been replaced by
-the classification "gain", "normal" or "loss".
+the classification "gain", "normal" or "loss". Missing segment values
+return `NA` calls.
 
 ## Details
 
