@@ -31,20 +31,14 @@ getGlobPos <- function(chromosomes, position, pos.unit, cyto.data, delta = 0) {
   l <- getArmandChromStop(cyto.data = cyto.data, unit = pos.unit)
   chromstop <- l$chromstop
 
-  # Need to make sure that none of the input positions are larger than chromosome stop postions:
-  u.chrom <- unique(chromosomes)
-  new.pos <- position
-  for (j in 1:length(u.chrom)) {
-    probe.c <- chromosomes == u.chrom[j]
-    # Check for positions that are larger than chromosome max position
-    out <- which(position[probe.c] > chromstop[u.chrom[j]])
-    # Replace these positions by max chrom position:
-    new.pos[probe.c][out] <- chromstop[u.chrom[j]]
-  }
+  # Match chromosome codes to the order in the cytoband data.
+  cyto.chrom <- sort(unique(numericChrom(sub("^chr", "", cyto.data[, 1]))))
+  chrom.index <- match(chromosomes, cyto.chrom)
+  new.pos <- pmin(position, chromstop[chrom.index])
   chromstop <- chromstop + delta
   glob.chromstop <- cumsum(chromstop) # Global stopping position for each chromosome
 
   glob.pos <- new.pos +
-    c(0, glob.chromstop[-length(glob.chromstop)])[chromosomes] # Calculate global positions by adding global chromstop (for chrom > 1, for chrom=1 positions remain unchanged
+    c(0, glob.chromstop[-length(glob.chromstop)])[chrom.index] # Calculate global positions by adding global chromstop (for chrom > 1, for chrom=1 positions remain unchanged
   return(glob.pos)
 } # end getGlobPos

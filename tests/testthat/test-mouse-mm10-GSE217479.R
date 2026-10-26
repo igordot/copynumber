@@ -93,6 +93,11 @@ for (fixture in c(
 
       pdf(NULL)
       on.exit(dev.off())
+      expect_no_error(expect_no_warning(plotCircle(
+        segments = single,
+        thres.gain = 0.2,
+        assembly = "mm10"
+      )))
       expect_no_error(plotGenome(
         mouse,
         segments = single,

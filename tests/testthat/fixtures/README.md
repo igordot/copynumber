@@ -17,10 +17,9 @@ bins with non-finite ratios, zero depth, or zero weight in either sample.
 It keeps the log2 ratios unchanged and sets `pos = floor((start + end) / 2) + 1`.
 The sparse fixture selects bins at equal intervals in bin order.
 
-Tests cover `winsorize()`, `pcf()`, `multipcf()`, and `plotGenome()` with mm10.
+Tests cover `winsorize()`, `pcf()`, `multipcf()`, `plotGenome()`, and `plotCircle()` with mm10.
 The fixtures have exome gaps, no BAF track, no CNVkit weights, and no known true
 breakpoints. Do not use them to measure segmentation accuracy.
-`plotCircle()` currently fails on these data with `'to' must be a finite number`.
 
 Tests check output dimensions and selected values from the first mm10 commit,
 `ef99c55fb69a94cdf4a672b93bb0ca079a8f1b5b` (2020-07-15). The values were

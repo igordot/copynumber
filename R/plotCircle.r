@@ -219,7 +219,9 @@ plotCircle <- function(
         "gneg" = "white",
         "gpos100" = "black",
         "gpos75" = "gray25",
+        "gpos66" = "gray34",
         "gpos50" = "gray50",
+        "gpos33" = "gray67",
         "gpos25" = "gray75",
         "stalk" = "gray90",
         "gvar" = "grey",
@@ -272,12 +274,12 @@ plotCircle <- function(
   segments(tmp0$x, tmp0$y, tmp1$x, tmp1$y, lwd = 3)
 
   # Plot chromosome numbers
-  chrmiddle <- (chr.stop.pos[1:23] + (chr.stop.pos - delta)[2:24]) / 2
-  chrmiddle <- c((chr.stop.pos[1] - delta) / 2, chrmiddle) # add middle of chrom 1
+  chr.start.pos <- c(0, chr.stop.pos[-length(chr.stop.pos)])
+  chrmiddle <- (chr.start.pos + chr.stop.pos - delta) / 2
   x0 <- chrmiddle
   y0 <- rep(outer.circ - 0.1, length(chrmiddle))
   tmp <- circ(x0, y0, xmax)
-  text(tmp$x, tmp$y, c(1:22, "X", "Y"))
+  text(tmp$x, tmp$y, unique(sub("^chr", "", cytoband[, 1])))
 
   # Plot frequency of aberration
   # Check data input:
@@ -295,7 +297,7 @@ plotCircle <- function(
   # Make sure that chromosomes in data are numeric:
   chr <- numericChrom(data[, 1])
   pos <- data[, 2]
-  yhat <- data[, -c(1:2)]
+  yhat <- data[, -c(1:2), drop = FALSE]
   freq.circ <- 1 / 7 + inner.circ # placement of frequencies-circle
   m <- freq.circ + (freq.circ - inner.circ) # max space for amp frequencies
   AmpFreq <- apply(yhat > thres.gain, 1, mean)
