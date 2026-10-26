@@ -38,6 +38,11 @@
   first band.
 - [`multipcf()`](https://igordot.github.io/copynumber/reference/multipcf.md)
   no longer errors on a chromosome arm with a single probe.
+- [`plotCircle()`](https://igordot.github.io/copynumber/reference/plotCircle.md)
+  no longer errors when plotting a single sample.
+- [`plotCircle()`](https://igordot.github.io/copynumber/reference/plotCircle.md)
+  now plots mouse assemblies with the correct chromosome labels, sex
+  chromosome positions, and cytoband shades.
 - [`selectSegments()`](https://igordot.github.io/copynumber/reference/selectSegments.md)
   now returns a list, not a bare data frame, for large `nseg`.
 - [`subsetData()`](https://igordot.github.io/copynumber/reference/subsetData.md)
