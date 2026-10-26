@@ -396,8 +396,7 @@ aspcf <- function(
       yhat2 <- round(yhat2, digits = digits)
 
       # Create segmentation information:
-      # Note that yhat1 and yhat2 will have the same breakpoints; hence only use one of them to find these
-      wd <- which(diff(yhat1) != 0)
+      wd <- which(diff(yhat1) != 0 | diff(yhat2) != 0)
       seg.start <- c(1, wd + 1)
       seg.stop <- c(wd, length(probe.c))
       nSeg <- length(seg.start)

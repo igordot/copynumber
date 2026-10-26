@@ -64,3 +64,36 @@ test_that("aspcf() with return.est=TRUE returns logR estimates alongside segment
   )
   expect_equal(nrow(res$logR_estimates), nrow(logRWins))
 })
+
+test_that("aspcf() keeps BAF changes when logR means are equal", {
+  noise <- rep(c(-0.02, -0.01, 0, 0.01, 0.02), 10)
+  logR <- data.frame(chrom = 1, pos = 1:100, S1 = rep(noise, 2))
+  BAF <- logR
+  BAF$S1 <- c(0.5 + noise, 0.2 + noise)
+
+  res <- aspcf(logR, BAF, return.est = TRUE, verbose = FALSE)
+
+  expect_equal(res$segments$start.pos, c(1, 51))
+  expect_equal(res$segments$end.pos, c(50, 100))
+  expect_equal(res$segments$n.probes, c(50, 50))
+  expect_equal(res$segments$logR.mean, c(0, 0))
+  expect_equal(res$segments$BAF.mean, c(0.5, 0.8))
+  expect_equal(res$logR_estimates$S1, rep(0, 100))
+})
+
+test_that("aspcf() returns one segment when all BAF values are missing", {
+  logR <- data.frame(chrom = 1, pos = 1:10, S1 = 0.1)
+  BAF <- logR
+  BAF$S1 <- NA_real_
+
+  expect_message(
+    res <- aspcf(logR, BAF, verbose = FALSE),
+    "all of the BAF-values are outside the threshold values"
+  )
+
+  expect_equal(res$start.pos, 1)
+  expect_equal(res$end.pos, 10)
+  expect_equal(res$n.probes, 10)
+  expect_equal(res$logR.mean, 0.1)
+  expect_true(is.na(res$BAF.mean))
+})
