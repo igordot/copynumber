@@ -20,3 +20,33 @@ test_that("imputeMissing() rejects an unknown method", {
 
   expect_error(imputeMissing(data = subLymphoma, method = "bogus"))
 })
+
+test_that("imputeMissing() leaves complete data unchanged with the pcf method", {
+  d <- data.frame(chrom = 1, pos = 1:10, S1 = rep(c(0.1, 0.2), 5), S2 = 0.3)
+
+  expect_identical(imputeMissing(d, method = "pcf"), d)
+})
+
+test_that("imputeMissing() rejects missing coordinates with the pcf method", {
+  d <- data.frame(chrom = 1, pos = 1:10, S1 = 0.2)
+  for (column in 1:2) {
+    invalid <- d
+    invalid[1, column] <- NA
+    expect_error(
+      imputeMissing(invalid, method = "pcf"),
+      "missing values are not allowed in data columns 1 and 2",
+      fixed = TRUE
+    )
+  }
+})
+
+test_that("imputeMissing() fills missing samples with pcf estimates", {
+  d <- data.frame(chrom = 1, pos = 1:10, S1 = 0.2, S2 = rep(c(0.1, 0.3), 5))
+  expected <- d
+  d[5, 3] <- NA
+
+  expect_equal(
+    imputeMissing(d, method = "pcf", normalize = FALSE, verbose = FALSE),
+    expected
+  )
+})

@@ -129,6 +129,9 @@ imp.pcf <- function(data, yhat, ...) {
         call. = FALSE
       )
     }
+    if (!any(s)) {
+      return(data)
+    }
     pcf.res <- pcf(data = data[, c(1:2, which(s))], return.est = TRUE, ...) # Only run PCF on samples with missing values
     # Make sure yhat is the same size as cn.data to maintain location of na
     yhat <- data.frame(matrix(NA, nrow = nrow(data), ncol = ncol(data)))
