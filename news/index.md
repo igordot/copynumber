@@ -23,6 +23,8 @@
   and
   [`winsorize()`](https://igordot.github.io/copynumber/reference/winsorize.md)
   no longer error on matrix input.
+- [`aspcf()`](https://igordot.github.io/copynumber/reference/aspcf.md)
+  now keeps segment boundaries where only the BAF value changes.
 - `getArms()` no longer splits a chromosome into p/q arms using another
   chromosome’s boundary.
 - [`interpolate.pcf()`](https://igordot.github.io/copynumber/reference/interpolate.pcf.md)
