@@ -10,6 +10,7 @@
 * `aspcf(..., return.est = TRUE)` now returns named logR estimates.
 * `aspcf()`, `multipcf()`, `pcf()`, `plotAberration()`, `plotHeatmap()`, `subsetData()`, `subsetSegments()`, and `winsorize()` no longer error on matrix input.
 * `aspcf()` now keeps segment boundaries where only the BAF value changes.
+* `callAberrations()` now returns `NA` calls for missing segment values.
 * `getArms()` no longer splits a chromosome into p/q arms using another chromosome's boundary.
 * `interpolate.pcf()` no longer errors on a missing chromosome or single-row input.
 * `mm7`, `mm8`, and `mm9` cytoband data no longer drops chromosome 1's first band.

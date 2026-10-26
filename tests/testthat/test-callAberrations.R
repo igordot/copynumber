@@ -24,3 +24,71 @@ test_that("callAberrations() classifies multipcf (wide) segments per sample", {
   expect_true(all(unlist(called[sample_cols]) %in% c("normal", "gain", "loss")))
   expect_equal(nrow(called), nrow(multiSeg))
 })
+
+test_that("callAberrations() keeps missing pcf segment values unknown", {
+  segments <- data.frame(
+    sampleID = "S1",
+    chrom = 1,
+    arm = "p",
+    start.pos = 1:7,
+    end.pos = 1:7,
+    n.probes = 1,
+    mean = c(NA_real_, NaN, -0.3, -0.2, 0, 0.2, 0.3)
+  )
+
+  called <- callAberrations(segments, thres.gain = 0.2)
+
+  expect_identical(
+    called$call,
+    c(
+      NA_character_,
+      NA_character_,
+      "loss",
+      "normal",
+      "normal",
+      "normal",
+      "gain"
+    )
+  )
+  expect_equal(called[1:6], segments[1:6])
+})
+
+test_that("callAberrations() keeps missing multipcf values unknown per sample", {
+  segments <- data.frame(
+    chrom = 1,
+    arm = "p",
+    start.pos = 1:7,
+    end.pos = 1:7,
+    n.probes = 1,
+    S1 = c(NA_real_, NaN, -0.3, -0.2, 0, 0.2, 0.3),
+    S2 = c(0.3, 0.2, 0, -0.2, -0.3, NaN, NA_real_)
+  )
+
+  called <- callAberrations(segments, thres.gain = 0.2)
+
+  expect_identical(
+    called$S1,
+    c(
+      NA_character_,
+      NA_character_,
+      "loss",
+      "normal",
+      "normal",
+      "normal",
+      "gain"
+    )
+  )
+  expect_identical(
+    called$S2,
+    c(
+      "gain",
+      "normal",
+      "normal",
+      "normal",
+      "loss",
+      NA_character_,
+      NA_character_
+    )
+  )
+  expect_equal(called[1:5], segments[1:5])
+})

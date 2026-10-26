@@ -35,7 +35,8 @@
 #' @param thres.loss a numeric value giving the threshold to be applied for
 #' calling losses. Default is to use the negative value of `thres.gain`.
 #' @return A new segment data frame where the segment values have been replaced
-#' by the classification "gain", "normal" or "loss".
+#' by the classification "gain", "normal" or "loss". Missing segment values
+#' return `NA` calls.
 #' @author Gro Nilsen
 #' @examples
 #'
@@ -65,6 +66,7 @@ callAberrations <- function(segments, thres.gain, thres.loss = -thres.gain) {
     call.seg[gain] <- "gain"
     loss <- segments[, -c(1:5), drop = FALSE] < thres.loss
     call.seg[loss] <- "loss"
+    call.seg[is.na(segments[, -c(1:5), drop = FALSE])] <- NA_character_
 
     call.seg <- as.data.frame(cbind(segments[, c(1:5)], call.seg))
   } else {
@@ -73,6 +75,7 @@ callAberrations <- function(segments, thres.gain, thres.loss = -thres.gain) {
     call.seg[gain] <- "gain"
     loss <- segments[, 7] < thres.loss
     call.seg[loss] <- "loss"
+    call.seg[is.na(segments[, 7])] <- NA_character_
 
     call.seg <- as.data.frame(cbind(segments[, c(1:6)], call.seg))
     colnames(call.seg)[7] <- "call"

@@ -18,7 +18,8 @@ calling losses. Default is to use the negative value of \code{thres.gain}.}
 }
 \value{
 A new segment data frame where the segment values have been replaced
-by the classification "gain", "normal" or "loss".
+by the classification "gain", "normal" or "loss". Missing segment values
+return \code{NA} calls.
 }
 \description{
 Segments, obtained by \code{pcf} or \code{multipcf}, are classified as
