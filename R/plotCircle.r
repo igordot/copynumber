@@ -176,7 +176,7 @@ plotCircle <- function(
   cyto.chr <- cyto.chr[o]
   cytoband <- cytoband[o, ]
 
-  chr.end <- diff(cyto.chr) > 0
+  chr.end <- c(diff(cyto.chr) > 0, TRUE)
   cyto.start <- getGlobPos(
     cyto.chr,
     cytoband[, 2],
@@ -207,7 +207,7 @@ plotCircle <- function(
 
   # Get colors for the cytoband
   c0 <- rep(0, ngrid)
-  chr.stop.pos <- c(cyto.end[chr.end], cyto.end[length(cyto.end)])
+  chr.stop.pos <- cyto.end[chr.end]
   delta.gridpts <- c()
   for (i in 1:ngrid) {
     grid.chr <- which(chr.stop.pos >= gridpts[i])[1]
